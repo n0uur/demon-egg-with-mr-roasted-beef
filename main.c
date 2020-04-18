@@ -9,7 +9,7 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 450;
 
-    InitWindow(screenWidth, screenHeight, "raylib [textures] example - mouse painting");
+    InitWindow(screenWidth, screenHeight, "raylib [textures] example - mouse painting eiei");
 
     // Colours to choose from
     Color colors[MAX_COLORS_COUNT] = {

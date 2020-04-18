@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "C/C++: gcc.exe build active file",
+			"command": "C:/raylib/mingw/bin/gcc.exe",
+			"args": [
+				"-g",
+				"${fileDirname}\\main.c",
+				"-o",
+				"${fileDirname}\\demonEgg.exe",
+				"-I",
+				"${fileDirname}\\raylib\\src",
+				"-lraylib",
+				"-lopengl32",
+				"-lgdi32",
+				"-lwinmm",
+				"-std=c99",
+				"-Wall",
+				"-mwindows"
+			],
+			"options": {
+				"cwd": "C:/raylib/mingw/bin"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": "build"
+		}
+	]
+}
