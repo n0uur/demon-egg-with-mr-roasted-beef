@@ -8,6 +8,9 @@
 			"args": [
 				"-g",
 				"${fileDirname}\\main.c",
+				"${fileDirname}\\game.c",
+				"${fileDirname}\\egg.c",
+				"${fileDirname}\\beef.c",
 				"-o",
 				"${fileDirname}\\demonEgg.exe",
 				"-I",
