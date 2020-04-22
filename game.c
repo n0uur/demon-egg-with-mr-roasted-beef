@@ -3,16 +3,23 @@
 #include <stdio.h>                  // Required for: fopen(), fclose(), fputc(), fwrite(), printf(), fprintf(), funopen()
 #include <time.h>
 
-void gameMain() {
-    // Initialization
-    //--------------------------------------------------------------------------------------
+void gameInit() {
 
     const int screenWidth = 1366;
     const int screenHeight = 768;
 
-    
-
     InitWindow(screenWidth, screenHeight, "ไข่ตัวร้ายกับนายเนื้อย่าง");
+
+    CURRENT_GAME_STATE = GAME_SELECT;
+
+    SetTargetFPS(60);
+
+    fontRSU = LoadFont("resources/fonts/CSChatThaiUI.ttf");
+    fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
+    
+}
+
+void gameMain() {
 
     gameInit();
 
@@ -31,21 +38,6 @@ void gameMain() {
             eggMain();
         }
     }
-    
-    CloseWindow();
-
-    UnloadFont(fontTTF);
-}
-
-void gameInit() {
-
-    CURRENT_GAME_STATE = GAME_SELECT;
-
-    SetTargetFPS(60);
-
-    // fontTTF = LoadFontEx("resources/fonts/CSChatThaiUI.ttf", 32, 0, 3800);
-
-    fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
 
 }
 
@@ -60,5 +52,14 @@ void gameSelectMain() {
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
     EndDrawing();
+
+}
+
+void gameFini() {
+
+    UnloadFont(fontRSU);
+    UnloadFont(fontBM);
+
+    CloseWindow();
 
 }
