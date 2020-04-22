@@ -829,8 +829,26 @@ void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, f
                 DrawTexturePro(font.texture, font.recs[index], rec, (Vector2){ 0, 0 }, 0.0f, tint);
             }
 
-            if (font.chars[index].advanceX == 0) textOffsetX += ((float)font.recs[index].width*scaleFactor + spacing);
-            else textOffsetX += ((float)font.chars[index].advanceX*scaleFactor + spacing);
+            // --- Check is Thai Vowels
+
+            int isThaiVowels = 0;
+
+            char thaiVowels[] = "\u0e34\u0e35\u0e38\u0e39\u0e47\u0e48\u0e49\u0e4a\u0e4b\u0e31"; // only vowels that's need special spacing
+
+            for(int j = 0; j < TextLength(thaiVowels); j++) {
+                int codepointcc = 0;
+                int codepointtmp = GetNextCodepoint(&thaiVowels[j], &codepointcc);
+                int ii = GetGlyphIndex(font, codepointcc);;
+                if(codepoint == codepointtmp)
+                    isThaiVowels = 1;
+            }
+
+            // ------------------------
+
+            if(!isThaiVowels) {
+                if (font.chars[index].advanceX == 0) textOffsetX += ((float)font.recs[index].width*scaleFactor + spacing);
+                else textOffsetX += ((float)font.chars[index].advanceX*scaleFactor + spacing);
+            }
         }
 
         i += (codepointByteCount - 1);   // Move text bytes counter to next codepoint

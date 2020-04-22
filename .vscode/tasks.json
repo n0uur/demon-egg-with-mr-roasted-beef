@@ -11,6 +11,7 @@
 				"${fileDirname}\\game.c",
 				"${fileDirname}\\egg.c",
 				"${fileDirname}\\beef.c",
+				"${fileDirname}\\raylib\\src\\text.c",
 				"-o",
 				"${fileDirname}\\demonEgg.exe",
 				"-I",
@@ -20,7 +21,6 @@
 				"-lgdi32",
 				"-lwinmm",
 				"-std=c99",
-				"-Wall",
 				"-mwindows"
 			],
 			"options": {

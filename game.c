@@ -43,7 +43,7 @@ void gameInit() {
 
     SetTargetFPS(60);
 
-    fontTTF = LoadFontEx("resources/fonts/CSChatThaiUI.ttf", 32, 0, 650);
+    // fontTTF = LoadFontEx("resources/fonts/CSChatThaiUI.ttf", 32, 0, 3800);
 
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
 
@@ -55,7 +55,7 @@ void gameSelectMain() {
 
         ClearBackground(RAYWHITE);
 
-        DrawTextEx(fontBM, "\u0e2a\u0e27\u0e31\u0e2a\u0e14\u0e35\u0e42\u0e25\u0e01", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
+        DrawTextEx(fontBM, "สวัสดีโลก", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
 
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
