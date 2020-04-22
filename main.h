@@ -12,6 +12,11 @@ enum GAME_STATE CURRENT_GAME_STATE;
 
 // -----------------------
 
+Font fontTTF;
+Font fontBM;
+
+// -----------------------
+
 void gameInit();
 
 void gameMain();
