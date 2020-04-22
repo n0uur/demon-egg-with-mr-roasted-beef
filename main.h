@@ -18,7 +18,7 @@ Font fontBM;
 // -----------------------
 
 void gameInit();
-void gameDeInit();
+void gameFini();
 
 void gameMain();
 
