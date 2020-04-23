@@ -836,7 +836,8 @@ void DrawTextEx(Font font, const char *text, Vector2 position, float fontSize, f
             char thaiVowels[] = "\u0e34\u0e35\u0e38\u0e39\u0e47\u0e48\u0e49\u0e4a\u0e4b\u0e31\u0e37"; // only vowels that's need special spacing // อิ อี อือ อุ อู ไม้เอก ไม้โท ไม้ตรี ไม้จัตวา ไม้หันอากาศ ไม้ไต่คู้
 
             for(int j = 0; j < TextLength(thaiVowels); j++) {
-                int thaiCodePoint = GetNextCodepoint(&thaiVowels[j], 0);
+                int tmp = 0;
+                int thaiCodePoint = GetNextCodepoint(&thaiVowels[j], &tmp);
                 if(codepoint == thaiCodePoint)
                     isThaiVowels = 1;
             }
