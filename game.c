@@ -10,14 +10,14 @@ void gameInit() {
 
     InitWindow(screenWidth, screenHeight, "ไข่ตัวร้ายกับนายเนื้อย่าง");
 
-    CURRENT_GAME_STATE = GAME_BEEF;
+    CURRENT_GAME_STATE = GAME_SELECT;
 
     SetTargetFPS(60);
 
     fontRSU = LoadFont("resources/fonts/CSChatThaiUI.ttf");
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
-	
-	beefInit();
+
+    beefInit();
     
 }
 
@@ -52,6 +52,7 @@ void gameSelectMain() {
         DrawTextEx(fontBM, "สวัสดีโลก", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
 
         if(IsKeyPressed(66))CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
     EndDrawing();
