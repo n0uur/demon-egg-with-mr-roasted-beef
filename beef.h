@@ -5,18 +5,18 @@ int times = 0;
 
 // -----------------------
 
-Image table_img;
-Image pan_img;
-Image meat_bowl_img;
-Image sauce_bowl_img;
-Image raw_meat_1_img;
-Image raw_meat_2_img;
+Image tableImg;
+Image panImg;
+Image meatBowlImg;
+Image sauceBowlImg;
+Image rawMeat1Img;
+Image rawMeat2Img;
 
 // -----------------------
 
 Texture2D table;
 Texture2D pan;
-Texture2D meat_bowl;
-Texture2D sauce_bowl;
-Texture2D raw_meat_1;
-Texture2D raw_meat_2;
+Texture2D meatBowl;
+Texture2D sauceBowl;
+Texture2D rawMeat1;
+Texture2D rawMeat2;
