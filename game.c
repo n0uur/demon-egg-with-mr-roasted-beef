@@ -10,12 +10,14 @@ void gameInit() {
 
     InitWindow(screenWidth, screenHeight, "ไข่ตัวร้ายกับนายเนื้อย่าง");
 
-    CURRENT_GAME_STATE = GAME_SELECT;
+    CURRENT_GAME_STATE = GAME_BEEF;
 
     SetTargetFPS(60);
 
     fontRSU = LoadFont("resources/fonts/CSChatThaiUI.ttf");
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
+	
+	beefInit();
     
 }
 

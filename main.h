@@ -1,5 +1,7 @@
 #include "raylib.h"
 
+#define CHOCOLATE  CLITERAL(Color){ 118, 57, 16, 255 }  //For bg
+
 // -----------------------
 
 enum GAME_STATE {
@@ -28,6 +30,8 @@ void gameSelectMain();
 
 void eggMain();
 
+void beefInit();
 void beefMain();
 
 // -----------------------
+
