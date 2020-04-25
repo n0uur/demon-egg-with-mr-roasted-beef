@@ -51,7 +51,7 @@ void gameSelectMain() {
 
         DrawTextEx(fontBM, "สวัสดีโลก", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
 
-        if(IsKeyPressed(66))CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+        if(IsKeyPressed(KEY_B))CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
 
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
