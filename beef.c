@@ -1,4 +1,7 @@
 #include "beef.h"
+
+
+
 void flipMeat(Vector2 mousePosi, Texture2D meatT){
     Image meatI;
     if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
