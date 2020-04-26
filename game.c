@@ -1,14 +1,13 @@
 #include "main.h"
 
-#include <stdio.h>                  // Required for: fopen(), fclose(), fputc(), fwrite(), printf(), fprintf(), funopen()
-#include <time.h>
-
 void gameInit() {
 
     const int screenWidth = 1366;
     const int screenHeight = 768;
 
     InitWindow(screenWidth, screenHeight, "ไข่ตัวร้ายกับนายเนื้อย่าง");
+
+    InitAudioDevice();
 
     CURRENT_GAME_STATE = GAME_SELECT;
 
@@ -18,6 +17,10 @@ void gameInit() {
     beefPositionY = 0.0;
     eggPositionX = 100.0;
     eggPositionY = 0.0;
+
+    mainManuMusic = LoadMusicStream("resources/main_manu.ogg");
+    isMainManuPlaying = true;
+    PlayMusicStream(mainManuMusic);
 
     fontRSU = LoadFont("resources/fonts/CSChatThaiUI.ttf");
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
@@ -52,10 +55,18 @@ void gameMain() {
             gameSelectMain();
         }
         else if(CURRENT_GAME_STATE == GAME_EGG) {
+            if(isMainManuPlaying) {
+                StopMusicStream(mainManuMusic);
+                isMainManuPlaying = false;
+            }
             SetWindowTitle("ไข่ตัวร้ายกับนายเนื้อย่าง | ไข่ตัวร้าย");
             eggMain();
         }
         else if(CURRENT_GAME_STATE == GAME_BEEF) {
+            if(isMainManuPlaying) {
+                StopMusicStream(mainManuMusic);
+                isMainManuPlaying = false;
+            }
             SetWindowTitle("ไข่ตัวร้ายกับนายเนื้อย่าง | นายเนื้อย่าง");
             beefMain();
         }
@@ -64,6 +75,19 @@ void gameMain() {
 }
 
 void gameSelectMain() {
+    
+    if(!isMainManuPlaying) {
+        PlayMusicStream(mainManuMusic);
+        isMainManuPlaying = true;
+    }
+
+    if (IsKeyPressed(KEY_SPACE))
+    {
+        StopMusicStream(mainManuMusic);
+        PlayMusicStream(mainManuMusic);
+    }
+
+    UpdateMusicStream(mainManuMusic);
 
     float currentMousePositionX = GetMousePosition().x;
 
@@ -97,9 +121,9 @@ void gameSelectMain() {
         DrawTexture(gameLogoTexture, 427, -100, WHITE);
         DrawTextEx(fontRSU, "PLEASE SELECT GAME", (Vector2){ 550, 600 }, 32, 2, WHITE);
 
-        if(IsKeyPressed(KEY_B)) CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+        // if(IsKeyPressed(KEY_B)) CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
 
-        else if(IsKeyPressed(KEY_E)) CURRENT_GAME_STATE = GAME_EGG;
+        // else if(IsKeyPressed(KEY_E)) CURRENT_GAME_STATE = GAME_EGG;
 
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
