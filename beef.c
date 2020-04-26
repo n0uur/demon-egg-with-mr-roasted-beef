@@ -1,21 +1,5 @@
 #include "beef.h"
 
-
-
-void flipMeat(Vector2 mousePosi, Texture2D meatT){
-    Image meatI;
-    if(IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
-            if(times == 0){
-                meatI = GetTextureData(meatT);
-                UnloadTexture(meatT);
-                ImageFlipHorizontal(&meatI);
-                meatT = LoadTextureFromImage(meatI);
-                times++;
-            }
-        DrawTextureV(meatT, mousePosi, WHITE);
-    }
-    else if(IsMouseButtonUp(MOUSE_LEFT_BUTTON))times = 0;
-}
 void beefInit() {
 
     //Load Image
@@ -50,24 +34,52 @@ void beefInit() {
     UnloadImage(rawMeat1Img);
     UnloadImage(rawMeat2Img);
 
+    //Position of beef
+    beefArray[0].posX = SCREEN_WIDTH/2 - rawMeat1.width/2 - 400;
+    beefArray[0].posY = SCREEN_HEIGHT/2 - rawMeat1.height/2 + 240;
+    beefArray[1].posX = SCREEN_WIDTH/2 - rawMeat2.width/2 - 300;
+    beefArray[1].posY = SCREEN_HEIGHT/2 - rawMeat2.height/2 + 200;
+    beefArray[2].posX = SCREEN_WIDTH/2 - rawMeat1.width/2 - 400;
+    beefArray[2].posY = SCREEN_HEIGHT/2 - rawMeat2.height/2 + 180;
+
+    rectanglePosX[0] = beefArray[0].posX + 18;
+    rectanglePosX[1] = beefArray[1].posX + 25;
+    rectanglePosX[2] = beefArray[2].posX + 18;
+
+    rectanglePosY[0] = beefArray[0].posY;
+    rectanglePosY[1] = beefArray[1].posY;
+    rectanglePosY[2] = beefArray[2].posY;
+
+    rectangleWidth[0] = rawMeat1.width - 23;
+    rectangleWidth[1] = rawMeat2.width - 26;
+    rectangleWidth[2] = rawMeat1.width - 23;
+
+    rectangleHeight[0] = rawMeat1.height - 10;
+    rectangleHeight[1] = rawMeat2.height - 5;
+    rectangleHeight[2] = rawMeat1.height - 10;
 }
 
 void beefMain() {
-    Vector2 mPosition = { -100.0f, -100.0f };
+    //Rectangle Value for Drawing
     mPosition = GetMousePosition();
+
 
     BeginDrawing();
 
         ClearBackground(CHOCOLATE);
-        DrawTexture(table, GetScreenWidth()/2 - table.width/2, GetScreenHeight()/2 - table.height/2 + 80, WHITE);
-        DrawTexture(pan, GetScreenWidth()/2 - pan.width/2 + 100, GetScreenHeight()/2 - pan.height/2 - 30, WHITE);
-        DrawTexture(meatBowl, GetScreenWidth()/2 - meatBowl.width/2 - 400, GetScreenHeight()/2 - meatBowl.height/2 + 240, WHITE);
-        DrawTexture(sauceBowl, GetScreenWidth()/2 - sauceBowl.width/2 + 400, GetScreenHeight()/2 - sauceBowl.height/2 + 280, WHITE);
-        DrawTexture(rawMeat1, GetScreenWidth()/2 - rawMeat1.width/2 - 400, GetScreenHeight()/2 - rawMeat1.height/2 + 240, WHITE);
-        // DrawTexture(rawMeat2, GetScreenWidth()/2 - rawMeat2.width/2 - 300, GetScreenHeight()/2 - rawMeat2.height/2 + 200, WHITE);
+        DrawTexture(table, SCREEN_WIDTH/2 - table.width/2, SCREEN_HEIGHT/2 - table.height/2 + 80, WHITE);
+        DrawTexture(pan, SCREEN_WIDTH/2 - pan.width/2 + 100, SCREEN_HEIGHT/2 - pan.height/2 - 30, WHITE);
+        DrawTexture(meatBowl, SCREEN_WIDTH/2 - meatBowl.width/2 - 400, SCREEN_HEIGHT/2 - meatBowl.height/2 + 240, WHITE);
+        DrawTexture(sauceBowl, SCREEN_WIDTH/2 - sauceBowl.width/2 + 400, SCREEN_HEIGHT/2 - sauceBowl.height/2 + 280, WHITE);
         
-        flipMeat(mPosition, rawMeat1); //codition get posi mouse click which meat has selected
-        // flipMeat(mPosition, rawMeat2);
+        DrawTexture(rawMeat1, beefArray[0].posX, beefArray[0].posY, WHITE);
+        DrawRectangleLines(rectanglePosX[0], rectanglePosY[0], rectangleWidth[0], rectangleHeight[0], WHITE);
+        
+        DrawTexture(rawMeat2, beefArray[1].posX, beefArray[1].posY, WHITE);
+        DrawRectangleLines(rectanglePosX[1], rectanglePosY[1], rectangleWidth[1], rectangleHeight[1], WHITE);
+
+        DrawTexture(rawMeat1, beefArray[2].posX, beefArray[2].posY, WHITE);
+        DrawRectangleLines(rectanglePosX[2], rectanglePosY[2], rectangleWidth[2], rectangleHeight[2], WHITE);
 
     EndDrawing();
 }
