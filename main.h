@@ -28,6 +28,7 @@ void gameMain();
 
 void gameSelectMain();
 
+void eggInit();
 void eggMain();
 
 void beefInit();

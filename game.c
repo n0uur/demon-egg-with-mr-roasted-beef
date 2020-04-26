@@ -18,6 +18,7 @@ void gameInit() {
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
 
     beefInit();
+    eggInit();
     
 }
 
@@ -52,6 +53,8 @@ void gameSelectMain() {
         DrawTextEx(fontBM, "สวัสดีโลก", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
 
         if(IsKeyPressed(KEY_B))CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+
+        else if(IsKeyPressed(KEY_E))CURRENT_GAME_STATE = GAME_EGG;
 
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 

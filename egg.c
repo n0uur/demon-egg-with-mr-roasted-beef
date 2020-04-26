@@ -1,4 +1,8 @@
-#include "main.h"
+#include "egg.h"
+
+void eggInit() {
+
+}
 
 void eggMain() {
     
