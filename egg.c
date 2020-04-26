@@ -1,7 +1,5 @@
 #include "egg.h"
 
-void jump(int *positionX);
-
 void eggInit()
 {
     // Loaded in CPU memory
@@ -39,9 +37,22 @@ void eggMain()
         posX -= 5;
     else if (IsKeyDown(KEY_RIGHT))
         posX += 5;
-
-    if (IsKeyDown(KEY_UP))
-        posY -= 5;
+    int currentPositionY = posY;
+    if (GetTime() - lastPressedSpace < 1)
+    {
+        posY -= 100.0 * 0.0166;
+    }
+    if (GetTime() - lastPressedSpace > 1 && GetTime() - lastPressedSpace < 2)
+    {
+        posY += 100.0 * 0.0166;
+    }
+    if (IsKeyPressed(KEY_UP) || IsKeyPressed(KEY_SPACE))
+    {
+        if (GetTime() - lastPressedSpace >= 2)
+        {
+            lastPressedSpace = GetTime();
+        }
+    }
 
     BeginDrawing();
 
@@ -49,8 +60,4 @@ void eggMain()
     DrawTexture(eggTexture, posX, posY, WHITE);
 
     EndDrawing();
-}
-
-void jump(int *positionX)
-{
 }

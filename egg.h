@@ -2,6 +2,7 @@
 
 int posX = 1366 / 2;
 int posY = 768 / 2;
+double lastPressedSpace = 0;
 
 //Image
 Image eggImg;
