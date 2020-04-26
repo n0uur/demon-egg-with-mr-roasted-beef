@@ -2,7 +2,7 @@
 
 #define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 }  //For bg
 
-#define MEAT_COUNT 5
+#define MEAT_COUNT 10
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 
