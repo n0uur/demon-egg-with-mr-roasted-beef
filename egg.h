@@ -1,5 +1,8 @@
 #include "main.h"
 
+int posX = 1366 / 2;
+int posY = 768 / 2;
+
 //Image
 Image eggImg;
 Image basketImg;

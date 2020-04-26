@@ -1,22 +1,27 @@
 #include "egg.h"
 
+void jump(int *positionX);
+
 void eggInit()
 {
     // Loaded in CPU memory
-    Image eggImg = LoadImage("resources/dozenegg/images/egg.png");
-    Image basketImg = LoadImage("resources/dozenegg/images/egg.png");
-    Image backgroundImg;
-    Image goalImg = LoadImage("resources/dozenegg/images/goal.png");
-    Image eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
-    Image auraImg = LoadImage("resources/dozenegg/images/aura.png");
+    eggImg = LoadImage("resources/dozenegg/images/bigger_egg.png");
+    basketImg = LoadImage("resources/dozenegg/images/egg.png");
+    backgroundImg;
+    goalImg = LoadImage("resources/dozenegg/images/goal.png");
+    eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
+    auraImg = LoadImage("resources/dozenegg/images/aura.png");
+
+    // Image resize (if needed)
+    ImageResize(&eggImg, 40, 48);
 
     // Image converted to texture
-    Texture2D eggTexture = LoadTextureFromImage(eggImg);
-    Texture2D basketTexture = LoadTextureFromImage(basketImg);
-    Texture2D backgroundTexture = LoadTextureFromImage(backgroundImg);
-    Texture2D goalTexture = LoadTextureFromImage(goalImg);
-    Texture2D eggInBasketTexture = LoadTextureFromImage(eggInBasket);
-    Texture2D auraTexture = LoadTextureFromImage(auraImg);
+    eggTexture = LoadTextureFromImage(eggImg);
+    basketTexture = LoadTextureFromImage(basketImg);
+    backgroundTexture = LoadTextureFromImage(backgroundImg);
+    goalTexture = LoadTextureFromImage(goalImg);
+    eggInBasketTexture = LoadTextureFromImage(eggInBasket);
+    auraTexture = LoadTextureFromImage(auraImg);
 
     // Unloaded Image
     UnloadImage(eggImg);
@@ -28,5 +33,24 @@ void eggInit()
 }
 
 void eggMain()
+{
+
+    if (IsKeyDown(KEY_LEFT))
+        posX -= 5;
+    else if (IsKeyDown(KEY_RIGHT))
+        posX += 5;
+
+    if (IsKeyDown(KEY_UP))
+        posY -= 5;
+
+    BeginDrawing();
+
+    ClearBackground(RAYWHITE);
+    DrawTexture(eggTexture, posX, posY, WHITE);
+
+    EndDrawing();
+}
+
+void jump(int *positionX)
 {
 }
