@@ -47,3 +47,12 @@ Image EggSelect;
 Texture2D gameLogoTexture;
 Texture2D beefSelectTexture;
 Texture2D EggSelectTexture;
+
+float beefPositionX;
+float beefPositionY;
+float eggPositionX;
+float eggPositionY;
+
+// -----------------------
+
+double LERP(float start, float stop, float weight);

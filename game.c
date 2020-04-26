@@ -14,8 +14,27 @@ void gameInit() {
 
     SetTargetFPS(60);
 
+    beefPositionX = -300.0;
+    beefPositionY = 0.0;
+    eggPositionX = 100.0;
+    eggPositionY = 0.0;
+
     fontRSU = LoadFont("resources/fonts/CSChatThaiUI.ttf");
     fontBM = LoadFont("resources/fonts/rsu_bitmap.fnt");
+
+    gameLogo = LoadImage("resources/ui/logo.png");
+    beefSelect = LoadImage("resources/ui/select_beef.png");
+    EggSelect = LoadImage("resources/ui/select_egg.png");
+
+    ImageResize(&gameLogo, 512, 512);
+
+    gameLogoTexture = LoadTextureFromImage(gameLogo);
+    beefSelectTexture = LoadTextureFromImage(beefSelect);
+    EggSelectTexture = LoadTextureFromImage(EggSelect);
+
+    UnloadImage(gameLogo);
+    UnloadImage(beefSelect);
+    UnloadImage(EggSelect);
 
     beefInit();
     eggInit();
@@ -46,15 +65,41 @@ void gameMain() {
 
 void gameSelectMain() {
 
+    float currentMousePositionX = GetMousePosition().x;
+
+    if(currentMousePositionX > 833) { // ไข่
+        beefPositionX = -700;
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            CURRENT_GAME_STATE = GAME_EGG;
+    }
+    else if(currentMousePositionX < 533) { // เนื้อ
+        beefPositionX = 0;
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+            CURRENT_GAME_STATE = GAME_BEEF;
+    }
+    else {
+        beefPositionX = -300.0;
+    }
+
+    static float tmpBeefX = -400;
+    static float tmpEggX = 200;
+
+    tmpBeefX = (float)LERP(tmpBeefX, beefPositionX, 0.05);
+    tmpEggX = (float)LERP(tmpEggX, eggPositionX, 0.05);
+
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
 
-        DrawTextEx(fontBM, "สวัสดีโลก", (Vector2){ 20.0f, 100.0f }, 32, 2, LIGHTGRAY);
+        DrawTexture(EggSelectTexture, tmpEggX, eggPositionY, WHITE);
+        DrawTexture(beefSelectTexture, tmpBeefX, beefPositionY, WHITE);
 
-        if(IsKeyPressed(KEY_B))CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+        DrawTexture(gameLogoTexture, 427, -100, WHITE);
+        DrawTextEx(fontRSU, "PLEASE SELECT GAME", (Vector2){ 550, 600 }, 32, 2, WHITE);
 
-        else if(IsKeyPressed(KEY_E))CURRENT_GAME_STATE = GAME_EGG;
+        if(IsKeyPressed(KEY_B)) CURRENT_GAME_STATE = GAME_BEEF; //Press B to run beef game
+
+        else if(IsKeyPressed(KEY_E)) CURRENT_GAME_STATE = GAME_EGG;
 
         // DrawText("Hi dad!", 190, 200, 20, LIGHTGRAY);
 
