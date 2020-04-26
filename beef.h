@@ -25,6 +25,8 @@ Image meatBowlImg;
 Image sauceBowlImg;
 Image rawMeat1Img;
 Image rawMeat2Img;
+Image rawMeat3Img;
+Image rawMeat4Img;
 
 // -----------------------
 
@@ -34,6 +36,8 @@ Texture2D meatBowl;
 Texture2D sauceBowl;
 Texture2D rawMeat1;
 Texture2D rawMeat2;
+Texture2D rawMeat3;
+Texture2D rawMeat4;
 
 // -----------------------
 
@@ -48,6 +52,7 @@ int rectanglePosX[10];
 int rectanglePosY[10];
 int rectangleHeight[10];
 int rectangleWidth[10];
+
 //-------------------------
 
 Vector2 mPosition = { -100.0f, -100.0f };
