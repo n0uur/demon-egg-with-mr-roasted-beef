@@ -53,6 +53,9 @@ float beefPositionY;
 float eggPositionX;
 float eggPositionY;
 
+Music mainManuMusic;
+bool isMainManuPlaying;
+
 // -----------------------
 
 double LERP(float start, float stop, float weight);
