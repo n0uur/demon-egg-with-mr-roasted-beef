@@ -1,6 +1,6 @@
 #include "raylib.h"
 
-#define CHOCOLATE  CLITERAL(Color){ 118, 57, 16, 255 }  //For bg
+#define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 }
 
 // -----------------------
 
@@ -36,3 +36,10 @@ void beefMain();
 
 // -----------------------
 
+Image gameLogo;
+Image beefSelect;
+Image EggSelect;
+
+Texture2D gameLogoTexture;
+Texture2D beefSelectTexture;
+Texture2D EggSelectTexture;
