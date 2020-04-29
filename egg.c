@@ -73,13 +73,10 @@ void eggMain()
     //----------------------------
     //-- ไข่
     //----------------------------
-
     if (CURRENT_EGG_STATE == EGG_WAIT)
     {
-        // GRAVITY
         eggPositionY = baseLevelY;
 
-        // Check for new state logic
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
             CURRENT_EGG_STATE = EGG_JUMP;
@@ -88,11 +85,9 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_JUMP)
     {
-        // GRAVITY
         velocityY -= gravity * GetFrameTime();
         eggPositionY += velocityY * abs(eggPositionY - jumpHeight) * 0.05;
 
-        // Check for new state logic
         if (eggPositionY <= jumpHeight)
         {
             CURRENT_EGG_STATE = EGG_FALL;
@@ -101,11 +96,9 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_FALL)
     {
-        // GRAVITY
         velocityY += gravity * GetFrameTime();
         eggPositionY += velocityY;
 
-        // Check for new state logic
         if (eggPositionY >= baseLevelY)
         {
             CURRENT_EGG_STATE = EGG_WAIT;
@@ -113,6 +106,7 @@ void eggMain()
         }
     }
 
+    // DEBUG
     if (IsKeyDown(KEY_LEFT))
     {
         eggPositionX -= 3;
@@ -124,23 +118,27 @@ void eggMain()
     //----------------------------
     //-- ด่าน
     //----------------------------
+    
 
+    //----------------------------
+    // -- แสดงผล
+    //----------------------------
     BeginDrawing();
 
-    ClearBackground(RAYWHITE);
+        ClearBackground(RAYWHITE);
 
-    DrawTexture(backgroundTexture, 0, 0, WHITE);
+        DrawTexture(backgroundTexture, 0, 0, WHITE);
 
-    BeginMode2D(camera);
+        BeginMode2D(camera);
 
-    DrawTexture(eggTexture, eggPositionX - 40 / 2, eggPositionY - 48 / 2, WHITE);
-    DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
+            DrawTexture(eggTexture, eggPositionX - 40 / 2, eggPositionY - 48 / 2, WHITE);
+            DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
 
-    DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 - 400, WHITE);
+            DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 - 400, WHITE);
 
-    //DrawRectangleRec((Rectangle){1366 / 2 - 100, floorPositionY + 20, 200, 10}, RED);
+            //DrawRectangleRec((Rectangle){1366 / 2 - 100, floorPositionY + 20, 200, 10}, RED);
 
-    EndMode2D();
+        EndMode2D();
 
     EndDrawing();
 }
