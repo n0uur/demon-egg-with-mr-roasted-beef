@@ -66,7 +66,7 @@ void eggMain()
     //----------------------------
     //-- กล้อง
     //----------------------------
-    UpdateCameraCustom(&camera, eggPositionY, GetFrameTime(), 1366, 768);
+    UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
 
     //----------------------------
     //-- ไข่
