@@ -13,10 +13,10 @@ void gameInit() {
 
     SetTargetFPS(60);
 
-    beefPositionX = -300.0;
-    beefPositionY = 0.0;
-    eggPositionX = 100.0;
-    eggPositionY = 0.0;
+    beefSplashPositionX = -300.0;
+    beefSplashPositionY = 0.0;
+    eggSplashPositionX = 100.0;
+    eggSplashPositionY = 0.0;
 
     mainManuMusic = LoadMusicStream("resources/main_manu.ogg");
     isMainManuPlaying = true;
@@ -92,31 +92,31 @@ void gameSelectMain() {
     float currentMousePositionX = GetMousePosition().x;
 
     if(currentMousePositionX > 833) { // ไข่
-        beefPositionX = -700;
+        beefSplashPositionX = -700;
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             CURRENT_GAME_STATE = GAME_EGG;
     }
     else if(currentMousePositionX < 533) { // เนื้อ
-        beefPositionX = 0;
+        beefSplashPositionX = 0;
         if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
             CURRENT_GAME_STATE = GAME_BEEF;
     }
     else {
-        beefPositionX = -300.0;
+        beefSplashPositionX = -300.0;
     }
 
     static float tmpBeefX = -400;
     static float tmpEggX = 200;
 
-    tmpBeefX = (float)LERP(tmpBeefX, beefPositionX, 0.05);
-    tmpEggX = (float)LERP(tmpEggX, eggPositionX, 0.05);
+    tmpBeefX = (float)LERP(tmpBeefX, beefSplashPositionX, 0.05);
+    tmpEggX = (float)LERP(tmpEggX, eggSplashPositionX, 0.05);
 
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
 
-        DrawTexture(EggSelectTexture, tmpEggX, eggPositionY, WHITE);
-        DrawTexture(beefSelectTexture, tmpBeefX, beefPositionY, WHITE);
+        DrawTexture(EggSelectTexture, tmpEggX, eggSplashPositionY, WHITE);
+        DrawTexture(beefSelectTexture, tmpBeefX, beefSplashPositionY, WHITE);
 
         DrawTexture(gameLogoTexture, 427, -100, WHITE);
         DrawTextEx(fontRSU, "PLEASE SELECT GAME", (Vector2){ 550, 600 }, 32, 2, WHITE);

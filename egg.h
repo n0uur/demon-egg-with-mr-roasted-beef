@@ -1,9 +1,5 @@
 #include "main.h"
 
-int posX = 1366 / 2;
-int posY = 768 / 2;
-double lastPressedSpace = 0;
-
 // -----------------------
 
 int eggPositionX;
@@ -48,6 +44,13 @@ enum LEVEL_MOVEMENT_TYPE {
 };
 
 enum EGG_PLAY_STATE CURRENT_EGG_STATE;
+
+// -----------------------
+
+Camera2D camera;
+
+void UpdateCameraCustom(Camera2D *camera, int playerPositionY, float delta, int width, int height);
+
 // -----------------------
 
 int floorPositionY;

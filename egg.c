@@ -1,5 +1,5 @@
 #include "egg.h"
-#include <math.h>
+#include "raymath.h"
 
 void eggInit()
 {
@@ -34,38 +34,50 @@ void eggInit()
 
     //----------------------------
 
-    int posX = 1366 / 2;
-    int posY = 768 / 2;
-
     CURRENT_EGG_STATE = EGG_WAIT;
 
-    floorPositionY = 720;
+    floorPositionY = 650;
     levelHeight = 400;
     jumpHeight = 60;
-    baseLevelY = 730;
+    baseLevelY = 650;
+
+    eggPositionX = 1366 / 2;
+    eggPositionY = baseLevelY;
 
     gravity = 15;
     velocityY = 0;
 
     //----------------------------
 
-    for(int i = 0; i < 150; i++) {
+    camera.target = (Vector2) { eggPositionX, eggPositionY };
+    camera.offset = (Vector2) { 1366/2, 768/2 };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
 
+    //----------------------------
+
+    for(int i = 0; i < 150; i++) {
+        gameLevels[i].position = (Vector2) { 1366/2, (1 + i) * levelHeight };
     }
 }
 
 void eggMain()
 {
     //----------------------------
+    //-- กล้อง
+    //----------------------------
+    UpdateCameraCustom(&camera, eggPositionY, GetFrameTime(), 1366, 768);
+
+    //----------------------------
     //-- ไข่
     //----------------------------
 
     if(CURRENT_EGG_STATE == EGG_WAIT) {
         // GRAVITY
-        posY = baseLevelY;
+        eggPositionY = baseLevelY;
 
         // Check for new state logic
-        if (IsKeyDown(KEY_UP)) {
+        if (IsKeyDown(KEY_SPACE)) {
             CURRENT_EGG_STATE = EGG_JUMP;
             velocityY = 0;
         }
@@ -73,10 +85,10 @@ void eggMain()
     else if(CURRENT_EGG_STATE == EGG_JUMP) {
         // GRAVITY
         velocityY -= gravity * GetFrameTime();
-        posY += velocityY * abs(posY - jumpHeight) * 0.05;
+        eggPositionY += velocityY * abs(eggPositionY - jumpHeight) * 0.05;
 
         // Check for new state logic
-        if(posY <= jumpHeight) {
+        if(eggPositionY <= jumpHeight) {
             CURRENT_EGG_STATE = EGG_FALL;
             velocityY = 0;
         }
@@ -84,12 +96,12 @@ void eggMain()
     else if(CURRENT_EGG_STATE == EGG_FALL) {
         // GRAVITY
         velocityY += gravity * GetFrameTime();
-        posY += velocityY;
+        eggPositionY += velocityY;
 
         // Check for new state logic
-        if(posY >= baseLevelY) {
+        if(eggPositionY >= baseLevelY) {
             CURRENT_EGG_STATE = EGG_WAIT;
-            posY = baseLevelY;
+            eggPositionY = baseLevelY;
         }
     }
 
@@ -100,11 +112,31 @@ void eggMain()
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
-        DrawTexture(eggTexture, posX, posY, WHITE);
+
+        BeginMode2D(camera);
+
+            DrawTexture(eggTexture, eggPositionX - 40/2, eggPositionY - 48/2, WHITE);
+
+            DrawRectangleRec((Rectangle) { 1366/2 - 100, floorPositionY + 20, 200, 10 } , RED);
+
+        EndMode2D();
 
     EndDrawing();
 }
 
-void resetGravity() {
-    gravity = 15;
+void UpdateCameraCustom(Camera2D *camera, int playerPositionY, float delta, int width, int height)
+{
+    static float minSpeed = 20;
+    static float minEffectLength = 10;
+    static float fractionSpeed = 1.2f;
+    
+    camera->offset = (Vector2){ width/2, height/2 };
+    Vector2 diff = Vector2Subtract((Vector2) {1366/2, playerPositionY}, camera->target);
+    float length = Vector2Length(diff);
+    
+    if (length > minEffectLength)
+    {
+        float speed = fmaxf(fractionSpeed*length, minSpeed);
+        camera->target = Vector2Add(camera->target, Vector2Scale(diff, speed*delta/length));
+    }
 }

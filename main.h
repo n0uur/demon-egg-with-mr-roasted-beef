@@ -48,10 +48,10 @@ Texture2D gameLogoTexture;
 Texture2D beefSelectTexture;
 Texture2D EggSelectTexture;
 
-float beefPositionX;
-float beefPositionY;
-float eggPositionX;
-float eggPositionY;
+float beefSplashPositionX;
+float beefSplashPositionY;
+float eggSplashPositionX;
+float eggSplashPositionY;
 
 Music mainManuMusic;
 bool isMainManuPlaying;
