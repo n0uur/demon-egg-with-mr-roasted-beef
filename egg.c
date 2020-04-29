@@ -8,7 +8,7 @@ void eggInit()
     // Loaded in CPU memory
     eggImg = LoadImage("resources/dozenegg/images/bigger_egg.png");
     basketImg = LoadImage("resources/dozenegg/images/egg.png");
-    backgroundImg;
+    backgroundImg = LoadImage("resources/dozenegg/images/egg_bg.png");
     goalImg = LoadImage("resources/dozenegg/images/goal.png");
     eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
     auraImg = LoadImage("resources/dozenegg/images/aura.png");
@@ -112,6 +112,8 @@ void eggMain()
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
+
+        DrawTexture(backgroundTexture, 0, 0, WHITE);
 
         BeginMode2D(camera);
 
