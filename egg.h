@@ -79,3 +79,8 @@ int positionYToGo;
 
 int basketWidth;
 int basketHeight;
+
+int circlePosX;
+int circlePosY;
+
+int lifePoint;
