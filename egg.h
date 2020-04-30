@@ -71,3 +71,4 @@ struct Level {
 struct Level gameLevels[150];
 
 int currentEggLevel;
+int positionYToGo;
