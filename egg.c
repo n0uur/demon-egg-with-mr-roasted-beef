@@ -148,6 +148,10 @@ void eggMain()
             positionYToGo = baseLevelY - jumpHeight - levelHeight;
             // TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
         }
+
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        CURRENT_GAME_STATE = GAME_SELECT;
+    }
 #ifdef DEBUG
         if (IsKeyPressed(KEY_N))
         {
@@ -230,6 +234,7 @@ void eggMain()
             lifePoint --;
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
         }
+
 #ifdef DEBUG
         if (IsKeyPressed(KEY_R)) // reset
         {
@@ -285,6 +290,8 @@ void eggMain()
 
             DrawTexture(basketTexture, 1366 / 2 - basketWidth / 2, 650 - basketHeight / 2 + 15, WHITE);
 
+            DrawText("Controls --> (SPACE)&(ARROW_UP) = Jump\n                 (BACKSPACE) = Back to Main Menu", 450, 768 - 65 + 20, 20, WHITE);
+
             for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
 
                 if(!(i >= 0 && i <= 145)) // avoiding overflow
@@ -309,7 +316,7 @@ void eggMain()
         DrawRectangleRounded((Rectangle){ 1116 - 195, 5, 185, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 });
         DrawText(FormatText("Score : %d", score), 1116 - 185, 20, 25, RAYWHITE);
 
-        DrawTexture(exitButtonTexture, 1136, 608, WHITE);
+        //DrawTexture(exitButtonTexture, 1136, 608, WHITE);
 
         circlePosX = 270;
         circlePosY = 5;
