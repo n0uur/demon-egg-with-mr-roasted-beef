@@ -55,6 +55,7 @@ void eggInit()
 
     currentEggLevel = 0;
 
+    lifePoint = 12;
     //----------------------------
 
     camera.target = (Vector2){eggPositionX, eggPositionY};
@@ -220,6 +221,14 @@ void eggMain()
         }
     }
 
+    if (IsKeyPressed(KEY_U)) {
+        if (lifePoint != 12)
+            lifePoint += 1;
+    }
+    else if (IsKeyPressed(KEY_D)) {
+        if (lifePoint != 0)
+                lifePoint -= 1;
+    }       
     //----------------------------
     //-- กล้อง
     //----------------------------
@@ -229,6 +238,7 @@ void eggMain()
     //----------------------------
     // -- แสดงผล
     //----------------------------
+
     BeginDrawing();
 
         ClearBackground(RAYWHITE);
@@ -253,6 +263,28 @@ void eggMain()
 
         DrawRectangleRec((Rectangle){ 0, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
         DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
+
+        DrawRectangleRec((Rectangle){ 255, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
+
+        circlePosX = 270;
+        circlePosY = 5;
+
+            for (int i = 0; i < lifePoint; i++) {
+                DrawCircle(circlePosX, circlePosY + 15, 10, (Color) {227, 221, 216, 0.8 * 255 });
+                circlePosX += 25;
+                if (i == 5) {
+                    circlePosY += 25;
+                    circlePosX = 270;
+                }
+            }
+            for (int i = 0; i < lifePoint - 12; i++) {
+                DrawCircle(circlePosX, circlePosY + 15, 10, (Color) {89, 87, 85, 1 * 255 });
+                circlePosX += 25;
+                if (i == 5) {
+                    circlePosY += 25;
+                    circlePosX = 270;
+                }
+            }
 
     EndDrawing();
 }
