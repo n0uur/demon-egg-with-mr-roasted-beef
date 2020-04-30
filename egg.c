@@ -305,9 +305,9 @@ void eggMain()
         DrawRectangleRec((Rectangle){ 0, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
         DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
 
-        DrawRectangleRec((Rectangle){ 255, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
-        DrawRectangleRec((Rectangle){ 1116 - 165, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
-        DrawText(FormatText("Score : %d", score), 1116 - 155, 20, 25, RAYWHITE);
+    
+        DrawRectangleRounded((Rectangle){ 1116 - 195, 5, 185, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 });
+        DrawText(FormatText("Score : %d", score), 1116 - 185, 20, 25, RAYWHITE);
 
         DrawTexture(exitButtonTexture, 1136, 608, WHITE);
 
@@ -317,7 +317,9 @@ void eggMain()
         //----------------------------
         // -- Life Point
         //----------------------------
-        for (int i = 0; i < 12; i++) {
+        DrawRectangleRounded((Rectangle){ 255, 5, 155, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 }); // แผงไข่
+
+        for (int i = 0; i < 12; i++) { // ไข่
             if (i >= 6) {
                 circlePosY = 30;
                 circlePosX = 270 + ((i - 6) * 25);
