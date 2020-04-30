@@ -16,6 +16,7 @@ enum STATE {
 // -----------------------
 
 int times = 0;
+int max = 0;
 
 // -----------------------
 
@@ -42,6 +43,12 @@ struct beef {
     enum STATE CURRENT_MEAT_STATE;
 } beefArray[MEAT_COUNT];
 
+struct meatBox {
+    Rectangle box;
+    bool collision;
+    int collisionArea;
+} meatBox[MEAT_COUNT];
+
 int rectanglePosX[MEAT_COUNT];
 int rectanglePosY[MEAT_COUNT];
 int rectangleHeight[MEAT_COUNT];
@@ -56,4 +63,9 @@ int calcRectangleWidth[MEAT_COUNT] = {-23, -26, -23, -35};
 
 //-------------------------
 
+Rectangle mouseBox = {SCREEN_WIDTH/2 - 20, SCREEN_HEIGHT/2 - 20, 40, 40};
+Rectangle boxCollision = {0};
 Vector2 mPosition = { -100.0f, -100.0f };
+
+//-------------------------
+void beefAreaCheck();
