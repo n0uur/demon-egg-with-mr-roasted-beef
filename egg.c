@@ -38,8 +38,8 @@ void eggInit()
     CURRENT_EGG_STATE = EGG_WAIT;
 
     floorPositionY = 650;
-    levelHeight = 400;
-    jumpHeight = 60;
+    levelHeight = 200;
+    jumpHeight = 360;
     baseLevelY = 650;
 
     eggPositionX = 1366 / 2;
@@ -47,6 +47,8 @@ void eggInit()
 
     gravity = 15;
     velocityY = 0;
+
+    currentEggLevel = 0;
 
     //----------------------------
 
@@ -59,7 +61,8 @@ void eggInit()
 
     for (int i = 0; i < 150; i++)
     {
-        gameLevels[i].position = (Vector2){1366 / 2, (1 + i) * levelHeight};
+        gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
+        TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
     }
 }
 
@@ -132,9 +135,12 @@ void eggMain()
         BeginMode2D(camera);
 
             DrawTexture(eggTexture, eggPositionX - 40 / 2, eggPositionY - 48 / 2, WHITE);
+
             DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
 
-            DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 - 400, WHITE);
+            for(int i = 0; i < 10; i++) {
+                DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2, WHITE);
+            }
 
             //DrawRectangleRec((Rectangle){1366 / 2 - 100, floorPositionY + 20, 200, 10}, RED);
 
