@@ -63,11 +63,14 @@ void beefMain() {
         DrawTexture(sauceBowl, SCREEN_WIDTH/2 - sauceBowl.width/2 + 400, SCREEN_HEIGHT/2 - sauceBowl.height/2 + 280, WHITE);
         DrawRectangleRec(mouseBox, GREEN);
         
+        // วาดเนื้อ และ กรอบรอบเนื้อ
         for(int i = 0; i < 4; i++){
             DrawTexture(rawMeat[i], beefArray[i].posX, beefArray[i].posY, WHITE);
             DrawRectangleLines(rectanglePosX[i], rectanglePosY[i], rectangleWidth[i], rectangleHeight[i], WHITE);
+
+            // เช็ค ว่าคลิ๊กชิ้นไหน รวมทั้ง ย้ายไปตำแหน่งไหน
             if (meatBox[i].collision&&meatBox[i].collisionArea == max&&IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
-                DrawText(FormatText("Collision Area: %d [%d]", max, i), SCREEN_WIDTH/2 - 100, 40 + 10, 20, BLACK);
+                DrawText(FormatText("Collision Area: %d [%d]", max, i), SCREEN_WIDTH/2 - 100, 40 + 10, 20, BLACK); // Debug ขนาดและชินที่ i
                 beefArray[i].posX = mouseBox.x - (rectangleWidth[i] / 2);beefArray[i].posY = mouseBox.y - (rectangleHeight[i] / 2) + 30;
                 rectanglePosX[i] = beefArray[i].posX + calcRectanglePosX[i];
                 rectanglePosY[i] = beefArray[i].posY + calcRectanglePosY[i];
@@ -79,6 +82,7 @@ void beefMain() {
 }
 
 void beefAreaCheck(){
+    // เช็ค พื้นที่ว่าอันไหนเยอะเวลาคลิ๊กจะใช้อันที่ เม้าส์กินพื้นที่เยอะกว่า
     max = 0;
     for(int i = 0; i < 4; i++){
         meatBox[i].collision = CheckCollisionRecs(mouseBox, meatBox[i].box);
