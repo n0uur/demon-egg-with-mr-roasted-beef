@@ -332,6 +332,18 @@ void eggMain()
 
             DrawText("USE <BACKSPACE> TO GIVEUP!", 450, -400, 20, WHITE);
 
+            DrawText("YOU COME SO FAR!", 700, -2500, 20, WHITE);
+
+            DrawText("WE HAVE A GIFT FOR YOU!\nIF YOU CAN REACH THE FINISH!", 400, -5750, 20, WHITE);
+
+            DrawText("IT'S A CAKE!!", 400, -8750, 20, WHITE);
+
+            DrawText("THERE IS NO CAKE! IT'S A LIE!! TRUST ME!!!", 400, -17750, 20, WHITE);
+
+            DrawText("Please go back...", 400, -26750, 20, WHITE);
+
+            DrawText("GO BACK! IT'S A LIE! THERE IS NO CAKE!!", 400, -38750, 20, WHITE);
+
             DrawTexturePro(eggTexture, sourceRec, destRec, (Vector2) { eggTexture.width / 2, eggTexture.height / 2 },eggRotation, WHITE); // egg
             // DrawTextureEx(eggTexture, (Vector2) {eggPositionX - 40 / 2, eggPositionY - 48 / 2}, eggRotation, 1.0, WHITE); // egg
 
