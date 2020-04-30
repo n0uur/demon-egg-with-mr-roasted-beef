@@ -155,6 +155,8 @@ void eggMain()
             eggPositionY = baseLevelY;
             currentEggLevel++;
             lastLanding = GetTime();
+
+            score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10);
         }
         if (IsKeyPressed(KEY_M))
         {
