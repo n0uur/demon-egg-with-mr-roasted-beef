@@ -7,6 +7,8 @@ int eggPositionY;
 
 int cameraTargetPositionY;
 
+int lifePoint;
+
 // -----------------------
 
 Image eggImg;
@@ -88,4 +90,3 @@ int basketHeight;
 int circlePosX;
 int circlePosY;
 
-int lifePoint;

@@ -68,7 +68,7 @@ void eggInit()
     for (int i = 0; i < 150; i++)
     {
         gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
-        if(i % 10 == 0) {
+        if(i % 10 == 0 && i != 0) {
             gameLevels[i].movementType = MOVE_STATIC;
         }
         else if(i % 2 == 0) {
@@ -93,6 +93,10 @@ void eggMain()
             continue;
 
         struct Level *currentEditingLevel = &gameLevels[i];
+
+        if(currentEggLevel == i && i == 0) {
+            continue;
+        }
 
         if(currentEditingLevel->position.x <= 300) {
             currentEditingLevel->movementType = MOVE_LEFT_TO_RIGHT;
@@ -182,7 +186,7 @@ void eggMain()
         velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
-        if(1) { // still have life point ! now we still dont have life point system
+        if(lifePoint > 0) { // still have life point ! now we still dont have life point system
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT;
         }
         else { // no more point
@@ -200,6 +204,7 @@ void eggMain()
             eggPositionY = baseLevelY - 60;
             eggPositionX = gameLevels[currentEggLevel - 1].position.x;
             velocityY = 0;
+            lifePoint --;
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
         }
 
