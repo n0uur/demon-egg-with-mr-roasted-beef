@@ -11,6 +11,7 @@ void eggInit()
     goalImg = LoadImage("resources/dozenegg/images/goal.png");
     eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
     auraImg = LoadImage("resources/dozenegg/images/aura.png");
+    exitButtonImg = LoadImage("resources/dozenegg/images/exit_button.png");
 
     basketWidth = 100;
     basketHeight = 40;
@@ -18,6 +19,7 @@ void eggInit()
     // Image resize (if needed)
     ImageResize(&eggImg, 40, 48);
     ImageResize(&basketImg, basketWidth, basketHeight);
+    ImageResize(&exitButtonImg, 200, 85);
 
     // Image converted to texture
     eggTexture = LoadTextureFromImage(eggImg);
@@ -26,6 +28,7 @@ void eggInit()
     goalTexture = LoadTextureFromImage(goalImg);
     eggInBasketTexture = LoadTextureFromImage(eggInBasket);
     auraTexture = LoadTextureFromImage(auraImg);
+    exitButtonTexture = LoadTextureFromImage(exitButtonImg);
 
     // Unloaded Image
     UnloadImage(eggImg);
@@ -34,6 +37,7 @@ void eggInit()
     UnloadImage(goalImg);
     UnloadImage(eggInBasket);
     UnloadImage(auraImg);
+    UnloadImage(exitButtonImg);
 
     //----------------------------
 
@@ -274,8 +278,9 @@ void eggMain()
 
         DrawRectangleRec((Rectangle){ 255, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
         DrawRectangleRec((Rectangle){ 1116 - 165, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
-
         DrawText(FormatText("Score : %d", score), 1116 - 155, 20, 25, RAYWHITE);
+
+        DrawTexture(exitButtonTexture, 1136, 658, WHITE);
 
         circlePosX = 270;
         circlePosY = 5;
