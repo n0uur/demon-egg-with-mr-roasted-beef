@@ -45,6 +45,7 @@ void eggInit()
     baseLevelY = 650;
 
     lastLanding = 0;
+    lastFail = 0;
 
     eggPositionX = 1366 / 2;
     eggPositionY = baseLevelY;
@@ -53,7 +54,6 @@ void eggInit()
     velocityY = 0;
 
     currentEggLevel = 0;
-
 
     //----------------------------
 
@@ -110,7 +110,9 @@ void eggMain()
 
     //----------------------------
     //-- ไข่
-    //----------------------------
+    //----------------------------.
+    cameraTargetPositionY = eggPositionY;
+
     if (CURRENT_EGG_STATE == EGG_WAIT)
     {
         eggPositionY = baseLevelY;
@@ -159,38 +161,70 @@ void eggMain()
             if(abs(gameLevels[currentEggLevel].position.x - eggPositionX) <= basketWidth / 2) {
                 baseLevelY -= levelHeight;
                 eggPositionY = baseLevelY;
-                CURRENT_EGG_STATE = EGG_NEXT_LEVEL_TRANSITION;
+                CURRENT_EGG_STATE = EGG_NEXT_LEVEL;
             }
             else {
-                CURRENT_EGG_STATE = EGG_FAIL_TRANSITION;
+                lastFail = GetTime();
+                CURRENT_EGG_STATE = EGG_FAIL;
             }
         }
     }
-    else if (CURRENT_EGG_STATE == EGG_NEXT_LEVEL_TRANSITION)
+    else if (CURRENT_EGG_STATE == EGG_NEXT_LEVEL)
     {
         eggPositionY = baseLevelY;
         currentEggLevel++;
         lastLanding = GetTime();
         CURRENT_EGG_STATE = EGG_WAIT;
     }
-    else if (CURRENT_EGG_STATE == EGG_FAIL_TRANSITION)
+    else if (CURRENT_EGG_STATE == EGG_FAIL)
     {
         velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
-        if (IsKeyPressed(KEY_R))
+        if(1) { // still have life point ! now we still dont have life point system
+            CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT;
+        }
+        else { // no more point
+
+        }
+    }
+    else if (CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT) {
+
+        cameraTargetPositionY = baseLevelY - 60;
+
+        velocityY += gravity * GetFrameTime() * 0.8;
+        eggPositionY += velocityY;
+
+        if(GetTime() - lastFail >= 2) {
+            eggPositionY = baseLevelY - 60;
+            eggPositionX = gameLevels[currentEggLevel - 1].position.x;
+            velocityY = 0;
+            CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
+        }
+
+        if (IsKeyPressed(KEY_R)) // reset
         {
             lastLanding = GetTime();
             CURRENT_EGG_STATE = EGG_WAIT;
             // eggInit();
         }
     }
+    else if(CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT_2) {
+        velocityY += gravity * GetFrameTime() * 0.8;
+        eggPositionY += velocityY;
+        eggPositionX = gameLevels[currentEggLevel - 1].position.x;
+
+        if (eggPositionY >= baseLevelY) {
+            eggPositionY = baseLevelY;
+            CURRENT_EGG_STATE = EGG_WAIT;
+        }
+    }
 
     //----------------------------
     //-- กล้อง
     //----------------------------
-    if(CURRENT_EGG_STATE != EGG_FAIL_TRANSITION) // when fail camera will not follow egg
-        UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
+    if(CURRENT_EGG_STATE != EGG_FAIL) // when fail camera will not follow egg
+        UpdateCameraCustom(&camera, cameraTargetPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
 
     //----------------------------
     // -- แสดงผล

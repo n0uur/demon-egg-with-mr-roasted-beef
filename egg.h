@@ -5,6 +5,8 @@
 int eggPositionX;
 int eggPositionY;
 
+int cameraTargetPositionY;
+
 // -----------------------
 
 Image eggImg;
@@ -34,8 +36,10 @@ enum EGG_PLAY_STATE {
     EGG_WAIT,
     EGG_JUMP,
     EGG_FALL,
-    EGG_NEXT_LEVEL_TRANSITION,
-    EGG_FAIL_TRANSITION
+    EGG_NEXT_LEVEL,
+    EGG_FAIL,
+    EGG_FAIL_TO_WAIT,
+    EGG_FAIL_TO_WAIT_2,
 };
 
 enum LEVEL_MOVEMENT_TYPE {
@@ -63,6 +67,7 @@ float gravity;
 float velocityY;
 
 float lastLanding;
+float lastFail;
 
 // -----------------------
 
