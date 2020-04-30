@@ -37,14 +37,14 @@ void eggInit()
     CURRENT_EGG_STATE = EGG_WAIT;
 
     floorPositionY = 650;
-    levelHeight = 400;
-    jumpHeight = 220;
+    levelHeight = 300;
+    jumpHeight = 150;
     baseLevelY = 650;
 
     eggPositionX = 1366 / 2;
     eggPositionY = baseLevelY;
 
-    gravity = 15;
+    gravity = 25;
     velocityY = 0;
 
     currentEggLevel = 0;
@@ -61,10 +61,11 @@ void eggInit()
     for (int i = 0; i < 150; i++)
     {
         gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
-        if(i % 10 == 0) {
-            gameLevels[i].movementType = MOVE_STATIC;
-        }
-        else if(i % 2 == 0) {
+        // if(i % 10 == 0) {
+        //     gameLevels[i].movementType = MOVE_STATIC;
+        // }
+        // else
+        if(i % 2 == 0) {
             gameLevels[i].movementType = MOVE_LEFT_TO_RIGHT;
         }
         else {
@@ -79,15 +80,28 @@ void eggMain()
     //----------------------------
     //-- ด่าน
     //----------------------------
-    for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
+    for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
         if(!(i >= 0 && i <= 150)) // no overflow
             continue;
 
-        if(i == currentEggLevel - 1)
-            DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, RED);
-        else
-            DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
+        int speed = 300; // pexel / second.
+
+        struct Level *currentEditingLevel = &gameLevels[i];
+
+        if(currentEditingLevel->position.x <= 100) {
+            currentEditingLevel->movementType = MOVE_LEFT_TO_RIGHT;
+        }
+        else if(currentEditingLevel->position.x >= 1266) {
+            currentEditingLevel->movementType = MOVE_RIGHT_TO_LEFT;
+        }
+
+        if(currentEditingLevel->movementType == MOVE_LEFT_TO_RIGHT) {
+            currentEditingLevel->position.x += speed * GetFrameTime();
+        }
+        else if(currentEditingLevel->movementType == MOVE_RIGHT_TO_LEFT) {
+            currentEditingLevel->position.x -= speed * GetFrameTime();
+        }
     }
 
     //----------------------------
@@ -98,7 +112,7 @@ void eggMain()
         eggPositionY = baseLevelY;
 
         if(currentEggLevel > 0)
-            eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 0.4);
+            eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 1);
 
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
