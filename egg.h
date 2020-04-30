@@ -83,7 +83,7 @@ struct Level {
     int movementSpeed; /* pixel/seconds */
 };
 
-struct Level gameLevels[150];
+struct Level gameLevels[160];
 
 int currentEggLevel;
 int positionYToGo;
