@@ -56,6 +56,8 @@ void eggInit()
     currentEggLevel = 0;
 
     lifePoint = 12;
+
+    score = 0;
     //----------------------------
 
     camera.target = (Vector2){eggPositionX, eggPositionY};
@@ -180,6 +182,7 @@ void eggMain()
         currentEggLevel++;
         lastLanding = GetTime();
         CURRENT_EGG_STATE = EGG_WAIT;
+        score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10);
     }
     else if (CURRENT_EGG_STATE == EGG_FAIL)
     {
@@ -270,6 +273,9 @@ void eggMain()
         DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
 
         DrawRectangleRec((Rectangle){ 255, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
+        DrawRectangleRec((Rectangle){ 1116 - 165, 5, 155, 55}, (Color) {33, 32, 31, 0.6 * 255 });
+
+        DrawText(FormatText("Score : %d", score), 1116 - 155, 20, 25, RAYWHITE);
 
         circlePosX = 270;
         circlePosY = 5;

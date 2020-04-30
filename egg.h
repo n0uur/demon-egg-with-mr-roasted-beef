@@ -9,6 +9,8 @@ int cameraTargetPositionY;
 
 int lifePoint;
 
+int score;
+
 // -----------------------
 
 Image eggImg;
