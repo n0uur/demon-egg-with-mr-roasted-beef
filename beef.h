@@ -3,8 +3,8 @@
 // -----------------------
 
 enum SIDE {
-    LEFT = 0,
-    RIGHT
+    FACE = 0,
+    BACK
 };
 
 enum STATE {

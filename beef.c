@@ -40,7 +40,7 @@ void beefInit() {
     for(int i = 0; i < 4; i++){
         beefArray[i].posX = SCREEN_WIDTH/2 - rawMeatImg[i].width/2 + calcBeefArrayPosX[i];
         beefArray[i].posY = SCREEN_HEIGHT/2 - rawMeatImg[i].height/2 + calcBeefArrayPosY[i];
-        beefArray[i].CURRENT_SIDE = LEFT;
+        beefArray[i].CURRENT_SIDE = FACE;
         beefArray[i].CURRENT_MEAT_STATE = RAW;
         rectanglePosX[i] = beefArray[i].posX + calcRectanglePosX[i];
         rectanglePosY[i] = beefArray[i].posY + calcRectanglePosY[i];
