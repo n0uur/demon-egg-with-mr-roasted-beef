@@ -38,9 +38,6 @@ void gameInit() {
     UnloadImage(gameLogo);
     UnloadImage(beefSelect);
     UnloadImage(EggSelect);
-
-    beefInit();
-    eggInit();
     
 }
 
@@ -72,6 +69,8 @@ void gameMain() {
         }
     }
 
+    CloseWindow();
+
 }
 
 void gameSelectMain() {
@@ -93,13 +92,17 @@ void gameSelectMain() {
 
     if(currentMousePositionX > 833) { // ไข่
         beefSplashPositionX = -700;
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            eggInit();
             CURRENT_GAME_STATE = GAME_EGG;
+        }
     }
     else if(currentMousePositionX < 533) { // เนื้อ
         beefSplashPositionX = 0;
-        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+        if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+            beefInit();
             CURRENT_GAME_STATE = GAME_BEEF;
+        }
     }
     else {
         beefSplashPositionX = -300.0;
