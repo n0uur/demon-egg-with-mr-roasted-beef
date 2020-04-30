@@ -65,7 +65,7 @@ void eggInit()
 
     //----------------------------
 
-    for (int i = 0; i < 150; i++)
+    for (int i = 0; i < 160; i++)
     {
         gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
         if(i % 10 == 0 && i != 0) {
@@ -77,7 +77,13 @@ void eggInit()
         else {
             gameLevels[i].movementType = MOVE_RIGHT_TO_LEFT;
         }
-        gameLevels[i].movementSpeed = GetRandomValue(200, 400) + (100.0 * i / 30.0);
+        gameLevels[i].movementSpeed = i < 140 ? GetRandomValue(200, 400) + (100.0 * i / 30.0) : 1500;
+        if(i == 144) {
+            gameLevels[i].movementSpeed = 3000;
+        }
+        else if(i == 145) {
+            gameLevels[i].movementType = MOVE_STATIC;
+        }
         // TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
     }
 }
@@ -89,7 +95,7 @@ void eggMain()
     //----------------------------
     for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
-        if(!(i >= 0 && i <= 150)) // no overflow
+        if(i < 0 && i > 160) // no overflow
             continue;
 
         struct Level *currentEditingLevel = &gameLevels[i];
@@ -136,7 +142,7 @@ void eggMain()
             positionYToGo = baseLevelY - jumpHeight - levelHeight;
             // TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
         }
-
+#ifdef DEBUG
         if (IsKeyPressed(KEY_N))
         {
             baseLevelY -= levelHeight;
@@ -144,6 +150,14 @@ void eggMain()
             currentEggLevel++;
             lastLanding = GetTime();
         }
+        if (IsKeyPressed(KEY_M))
+        {
+            baseLevelY -= levelHeight * 140;
+            eggPositionY = baseLevelY;
+            currentEggLevel += 140;
+            lastLanding = GetTime();
+        }
+#endif
     }
     else if (CURRENT_EGG_STATE == EGG_JUMP)
     {
@@ -207,13 +221,14 @@ void eggMain()
             lifePoint --;
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
         }
-
+#ifdef DEBUG
         if (IsKeyPressed(KEY_R)) // reset
         {
             lastLanding = GetTime();
             CURRENT_EGG_STATE = EGG_WAIT;
             // eggInit();
         }
+#endif
     }
     else if(CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT_2) {
         velocityY += gravity * GetFrameTime() * 0.8;
@@ -226,14 +241,19 @@ void eggMain()
         }
     }
 
-    if (IsKeyPressed(KEY_U)) {
-        if (lifePoint != 12)
-            lifePoint += 1;
-    }
-    else if (IsKeyPressed(KEY_D)) {
-        if (lifePoint != 0)
-            lifePoint -= 1;
-    }       
+#ifdef DEBUG
+
+        if (IsKeyPressed(KEY_U)) {
+            if (lifePoint != 12)
+                lifePoint += 1;
+        }
+        else if (IsKeyPressed(KEY_D)) {
+            if (lifePoint != 0)
+                lifePoint -= 1;
+        }
+
+#endif
+
     //----------------------------
     //-- กล้อง
     //----------------------------
@@ -258,10 +278,17 @@ void eggMain()
 
             for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
 
-                if(!(i >= 0 && i <= 150)) // avoiding overflow
+                if(!(i >= 0 && i <= 145)) // avoiding overflow
                     continue;
-
                 DrawTexture(basketTexture, gameLevels[i].position.x - basketWidth / 2, gameLevels[i].position.y - basketHeight / 2 + 15, WHITE);
+
+#ifdef DEBUG
+
+                    DrawText(FormatText("Level: %d Speed : %d", i + 1, gameLevels[i].movementSpeed), gameLevels[i].position.x - 100, gameLevels[i].position.y + 60, 20, BLACK);
+                    DrawText(FormatText("X: %.2f Y : %.2f", gameLevels[i].position.x, gameLevels[i].position.y), gameLevels[i].position.x - 100, gameLevels[i].position.y + 85, 20, BLACK);
+                
+#endif
+
             }
 
         EndMode2D();
