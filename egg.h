@@ -4,12 +4,21 @@
 
 int eggPositionX;
 int eggPositionY;
+float eggRotation;
+float nextRotation;
+
+void updateRotation();
 
 int cameraTargetPositionY;
 
 int lifePoint;
-
 int score;
+
+// -----------------------
+
+float auraOpacity;
+float auraScale;
+Vector2 auraPosition;
 
 // -----------------------
 
@@ -94,3 +103,5 @@ int basketHeight;
 int circlePosX;
 int circlePosY;
 
+Rectangle sourceRec;
+Rectangle destRec;

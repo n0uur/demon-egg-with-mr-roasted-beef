@@ -54,7 +54,10 @@ void eggInit()
     eggPositionX = 1366 / 2;
     eggPositionY = baseLevelY;
 
-    gravity = 25;
+    eggRotation = 0;
+    nextRotation = 0;
+
+    gravity = 18;
     velocityY = 0;
 
     currentEggLevel = 0;
@@ -62,6 +65,16 @@ void eggInit()
     lifePoint = 12;
 
     score = 0;
+
+    //----------------------------
+
+    auraScale = 0;
+    auraOpacity = 0;
+
+    //----------------------------
+
+    sourceRec = (Rectangle) { 0.0f, 0.0f, eggTexture.width, eggTexture.height };
+
     //----------------------------
 
     camera.target = (Vector2){eggPositionX, eggPositionY};
@@ -101,7 +114,7 @@ void eggMain()
     //----------------------------
     for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
-        if(i < 0 && i > 160) // no overflow
+        if(i < 0 || i > 160) // no overflow
             continue;
 
         struct Level *currentEditingLevel = &gameLevels[i];
@@ -130,9 +143,17 @@ void eggMain()
     //----------------------------.
     cameraTargetPositionY = eggPositionY;
 
+    destRec = (Rectangle) { eggPositionX, eggPositionY, eggTexture.width, eggTexture.height };
+
     if (CURRENT_EGG_STATE == EGG_WAIT)
     {
         eggPositionY = baseLevelY;
+
+        auraScale = LERP(auraScale, 2, 0.1);
+        auraOpacity = LERP(auraOpacity, 0, 0.05);
+        auraPosition.x = eggPositionX;
+
+        updateRotation();
 
         if(currentEggLevel > 0) { // ไข่ follow a basket
             if(GetTime() - lastLanding >= 0.3) // smooth follow when just landing at a basket
@@ -144,9 +165,10 @@ void eggMain()
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
             CURRENT_EGG_STATE = EGG_JUMP;
-            velocityY = -3;
+            velocityY = -1.5;
             positionYToGo = baseLevelY - jumpHeight - levelHeight;
             // TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
+            nextRotation += 360;
         }
 
     if (IsKeyPressed(KEY_BACKSPACE)) {
@@ -164,15 +186,21 @@ void eggMain()
         }
         if (IsKeyPressed(KEY_M))
         {
-            baseLevelY -= levelHeight * 140;
-            eggPositionY = baseLevelY;
-            currentEggLevel += 140;
-            lastLanding = GetTime();
+            for(int i = 0; i < 10; i++) {
+                baseLevelY -= levelHeight;
+                eggPositionY = baseLevelY;
+                currentEggLevel++;
+                lastLanding = GetTime();
+
+                score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10);
+            }
         }
 #endif
     }
     else if (CURRENT_EGG_STATE == EGG_JUMP)
     {
+        updateRotation();
+
         velocityY -= gravity * GetFrameTime();
         eggPositionY += velocityY * abs(eggPositionY - positionYToGo) * 0.02;
 
@@ -184,6 +212,8 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_FALL)
     {
+        updateRotation();
+
         velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
@@ -202,11 +232,13 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_NEXT_LEVEL)
     {
+        updateRotation();
+
         eggPositionY = baseLevelY;
         currentEggLevel++;
         lastLanding = GetTime();
         CURRENT_EGG_STATE = EGG_WAIT;
-        score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10);
+        score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10); 
     }
     else if (CURRENT_EGG_STATE == EGG_FAIL)
     {
@@ -228,8 +260,14 @@ void eggMain()
         eggPositionY += velocityY;
 
         if(GetTime() - lastFail >= 2) {
-            eggPositionY = baseLevelY - 60;
             eggPositionX = gameLevels[currentEggLevel - 1].position.x;
+            eggPositionY = baseLevelY - 60;
+
+            auraPosition.x = eggPositionX;
+            auraPosition.y = eggPositionY + 30;
+            auraScale = 0;
+            auraOpacity = 1;
+
             velocityY = 0;
             lifePoint --;
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
@@ -249,8 +287,14 @@ void eggMain()
         eggPositionY += velocityY;
         eggPositionX = gameLevels[currentEggLevel - 1].position.x;
 
+        auraScale = LERP(auraScale, 2, 0.1);
+        auraOpacity = LERP(auraOpacity, 0, 0.05);
+        auraPosition.x = eggPositionX;
+
         if (eggPositionY >= baseLevelY) {
             eggPositionY = baseLevelY;
+            eggRotation = 0;
+            nextRotation = 0;
             CURRENT_EGG_STATE = EGG_WAIT;
         }
     }
@@ -286,15 +330,20 @@ void eggMain()
 
         BeginMode2D(camera);
 
-            DrawTexture(eggTexture, eggPositionX - 40 / 2, eggPositionY - 48 / 2, WHITE);
+            DrawText("USE <BACKSPACE> TO GIVEUP!", 450, -400, 20, WHITE);
 
-            DrawTexture(basketTexture, 1366 / 2 - basketWidth / 2, 650 - basketHeight / 2 + 15, WHITE);
+            DrawTexturePro(eggTexture, sourceRec, destRec, (Vector2) { eggTexture.width / 2, eggTexture.height / 2 },eggRotation, WHITE); // egg
+            // DrawTextureEx(eggTexture, (Vector2) {eggPositionX - 40 / 2, eggPositionY - 48 / 2}, eggRotation, 1.0, WHITE); // egg
 
-            DrawText("Controls --> (SPACE)&(ARROW_UP) = Jump\n                 (BACKSPACE) = Back to Main Menu", 450, 768 - 65 + 20, 20, WHITE);
+            DrawTexture(basketTexture, 1366 / 2 - basketWidth / 2, 650 - basketHeight / 2 + 15, WHITE); // start basket
+
+            DrawText("USE <SPACE> TO JUMP", 560, 700, 20, WHITE);
+
+            DrawTextureEx(auraTexture, (Vector2) {auraPosition.x - auraScale * 27, auraPosition.y - auraScale * 27}, 0, auraScale, (Color) {255, 255, 255, auraOpacity * 255});
 
             for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
 
-                if(!(i >= 0 && i <= 145)) // avoiding overflow
+                if(i < 0 || i > 145) // avoiding overflow
                     continue;
                 DrawTexture(basketTexture, gameLevels[i].position.x - basketWidth / 2, gameLevels[i].position.y - basketHeight / 2 + 15, WHITE);
 
@@ -309,10 +358,9 @@ void eggMain()
 
         EndMode2D();
 
-        DrawRectangleRec((Rectangle){ 0, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
-        DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
+        DrawRectangleRec((Rectangle){ 0, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.8 * 255 });
+        DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.8 * 255 });
 
-    
         DrawRectangleRounded((Rectangle){ 1116 - 195, 5, 185, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 });
         DrawText(FormatText("Score : %d", score), 1116 - 185, 20, 25, RAYWHITE);
 
@@ -357,4 +405,8 @@ void UpdateCameraCustom(Camera2D *camera, int playerPositionY, float delta, int 
         float speed = fmaxf(fractionSpeed * length, minSpeed);
         camera->target = Vector2Add(camera->target, Vector2Scale(diff, speed * delta / length));
     }
+}
+
+void updateRotation() {
+    eggRotation = LERP(eggRotation, nextRotation, 4 * GetFrameTime());
 }
