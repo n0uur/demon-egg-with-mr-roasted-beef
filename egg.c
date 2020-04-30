@@ -207,15 +207,14 @@ void eggMain()
         if (eggPositionY <= positionYToGo + 10)
         {
             CURRENT_EGG_STATE = EGG_FALL;
-            velocityY = 0;
+            resetGravity();
         }
     }
     else if (CURRENT_EGG_STATE == EGG_FALL)
     {
         updateRotation();
 
-        velocityY += gravity * GetFrameTime() * 0.8;
-        eggPositionY += velocityY;
+        updateGravity();
 
         if (eggPositionY >= baseLevelY - levelHeight) // back to basket Y, check for next state
         {
@@ -242,8 +241,7 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_FAIL)
     {
-        velocityY += gravity * GetFrameTime() * 0.8;
-        eggPositionY += velocityY;
+        updateGravity();
 
         if(lifePoint > 0) { // still have life point ! now we still dont have life point system
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT;
@@ -256,19 +254,18 @@ void eggMain()
 
         cameraTargetPositionY = baseLevelY - 60;
 
-        velocityY += gravity * GetFrameTime() * 0.8;
-        eggPositionY += velocityY;
+        updateGravity();
 
         if(GetTime() - lastFail >= 2) {
             eggPositionX = gameLevels[currentEggLevel - 1].position.x;
             eggPositionY = baseLevelY - 60;
 
             auraPosition.x = eggPositionX;
-            auraPosition.y = eggPositionY + 30;
+            auraPosition.y = eggPositionY + 10;
             auraScale = 0;
             auraOpacity = 1;
 
-            velocityY = 0;
+            resetGravity();
             lifePoint --;
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
         }
@@ -283,8 +280,7 @@ void eggMain()
 #endif
     }
     else if(CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT_2) {
-        velocityY += gravity * GetFrameTime() * 0.8;
-        eggPositionY += velocityY;
+        updateGravity();
         eggPositionX = gameLevels[currentEggLevel - 1].position.x;
 
         auraScale = LERP(auraScale, 2, 0.1);
@@ -417,6 +413,15 @@ void UpdateCameraCustom(Camera2D *camera, int playerPositionY, float delta, int 
         float speed = fmaxf(fractionSpeed * length, minSpeed);
         camera->target = Vector2Add(camera->target, Vector2Scale(diff, speed * delta / length));
     }
+}
+
+void resetGravity() {
+    velocityY = 0;
+}
+
+void updateGravity() {
+    velocityY += gravity * GetFrameTime() * 0.8;
+    eggPositionY += velocityY;
 }
 
 void updateRotation() {

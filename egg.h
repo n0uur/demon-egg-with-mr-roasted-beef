@@ -81,6 +81,9 @@ int baseLevelY;
 float gravity;
 float velocityY;
 
+void resetGravity();
+void updateGravity();
+
 float lastLanding;
 float lastFail;
 
