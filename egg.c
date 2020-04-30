@@ -107,6 +107,12 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_WAIT;
             eggPositionY = baseLevelY;
         }
+        else if (eggPositionY >= gameLevels[0].position.y) 
+        {
+            CURRENT_EGG_STATE = EGG_WAIT;
+            baseLevelY = gameLevels[0].position.y - 30/2;
+            eggPositionY = baseLevelY;
+        }
     }
 
     // DEBUG
