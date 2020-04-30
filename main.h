@@ -1,4 +1,5 @@
 #include "raylib.h"
+#include "raymath.h"
 
 #define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 }  //For bg
 

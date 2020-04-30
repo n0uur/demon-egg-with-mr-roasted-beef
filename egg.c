@@ -1,5 +1,4 @@
 #include "egg.h"
-#include "raymath.h"
 
 void eggInit()
 {
@@ -62,6 +61,15 @@ void eggInit()
     for (int i = 0; i < 150; i++)
     {
         gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
+        if(i % 10 == 0) {
+            gameLevels[i].movementType = MOVE_STATIC;
+        }
+        else if(i % 2 == 0) {
+            gameLevels[i].movementType = MOVE_LEFT_TO_RIGHT;
+        }
+        else {
+            gameLevels[i].movementType = MOVE_RIGHT_TO_LEFT;
+        }
         TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
     }
 }
@@ -69,10 +77,18 @@ void eggInit()
 void eggMain()
 {
     //----------------------------
-    //-- กล้อง
+    //-- ด่าน
     //----------------------------
-    if(CURRENT_EGG_STATE != EGG_FAIL_TRANSITION) // when fail camera will not follow egg
-        UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
+    for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
+
+        if(!(i >= 0 && i <= 150)) // no overflow
+            continue;
+
+        if(i == currentEggLevel - 1)
+            DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, RED);
+        else
+            DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
+    }
 
     //----------------------------
     //-- ไข่
@@ -138,19 +154,11 @@ void eggMain()
         }
     }
 
-    // DEBUG
-    if (IsKeyDown(KEY_LEFT))
-    {
-        eggPositionX -= 3;
-    }
-    else if (IsKeyDown(KEY_RIGHT))
-    {
-        eggPositionX += 3;
-    }
     //----------------------------
-    //-- ด่าน
+    //-- กล้อง
     //----------------------------
-    
+    if(CURRENT_EGG_STATE != EGG_FAIL_TRANSITION) // when fail camera will not follow egg
+        UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
 
     //----------------------------
     // -- แสดงผล
