@@ -12,9 +12,12 @@ void eggInit()
     eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
     auraImg = LoadImage("resources/dozenegg/images/aura.png");
 
+    basketWidth = 100;
+    basketHeight = 40;
+
     // Image resize (if needed)
     ImageResize(&eggImg, 40, 48);
-    ImageResize(&basketImg, 80, 30);
+    ImageResize(&basketImg, basketWidth, basketHeight);
 
     // Image converted to texture
     eggTexture = LoadTextureFromImage(eggImg);
@@ -41,6 +44,8 @@ void eggInit()
     jumpHeight = 150;
     baseLevelY = 650;
 
+    lastLanding = 0;
+
     eggPositionX = 1366 / 2;
     eggPositionY = baseLevelY;
 
@@ -48,6 +53,7 @@ void eggInit()
     velocityY = 0;
 
     currentEggLevel = 0;
+
 
     //----------------------------
 
@@ -61,17 +67,17 @@ void eggInit()
     for (int i = 0; i < 150; i++)
     {
         gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
-        // if(i % 10 == 0) {
-        //     gameLevels[i].movementType = MOVE_STATIC;
-        // }
-        // else
-        if(i % 2 == 0) {
+        if(i % 10 == 0) {
+            gameLevels[i].movementType = MOVE_STATIC;
+        }
+        else if(i % 2 == 0) {
             gameLevels[i].movementType = MOVE_LEFT_TO_RIGHT;
         }
         else {
             gameLevels[i].movementType = MOVE_RIGHT_TO_LEFT;
         }
-        TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
+        gameLevels[i].movementSpeed = GetRandomValue(200, 400) + (100.0 * i / 30.0);
+        // TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
     }
 }
 
@@ -85,22 +91,20 @@ void eggMain()
         if(!(i >= 0 && i <= 150)) // no overflow
             continue;
 
-        int speed = 300; // pexel / second.
-
         struct Level *currentEditingLevel = &gameLevels[i];
 
-        if(currentEditingLevel->position.x <= 100) {
+        if(currentEditingLevel->position.x <= 300) {
             currentEditingLevel->movementType = MOVE_LEFT_TO_RIGHT;
         }
-        else if(currentEditingLevel->position.x >= 1266) {
+        else if(currentEditingLevel->position.x >= 1066) {
             currentEditingLevel->movementType = MOVE_RIGHT_TO_LEFT;
         }
 
         if(currentEditingLevel->movementType == MOVE_LEFT_TO_RIGHT) {
-            currentEditingLevel->position.x += speed * GetFrameTime();
+            currentEditingLevel->position.x += currentEditingLevel->movementSpeed * GetFrameTime();
         }
         else if(currentEditingLevel->movementType == MOVE_RIGHT_TO_LEFT) {
-            currentEditingLevel->position.x -= speed * GetFrameTime();
+            currentEditingLevel->position.x -= currentEditingLevel->movementSpeed * GetFrameTime();
         }
     }
 
@@ -111,15 +115,27 @@ void eggMain()
     {
         eggPositionY = baseLevelY;
 
-        if(currentEggLevel > 0)
-            eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 1);
+        if(currentEggLevel > 0) { // ไข่ follow a basket
+            if(GetTime() - lastLanding >= 0.3) // smooth follow when just landing at a basket
+                eggPositionX = gameLevels[currentEggLevel - 1].position.x;
+            else
+                eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 0.6);
+        }
 
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
             CURRENT_EGG_STATE = EGG_JUMP;
             velocityY = -3;
             positionYToGo = baseLevelY - jumpHeight - levelHeight;
-            TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
+            // TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
+        }
+
+        if (IsKeyPressed(KEY_N))
+        {
+            baseLevelY -= levelHeight;
+            eggPositionY = baseLevelY;
+            currentEggLevel++;
+            lastLanding = GetTime();
         }
     }
     else if (CURRENT_EGG_STATE == EGG_JUMP)
@@ -140,7 +156,7 @@ void eggMain()
 
         if (eggPositionY >= baseLevelY - levelHeight) // back to basket Y, check for next state
         {
-            if(abs(gameLevels[currentEggLevel].position.x - eggPositionX) <= 35) {
+            if(abs(gameLevels[currentEggLevel].position.x - eggPositionX) <= basketWidth / 2) {
                 baseLevelY -= levelHeight;
                 eggPositionY = baseLevelY;
                 CURRENT_EGG_STATE = EGG_NEXT_LEVEL_TRANSITION;
@@ -154,17 +170,19 @@ void eggMain()
     {
         eggPositionY = baseLevelY;
         currentEggLevel++;
+        lastLanding = GetTime();
         CURRENT_EGG_STATE = EGG_WAIT;
     }
     else if (CURRENT_EGG_STATE == EGG_FAIL_TRANSITION)
     {
-        baseLevelY += levelHeight;
         velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
         if (IsKeyPressed(KEY_R))
         {
-            eggInit();
+            lastLanding = GetTime();
+            CURRENT_EGG_STATE = EGG_WAIT;
+            // eggInit();
         }
     }
 
@@ -187,22 +205,20 @@ void eggMain()
 
             DrawTexture(eggTexture, eggPositionX - 40 / 2, eggPositionY - 48 / 2, WHITE);
 
-            DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
+            DrawTexture(basketTexture, 1366 / 2 - basketWidth / 2, 650 - basketHeight / 2 + 15, WHITE);
 
             for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
 
                 if(!(i >= 0 && i <= 150)) // avoiding overflow
                     continue;
 
-                if(i == currentEggLevel - 1)
-                    DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, RED);
-                else
-                    DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
+                DrawTexture(basketTexture, gameLevels[i].position.x - basketWidth / 2, gameLevels[i].position.y - basketHeight / 2 + 15, WHITE);
             }
 
-            //DrawRectangleRec((Rectangle){1366 / 2 - 100, floorPositionY + 20, 200, 10}, RED);
-
         EndMode2D();
+
+        DrawRectangleRec((Rectangle){ 0, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
+        DrawRectangleRec((Rectangle){ 1066 + basketWidth / 2, 0, 300 - basketWidth / 2, 768}, (Color) { 0, 0, 0, 0.6 * 255 });
 
     EndDrawing();
 }

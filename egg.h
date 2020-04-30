@@ -62,14 +62,20 @@ int baseLevelY;
 float gravity;
 float velocityY;
 
+float lastLanding;
+
 // -----------------------
 
 struct Level {
     Vector2 position;
     enum LEVEL_MOVEMENT_TYPE movementType;
+    int movementSpeed; /* pixel/seconds */
 };
 
 struct Level gameLevels[150];
 
 int currentEggLevel;
 int positionYToGo;
+
+int basketWidth;
+int basketHeight;
