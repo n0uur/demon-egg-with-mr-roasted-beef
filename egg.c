@@ -71,7 +71,8 @@ void eggMain()
     //----------------------------
     //-- กล้อง
     //----------------------------
-    UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
+    if(CURRENT_EGG_STATE != EGG_FAIL_TRANSITION) // when fail camera will not follow egg
+        UpdateCameraCustom(&camera, eggPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
 
     //----------------------------
     //-- ไข่
@@ -80,12 +81,14 @@ void eggMain()
     {
         eggPositionY = baseLevelY;
 
+        if(currentEggLevel > 0)
+            eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 0.4);
+
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
-            baseLevelY -= levelHeight;
             CURRENT_EGG_STATE = EGG_JUMP;
             velocityY = -3;
-            positionYToGo = baseLevelY - jumpHeight;
+            positionYToGo = baseLevelY - jumpHeight - levelHeight;
             TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
         }
     }
@@ -105,11 +108,33 @@ void eggMain()
         velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
-        if (eggPositionY >= baseLevelY)
+        if (eggPositionY >= baseLevelY - levelHeight) // back to basket Y, check for next state
         {
-            CURRENT_EGG_STATE = EGG_WAIT;
-            eggPositionY = baseLevelY;
-            currentEggLevel++;
+            if(abs(gameLevels[currentEggLevel].position.x - eggPositionX) <= 35) {
+                baseLevelY -= levelHeight;
+                eggPositionY = baseLevelY;
+                CURRENT_EGG_STATE = EGG_NEXT_LEVEL_TRANSITION;
+            }
+            else {
+                CURRENT_EGG_STATE = EGG_FAIL_TRANSITION;
+            }
+        }
+    }
+    else if (CURRENT_EGG_STATE == EGG_NEXT_LEVEL_TRANSITION)
+    {
+        eggPositionY = baseLevelY;
+        currentEggLevel++;
+        CURRENT_EGG_STATE = EGG_WAIT;
+    }
+    else if (CURRENT_EGG_STATE == EGG_FAIL_TRANSITION)
+    {
+        baseLevelY += levelHeight;
+        velocityY += gravity * GetFrameTime() * 0.8;
+        eggPositionY += velocityY;
+
+        if (IsKeyPressed(KEY_R))
+        {
+            eggInit();
         }
     }
 
@@ -143,7 +168,13 @@ void eggMain()
             DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
 
             for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
-                if(i >= 0 && i <= 150)
+
+                if(!(i >= 0 && i <= 150)) // avoiding overflow
+                    continue;
+
+                if(i == currentEggLevel - 1)
+                    DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, RED);
+                else
                     DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
             }
 
