@@ -84,7 +84,7 @@ void eggMain()
         {
             baseLevelY -= levelHeight;
             CURRENT_EGG_STATE = EGG_JUMP;
-            velocityY = 0;
+            velocityY = -3;
             positionYToGo = baseLevelY - jumpHeight;
             TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
         }
@@ -92,7 +92,7 @@ void eggMain()
     else if (CURRENT_EGG_STATE == EGG_JUMP)
     {
         velocityY -= gravity * GetFrameTime();
-        eggPositionY += velocityY * abs(eggPositionY - positionYToGo) * 0.05;
+        eggPositionY += velocityY * abs(eggPositionY - positionYToGo) * 0.02;
 
         if (eggPositionY <= positionYToGo + 10)
         {
@@ -102,13 +102,14 @@ void eggMain()
     }
     else if (CURRENT_EGG_STATE == EGG_FALL)
     {
-        velocityY += gravity * GetFrameTime();
+        velocityY += gravity * GetFrameTime() * 0.8;
         eggPositionY += velocityY;
 
         if (eggPositionY >= baseLevelY)
         {
             CURRENT_EGG_STATE = EGG_WAIT;
             eggPositionY = baseLevelY;
+            currentEggLevel++;
         }
     }
 
@@ -141,8 +142,9 @@ void eggMain()
 
             DrawTexture(basketTexture, 1366 / 2 - 80 / 2, 650 - 30 / 2 + 15, WHITE);
 
-            for(int i = 0; i < 10; i++) {
-                DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
+            for(int i = currentEggLevel - 2; i < currentEggLevel + 5; i++) {
+                if(i >= 0 && i <= 150)
+                    DrawTexture(basketTexture, gameLevels[i].position.x - 80 / 2, gameLevels[i].position.y - 30 / 2 + 15, WHITE);
             }
 
             //DrawRectangleRec((Rectangle){1366 / 2 - 100, floorPositionY + 20, 200, 10}, RED);
