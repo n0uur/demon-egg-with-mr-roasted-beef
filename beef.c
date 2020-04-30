@@ -68,7 +68,7 @@ void beefMain() {
             DrawRectangleLines(rectanglePosX[i], rectanglePosY[i], rectangleWidth[i], rectangleHeight[i], WHITE);
             if (meatBox[i].collision&&meatBox[i].collisionArea == max&&IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
                 DrawText(FormatText("Collision Area: %d [%d]", max, i), SCREEN_WIDTH/2 - 100, 40 + 10, 20, BLACK);
-                beefArray[i].posX = mouseBox.x;beefArray[i].posY = mouseBox.y;
+                beefArray[i].posX = mouseBox.x - (rectangleWidth[i] / 2);beefArray[i].posY = mouseBox.y - (rectangleHeight[i] / 2) + 30;
                 rectanglePosX[i] = beefArray[i].posX + calcRectanglePosX[i];
                 rectanglePosY[i] = beefArray[i].posY + calcRectanglePosY[i];
                 DrawRectangleRec(boxCollision, BLACK);
