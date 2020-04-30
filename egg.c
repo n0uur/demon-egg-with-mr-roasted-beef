@@ -227,7 +227,7 @@ void eggMain()
     }
     else if (IsKeyPressed(KEY_D)) {
         if (lifePoint != 0)
-                lifePoint -= 1;
+            lifePoint -= 1;
     }       
     //----------------------------
     //-- กล้อง
@@ -269,22 +269,21 @@ void eggMain()
         circlePosX = 270;
         circlePosY = 5;
 
-            for (int i = 0; i < lifePoint; i++) {
-                DrawCircle(circlePosX, circlePosY + 15, 10, (Color) {227, 221, 216, 0.8 * 255 });
-                circlePosX += 25;
-                if (i == 5) {
-                    circlePosY += 25;
-                    circlePosX = 270;
-                }
+        //----------------------------
+        // -- Life Point
+        //----------------------------
+        for (int i = 0; i < 12; i++) {
+            if (i >= 6) {
+                circlePosY = 30;
+                circlePosX = 270 + ((i - 6) * 25);
             }
-            for (int i = 0; i < lifePoint - 12; i++) {
-                DrawCircle(circlePosX, circlePosY + 15, 10, (Color) {89, 87, 85, 1 * 255 });
-                circlePosX += 25;
-                if (i == 5) {
-                    circlePosY += 25;
-                    circlePosX = 270;
-                }
+            else {
+                circlePosY = 5;
+                circlePosX = 270 + (i * 25);
             }
+
+            DrawCircle(circlePosX, circlePosY + 15, 10, (Color) {255, 255, 255, (lifePoint > i ? 1 : 0.3) * 255 });
+        }
 
     EndDrawing();
 }
