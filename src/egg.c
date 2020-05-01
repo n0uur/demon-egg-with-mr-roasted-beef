@@ -358,8 +358,7 @@ void eggMain()
 
             DrawText("GO BACK! IT'S A LIE! THERE IS NO CAKE!!", 400, -38750, 20, WHITE);
 
-            DrawTexturePro(eggTexture, sourceRec, destRec, (Vector2) { eggTexture.width / 2, eggTexture.height / 2 },eggRotation, WHITE); // egg
-            // DrawTextureEx(eggTexture, (Vector2) {eggPositionX - 40 / 2, eggPositionY - 48 / 2}, eggRotation, 1.0, WHITE); // egg
+            DrawTexturePro(eggTexture, sourceRec, destRec, (Vector2) { eggTexture.width / 2, eggTexture.height / 2 }, eggRotation, WHITE); // egg
 
             DrawTexture(basketTexture, 1366 / 2 - basketWidth / 2, 650 - basketHeight / 2 + 15, WHITE); // start basket
 
