@@ -1,70 +1,76 @@
 #include "main.h"
 
+#define MEAT_COUNT 1
+
 // -----------------------
 
-enum SIDE {
-    FACE = 0,
+enum BEEF_SIDE {
+    FRONT,
     BACK
 };
 
-enum STATE {
-    RAW = 0,
-    COOKED,
-    OVER_COOKED
+enum BEEF_STATE {
+    BEEF_STATE_NORMAL,
+    BEEF_STATE_ATE
+};
+
+enum BEEF_SIDE_STATE {
+    BEEF_SIDE_STATE_RAW,
+    BEEF_SIDE_STATE_COOKED,
+    BEEF_SIDE_STATE_OVER_COOKED,
+    BEEF_SIDE_STATE_OVER_COOKED_2,
+    BEEF_SIDE_STATE_UNEATABLE
+};
+
+enum BEEF_TYPE {
+    BEEF_TYPE_1,
+    BEEF_TYPE_2,
+    BEEF_TYPE_3,
+    BEEF_TYPE_4
 };
 
 // -----------------------
 
-int times = 0;
-int max = 0;
+struct BEEF {
+    Vector2 position;
+
+    enum BEEF_STATE state;
+    
+    enum BEEF_TYPE type;
+    enum BEEF_SIDE currentSide;
+
+    enum BEEF_STATE frontState;
+    enum BEEF_STATE backState;
+
+    double frontGrilledTime;
+    double backGrilledTime;
+
+    double timeNeedToCooked;
+    double timeNeedToOverCooked;
+    double timeNeedToOverCooked2;
+};
+
+struct BEEF beefs[MEAT_COUNT];
 
 // -----------------------
 
-Image tableImg;
-Image panImg;
-Image meatBowlImg;
-Image sauceBowlImg;
-Image rawMeatImg[9];
+Image tableImage;
+Image panImage;
+Image meatBowlImage;
+Image sauceBowlImage;
+Image rawMeatImage[4];
+Image cookedMeatImage[4];
+Image overCookedMeatImage[4];
+Image overCooked2MeatImage[4];
 
 // -----------------------
 
-Texture2D table;
-Texture2D pan;
-Texture2D meatBowl;
-Texture2D sauceBowl;
-Texture2D rawMeat[9];
+Texture2D tableTexture;
+Texture2D panTexture;
+Texture2D meatBowlTexture;
+Texture2D sauceBowlTexture;
+Texture2D rawMeatTexture[4];
+Texture2D cookedMeatTexture[4];
+Texture2D overCookedMeatTexture[4];
+Texture2D overCooked2MeatTexture[4];
 
-// -----------------------
-
-struct beef {
-    float posX;
-    float posY;
-    enum SIDE CURRENT_SIDE;
-    enum STATE CURRENT_MEAT_STATE;
-} beefArray[MEAT_COUNT];
-
-struct meatBox {
-    Rectangle box;
-    bool collision;
-    int collisionArea;
-} meatBox[MEAT_COUNT];
-
-int rectanglePosX[MEAT_COUNT];
-int rectanglePosY[MEAT_COUNT];
-int rectangleHeight[MEAT_COUNT];
-int rectangleWidth[MEAT_COUNT];
-
-int calcBeefArrayPosX[MEAT_COUNT] = {-430, -300, -400, -500, -400, -550,-500, -350, -250, -300};
-int calcBeefArrayPosY[MEAT_COUNT] = {240, 170, 150, 180, 320, 220, 310, 215, 250, 300};
-int calcRectanglePosX[MEAT_COUNT] = {18, 25, 15, 25, 25, 25, 25, 25, 25, 25};
-int calcRectanglePosY[MEAT_COUNT] = {0, 0, -4, 0, 0, 0, 0, 0, 0, 0};
-int calcRectangleHeight[MEAT_COUNT] = {-10, -5, -20, 0,-10, -10, -10,-10,-20,-20};
-int calcRectangleWidth[MEAT_COUNT] = {-23, -40, -23, -45,-35,-45,-46,-45,-40,-40};
-
-//-------------------------
-Rectangle mouseBox = {SCREEN_WIDTH/2 - 20, SCREEN_HEIGHT/2 - 20, 40, 40};
-Rectangle boxCollision = {0};
-Vector2 mPosition = { -100.0f, -100.0f };
-
-//-------------------------
-void beefAreaCheck();
