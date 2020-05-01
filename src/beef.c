@@ -144,6 +144,12 @@ void beefMain() {
         // flip
         beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
         // dont forget to play sound and effect when put to tao fai
+        if(isMeatInGrill(beefs[draggingMeatIndex])) {
+
+        }
+        else if(isMeatInSauceBowl(beefs[draggingMeatIndex])) {
+            eatThisMeat(draggingMeatIndex);
+        }
 
         isDragging = false;
         draggingMeatIndex = -1;
@@ -165,6 +171,9 @@ void beefMain() {
     }
     else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
         for(int i = 0; i < MEAT_COUNT; i++) {
+            if(beefs[i].state == BEEF_STATE_ATE)
+                continue;
+
             if(CheckCollisionPointRec(mousePosition, (Rectangle) { beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88 })) {
                 isDragging = true;
                 draggingMeatIndex = i;
@@ -295,6 +304,10 @@ void eatThisMeat(int meatIndex) {
     if(meatLeftCount() <= 0) { // regenerate meat when ran out of it
         generateMeat();
     }
+}
+
+int scoreCalculateFromMeat(struct BEEF beef) {
+    return 0;
 }
 
 int meatLeftCount() {
