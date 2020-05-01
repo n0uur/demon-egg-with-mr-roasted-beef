@@ -108,6 +108,15 @@ void eggInit()
         else if(i == 145) {
             gameLevels[i].movementType = MOVE_STATIC;
         }
+
+        if(i > 2 && i < 50) {
+            if(GetRandomValue(0, 100) < 15) { // 15%
+                gameLevels[i].movementType = MOVE_STATIC;
+                if(gameLevels[i - 1].movementType == MOVE_STATIC) { // previous level is static too
+                    gameLevels[i].position.x = gameLevels[i - 1].position.x; // อยู่ตรงกันนะไอหนู ไม่งั้นพี่คงผ่านไม่ได้
+                }
+            }
+        }
         // TraceLog(LOG_INFO, "Loaded Level %d : %d", i + 1, baseLevelY -(1 + i) * levelHeight);
     }
 }
