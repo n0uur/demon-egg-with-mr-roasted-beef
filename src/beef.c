@@ -150,6 +150,16 @@ void beefMain() {
     if(isDragging && draggingMeatIndex != -1) {
         beefs[draggingMeatIndex].position.x += mousePosition.x - lastMousePosition.x;
         beefs[draggingMeatIndex].position.y += mousePosition.y - lastMousePosition.y;
+
+        if(beefs[draggingMeatIndex].position.x < 10)
+            beefs[draggingMeatIndex].position.x = 10;
+        else if(beefs[draggingMeatIndex].position.x > 1356)
+            beefs[draggingMeatIndex].position.x = 1356;
+
+        if(beefs[draggingMeatIndex].position.y < 10)
+            beefs[draggingMeatIndex].position.y = 10;
+        else if(beefs[draggingMeatIndex].position.y > 758)
+            beefs[draggingMeatIndex].position.y = 758;
     }
     else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
         for(int i = 0; i < MEAT_COUNT; i++) {
