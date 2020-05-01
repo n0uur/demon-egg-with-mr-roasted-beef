@@ -1,0 +1,85 @@
+body {
+  font-family: 'Prompt', sans-serif;
+}
+.jp-font {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
+.logo-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 800px;
+  max-width: 80vw;
+  margin: auto;
+  z-index: 1;
+}
+
+.beef-img {
+  position: absolute;
+  top: -10vh;
+  right: -10vw;
+  width: 80vw;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.egg-beef-img {
+  position: absolute;
+  bottom: -100px;
+  left: -100px;
+  width: 800px;
+  max-width: 80vw;
+  opacity: 0.2;
+  z-index: 0;
+}
+
+.block {
+  height: 100vh;
+  widows: 100vw;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-bottom {
+  position: absolute;
+  bottom: 5vh;
+  left: 0;
+  right: 0;
+  margin: auto;
+
+  font-size: 60px;
+}
+
+.top {
+  background: black;
+}
+
+.bg-black-to-gray {
+  background-image: linear-gradient(black, rgb(14, 14, 14));
+}
+
+.bg-gray-to-black {
+  background-image: linear-gradient(rgb(14, 14, 14), black);
+}
+
+.bg-code {
+  background-image: url('../code.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-color: rgb(37, 37, 38);
+}
+
+.bg-dark-tran {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 400;
+}
+
+.text-danger {
+  font-weight: 400;
+}
