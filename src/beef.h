@@ -1,6 +1,9 @@
 #include "main.h"
 
-#define MEAT_COUNT 1
+#define MEAT_COUNT 10
+// -----------------------
+
+void generateMeat();
 
 // -----------------------
 
@@ -48,6 +51,7 @@ struct BEEF {
     double timeNeedToCooked;
     double timeNeedToOverCooked;
     double timeNeedToOverCooked2;
+    double timeNeedToUneatable;
 };
 
 struct BEEF beefs[MEAT_COUNT];
@@ -74,3 +78,14 @@ Texture2D cookedMeatTexture[4];
 Texture2D overCookedMeatTexture[4];
 Texture2D overCooked2MeatTexture[4];
 
+// -----------------------
+
+Vector2 mousePosition;
+Vector2 lastMousePosition;
+
+bool isDragging;
+int draggingMeatIndex;
+
+// -----------------------
+
+bool isMeatInGrill(struct BEEF);

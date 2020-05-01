@@ -65,52 +65,102 @@ void beefInit() {
 
     //----------------------------
 
-    for(int i = 0; i < MEAT_COUNT; i++) {
-        beefs[i].position.x = 270 + GetRandomValue(-120, 120);
-        beefs[i].position.y = 650 + GetRandomValue(-50, 50);
-
-        beefs[i].type = (GetRandomValue(0, 100) > 50) ? ((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_1:BEEF_TYPE_2):((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_3:BEEF_TYPE_4);
-        
-        beefs[i].currentSide = GetRandomValue(1, 2) == 1 ? FRONT : BACK;
-
-        beefs[i].frontState = BEEF_SIDE_STATE_RAW;
-        beefs[i].backState = BEEF_SIDE_STATE_RAW;
-
-        beefs[i].frontGrilledTime = 0;
-        beefs[i].backGrilledTime = 0;
-
-        beefs[i].timeNeedToCooked = GetRandomValue(15, 30);
-        beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(5, 15);
-        beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 8);
-    }
+    generateMeat();
 
     //----------------------------
+
+    mousePosition = GetMousePosition();
+    lastMousePosition = mousePosition;
+
+    isDragging = false;
+    draggingMeatIndex = -1;
 }
 
 void beefMain() {
 
 #if GAME_DEBUG
     if(IsKeyPressed(KEY_R)) {
-        for(int i = 0; i < MEAT_COUNT; i++) {
-            beefs[i].position.x = 270 + GetRandomValue(-120, 120);
-            beefs[i].position.y = 650 + GetRandomValue(-50, 50);
-
-            beefs[i].type = (GetRandomValue(0, 100) > 50) ? ((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_1:BEEF_TYPE_2):((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_3:BEEF_TYPE_4);
-            
-            beefs[i].currentSide = GetRandomValue(1, 2) == 1 ? FRONT : BACK;
-
-            beefs[i].frontState = BEEF_SIDE_STATE_RAW;
-            beefs[i].backState = BEEF_SIDE_STATE_RAW;
-
-            beefs[i].frontGrilledTime = 0;
-            beefs[i].backGrilledTime = 0;
-
-            beefs[i].timeNeedToCooked = GetRandomValue(15, 30);
-            beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(5, 15);
-            beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 8);
-        }
+        generateMeat();
     }
 #endif
+
+    //----------------------------
+    //-- ความสุก
+    //----------------------------
+    for(int i = 0; i < MEAT_COUNT; i++) {
+        if(isDragging && draggingMeatIndex == i)
+            continue;
+
+        if(!isMeatInGrill(beefs[i]))
+            continue;
+
+        struct BEEF *editingBeef = &beefs[i];
+
+        if(editingBeef->currentSide == FRONT) {
+            editingBeef->frontGrilledTime += GetFrameTime() / 2.0;
+            editingBeef->backGrilledTime += GetFrameTime();
+        }
+        else {
+            editingBeef->frontGrilledTime += GetFrameTime();
+            editingBeef->backGrilledTime += GetFrameTime() / 2.0;
+        }
+
+        if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToUneatable) {
+            editingBeef->frontState = BEEF_SIDE_STATE_UNEATABLE;
+        }
+        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked2) {
+            editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED_2;
+        }
+        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked) {
+            editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED;
+        }
+        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToCooked) {
+            editingBeef->frontState = BEEF_SIDE_STATE_COOKED;
+        }
+
+        if(editingBeef->backGrilledTime >= editingBeef->timeNeedToUneatable) {
+            editingBeef->backState = BEEF_SIDE_STATE_UNEATABLE;
+        }
+        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked2) {
+            editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED_2;
+        }
+        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked) {
+            editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED;
+        }
+        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToCooked) {
+            editingBeef->backState = BEEF_SIDE_STATE_COOKED;
+        }
+    }
+
+    //----------------------------
+    //-- ลากเนื้อ
+    //----------------------------
+
+    mousePosition = GetMousePosition();
+
+    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+        // flip
+        beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
+        // dont forget to play sound and effect when put to tao fai
+
+        isDragging = false;
+        draggingMeatIndex = -1;
+    }
+
+    if(isDragging && draggingMeatIndex != -1) {
+        beefs[draggingMeatIndex].position.x += mousePosition.x - lastMousePosition.x;
+        beefs[draggingMeatIndex].position.y += mousePosition.y - lastMousePosition.y;
+    }
+    else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+        for(int i = 0; i < MEAT_COUNT; i++) {
+            if(CheckCollisionPointRec(mousePosition, (Rectangle) { beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88 })) {
+                isDragging = true;
+                draggingMeatIndex = i;
+            }
+        }
+    }
+
+    lastMousePosition = mousePosition;
 
     BeginDrawing();
 
@@ -118,17 +168,22 @@ void beefMain() {
 
         DrawTexture(tableTexture, 0, 80, WHITE);
         DrawTexture(panTexture, 1366/2 - panTexture.width / 2 + 100, 768/2 - panTexture.height/2 - 30, WHITE);
-        DrawEllipseLines(1366 / 2 + 100, 768 / 2 - 50, 320, 110, WHITE); // เตา
+        
         DrawTexture(meatBowlTexture, 1366 / 2 - meatBowlTexture.width / 2 - 400, 768/2 - meatBowlTexture.height/2 + 240, WHITE);
         DrawTexture(sauceBowlTexture, 1366 / 2 - sauceBowlTexture.width / 2 + 400, 768/2 - sauceBowlTexture.height/2 + 280, WHITE);
-        DrawEllipseLines(1366 / 2 + 400, 768 / 2 - -300, 120, 50, WHITE); // น้ำจิ้ม
+
+#if GAME_DEBUG
+        DrawEllipseLines(1366 / 2 + 100, 768 / 2 - 50, 320, 110, RED); // เตา
+        DrawEllipseLines(1366 / 2 + 400, 768 / 2 - -300, 120, 50, RED); // น้ำจิ้ม
+#endif
 
         for(int i = 0; i < MEAT_COUNT; i++) {
-            
+
             if(beefs[i].state == BEEF_STATE_ATE)
                 continue;
 
             Color overlayColor = beefs[i].currentSide == FRONT ? (beefs[i].frontState == BEEF_SIDE_STATE_UNEATABLE ? BLACK : WHITE):beefs[i].backState == BEEF_SIDE_STATE_UNEATABLE ? BLACK : WHITE;
+            
             Texture2D textureToDraw = rawMeatTexture[beefs[i].type];
             if(beefs[i].currentSide == FRONT) {
                 if(beefs[i].frontState == BEEF_SIDE_STATE_COOKED) {
@@ -155,10 +210,63 @@ void beefMain() {
             DrawTextureRec(textureToDraw, (Rectangle) {0, 0, rawMeatTexture[beefs[i].type].width * (beefs[i].currentSide == FRONT ? 1:-1), rawMeatTexture[beefs[i].type].height}, (Vector2) {beefs[i].position.x - 70, beefs[i].position.y - 44}, overlayColor);
             // DrawTexture(rawMeatTexture[beefs[i].type], beefs[i].position.x - 70, beefs[i].position.y - 44, WHITE);
 #if GAME_DEBUG
-            DrawText(TextFormat("TYPE : %s", beefs[i].currentSide == FRONT ? "FRONT":"BACK"), beefs[i].position.x - 70, beefs[i].position.y - 44, 20, RED);
+            DrawRectangleLines(beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88, (Color) {0, 255, 0, 255});
+
+            DrawText(
+                TextFormat("TYPE : %s\n%s\nFRONT : %.2f\nBACK : %.2f\n%.2f %.2f %.2f %.2f",
+                    beefs[i].currentSide == FRONT ? "FRONT":"BACK",
+                    isMeatInGrill(beefs[i]) ? "IN":"OUT",
+                    beefs[i].frontGrilledTime,
+                    beefs[i].backGrilledTime,
+                    beefs[i].timeNeedToCooked,
+                    beefs[i].timeNeedToOverCooked,
+                    beefs[i].timeNeedToOverCooked2,
+                    beefs[i].timeNeedToUneatable
+                ),
+                beefs[i].position.x - 70,
+                beefs[i].position.y - 44,
+                12,
+                GREEN
+            );
 #endif
         }
-            
         
     EndDrawing();
+}
+
+void generateMeat() {
+    for(int i = 0; i < MEAT_COUNT; i++) {
+        beefs[i].position.x = 270 + GetRandomValue(-120, 120);
+        beefs[i].position.y = 650 + GetRandomValue(-50, 50);
+
+        beefs[i].type = (GetRandomValue(0, 100) > 50) ? ((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_1:BEEF_TYPE_2):((GetRandomValue(0, 100) > 50) ? BEEF_TYPE_3:BEEF_TYPE_4);
+        
+        beefs[i].currentSide = GetRandomValue(1, 2) == 1 ? FRONT : BACK;
+
+        beefs[i].state = BEEF_STATE_NORMAL;
+
+        beefs[i].frontState = BEEF_SIDE_STATE_RAW;
+        beefs[i].backState = BEEF_SIDE_STATE_RAW;
+
+        beefs[i].frontGrilledTime = 0;
+        beefs[i].backGrilledTime = 0;
+
+        beefs[i].timeNeedToCooked = GetRandomValue(5, 15);
+        beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(3, 8);
+        beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 8);
+        beefs[i].timeNeedToUneatable = beefs[i].timeNeedToOverCooked2 + GetRandomValue(5, 10);
+    }
+}
+
+bool isMeatInGrill(struct BEEF checkBeef) {
+
+    // สูตร
+    // p = (pow((x - h), 2) / pow(a, 2)) + (pow((y - k), 2) / pow(b, 2));
+    // > 1 นอก , < 1 ใน , = 1 อยู่ตรงเส้นรอบวง
+    // (x, y) คือจุดที่หา, (h, k) คือจุดศูนย์กลางวงรี, (a, b) คือขนาดของวงรีด้านกว้าง และสูงตามลำดับ
+    //
+    // if you hate math, you also hate programming too.
+    //
+
+    return (pow((checkBeef.position.x - 783), 2) / pow(320, 2)) + (pow((checkBeef.position.y - 334), 2) / pow(110, 2)) <= 1;
 }
