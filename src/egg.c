@@ -43,6 +43,7 @@ void eggInit()
 
     eggJumpSound = LoadSound("resources/dozenegg/sounds/jump.ogg");
     eggRespawnSound = LoadSound("resources/dozenegg/sounds/respawn.ogg");
+    eggGameMusic = LoadMusicStream("resources/dozenegg/sounds/Cipher2.ogg");
 
     //----------------------------
 
@@ -70,6 +71,10 @@ void eggInit()
     lifePoint = 12;
 
     score = 0;
+
+    //----------------------------
+
+    PlayMusicStream(eggGameMusic);
 
     //----------------------------
 
@@ -126,6 +131,7 @@ void eggMain()
     //----------------------------
     //-- ด่าน
     //----------------------------
+    UpdateMusicStream(eggGameMusic);
     for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
         if(i < 0 || i > 160) // no overflow
@@ -189,6 +195,7 @@ void eggMain()
 
     if (IsKeyPressed(KEY_BACKSPACE)) {
         CURRENT_GAME_STATE = GAME_SELECT;
+        StopMusicStream(eggGameMusic);
     }
 #if DEBUG
         if (IsKeyPressed(KEY_N))
@@ -263,7 +270,7 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT;
         }
         else { // no more point
-
+            CURRENT_EGG_STATE = EGG_DIE;
         }
     }
     else if (CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT) {
@@ -324,6 +331,8 @@ void eggMain()
                 lifePoint -= 1;
         }
 
+        if (IsKeyPressed(KEY_E))
+            eggInit();
 #endif
 
     //----------------------------
