@@ -226,6 +226,10 @@ void eggMain()
     {
         updateRotation();
 
+        auraScale = LERP(auraScale, 2, 0.1);
+        auraOpacity = LERP(auraOpacity, 0, 0.05);
+        auraPosition.x = eggPositionX;
+
         velocityY -= gravity * GetFrameTime();
         eggPositionY += velocityY * abs(eggPositionY - positionYToGo) * 0.02;
 
