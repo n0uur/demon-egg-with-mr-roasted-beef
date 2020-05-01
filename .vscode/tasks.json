@@ -21,7 +21,8 @@
 				"-lgdi32",
 				"-lwinmm",
 				"-std=c99",
-				"-mwindows"
+				"-mwindows",
+				"${workspaceFolder}\\src\\resource\\resouce.res"
 			],
 			"options": {
 				"cwd": "C:/raylib/mingw/bin"
