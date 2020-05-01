@@ -23,17 +23,40 @@
 </head>
 
 <body>
-  <div class="block top">
+  <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar bg-dark-tran">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigationBar"
+      aria-controls="navigationBar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navigationBar">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="#home">หน้าหลัก</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#about">เกี่ยวกับ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#directory">ไฟล์ในรหัสต้นฉบับ</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="block top" id="home">
     <div class="animated infinite slow pulse logo-img">
       <img src="./static/logo.png" class="logo-img animated fadeIn delay-1s" draggable="false">
     </div>
     <img src="./static/egg_beef.png" class="egg-beef-img" draggable="false">
     <img src="./static/beef.png" class="beef-img" draggable="false">
-    <h1 class="top-bottom animated delay-2s infinite bounce slow text-white text-center">
-      <i class="fas fa-chevron-down animated fadeIn delay-2s"></i>
+    <h1 class="top-bottom animated delay-2s infinite bounce slow text-white text-center" style="z-index: 5;">
+      <a href="#about" class="text-white">
+        <i class="fas fa-chevron-down animated fadeIn delay-2s"></i>
+      </a>
     </h1>
+    
   </div>
-  <div class="block bg-black-to-gray text-white">
+  <div class="block bg-black-to-gray text-white" id="about">
     <div class="container h-100">
       <div class="row h-100">
         <div class="col-md-4 d-none d-md-block my-auto">
@@ -70,7 +93,7 @@
       </div>
     </div>
   </div>
-  <div class="block bg-gray-to-black block-code bg-code">
+  <div class="block bg-gray-to-black block-code bg-code" id="directory">
     <div class="container h-100 text-white">
       <div class="row h-100">
         <div class="col-md-4 d-none d-md-block my-auto"></div>
@@ -82,19 +105,19 @@
           <p class="text-danger d-none d-md-block">
             * แนะนำให้ใช้ Compiler จากทางผู้พัฒนา Raylib โดยตรง เพื่อไม่ให้เกิดปัญหาในการแปลงรหัสต้นฉบับ
           </p>
-          <a href="https://github.com/n0uur/demon-egg-with-mr-roasted-beef" class="d-none d-md-inline-block">
+          <a href="https://github.com/n0uur/demon-egg-with-mr-roasted-beef" class="d-none d-md-inline-block" target="_BLANK">
             <button class="btn btn-dark"><i class="fab fa-github"></i> ดูรหัสต้นฉบับบน Github</button>
           </a>
-          <a href="#" class="d-none d-md-inline-block">
-            <button class="btn btn-dark"><i class="fas fa-download"></i> ดาวน์โหลดเกม</button>
-          </a>
+          <!-- <a href="#" class="d-none d-md-inline-block"> -->
+            <button class="btn d-none d-md-inline-block btn-dark" disabled><i class="fas fa-download"></i> ดาวน์โหลดเกม</button>
+          <!-- </a> -->
           <div class="border-top mt-3 mb-3 w-50"></div>
             > Bin <span class="text-success">/* โฟลเดอร์เกม */</span>
             <ul>
               <li><i class="far fa-folder"></i> resource <span class="text-success d-none d-md-inline-block">/* ข้อมูลต่างๆของตัวเกม เช่น เสียง ภาพต่างๆ */</span></li>
               <li><i class="far fa-file"></i> demonEgg.exe <span class="text-success d-none d-md-inline-block">/* ไฟล์ตัวเกม */</span></li>
             </ul>
-            > src <span class="text-success d-none d-md-inline-block">/* โฟลเดอร์รวมโค้ดต้นฉบับของเกม */</span>
+            > src <span class="text-success">/* โฟลเดอร์รวมโค้ดต้นฉบับของเกม */</span>
             <ul>
               <li><i class="far fa-folder"></i> external <span class="text-success d-none d-md-inline-block">/* โค้ดต้นฉบับของ Libary ต่างๆที่นำมาใช้ */</span></li>
               <li><i class="far fa-folder"></i> resource <span class="text-success d-none d-md-inline-block">/* ข้อมูลต่างๆของตัวเกมที่ต้องบีบรวมกับต้วเกม เช่น ไอคอน */</span></li>

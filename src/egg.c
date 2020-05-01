@@ -128,10 +128,11 @@ void eggInit()
 
 void eggMain()
 {
+    UpdateMusicStream(eggGameMusic);
+    
     //----------------------------
     //-- ด่าน
     //----------------------------
-    UpdateMusicStream(eggGameMusic);
     for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
         if(i < 0 || i > 160) // no overflow
