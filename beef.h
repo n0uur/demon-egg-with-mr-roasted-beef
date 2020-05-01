@@ -24,7 +24,7 @@ Image tableImg;
 Image panImg;
 Image meatBowlImg;
 Image sauceBowlImg;
-Image rawMeatImg[4];
+Image rawMeatImg[9];
 
 // -----------------------
 
@@ -32,7 +32,7 @@ Texture2D table;
 Texture2D pan;
 Texture2D meatBowl;
 Texture2D sauceBowl;
-Texture2D rawMeat[4];
+Texture2D rawMeat[9];
 
 // -----------------------
 
@@ -54,15 +54,14 @@ int rectanglePosY[MEAT_COUNT];
 int rectangleHeight[MEAT_COUNT];
 int rectangleWidth[MEAT_COUNT];
 
-int calcBeefArrayPosX[MEAT_COUNT] = {-400, -300, -400, -500};
-int calcBeefArrayPosY[MEAT_COUNT] = {240, 200, 180, 180};
-int calcRectanglePosX[MEAT_COUNT] = {18, 25, 15, 25};
-int calcRectanglePosY[MEAT_COUNT] = {0, 0, -4, 0};
-int calcRectangleHeight[MEAT_COUNT] = {-10, -5, -10, 0};
-int calcRectangleWidth[MEAT_COUNT] = {-23, -26, -23, -35};
+int calcBeefArrayPosX[MEAT_COUNT] = {-430, -300, -400, -500, -400, -550,-500, -350, -250, -300};
+int calcBeefArrayPosY[MEAT_COUNT] = {240, 170, 150, 180, 320, 220, 310, 215, 250, 300};
+int calcRectanglePosX[MEAT_COUNT] = {18, 25, 15, 25, 25, 25, 25, 25, 25, 25};
+int calcRectanglePosY[MEAT_COUNT] = {0, 0, -4, 0, 0, 0, 0, 0, 0, 0};
+int calcRectangleHeight[MEAT_COUNT] = {-10, -5, -20, 0,-10, -10, -10,-10,-20,-20};
+int calcRectangleWidth[MEAT_COUNT] = {-23, -40, -23, -45,-35,-45,-46,-45,-40,-40};
 
 //-------------------------
-
 Rectangle mouseBox = {SCREEN_WIDTH/2 - 20, SCREEN_HEIGHT/2 - 20, 40, 40};
 Rectangle boxCollision = {0};
 Vector2 mPosition = { -100.0f, -100.0f };
