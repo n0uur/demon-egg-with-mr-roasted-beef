@@ -88,5 +88,14 @@ int draggingMeatIndex;
 
 // -----------------------
 
+int gameScore;
+
+// -----------------------
+
 bool isMeatInGrill(struct BEEF);
 bool isMeatInSauceBowl(struct BEEF beef);
+
+void eatThisMeat(int meatIndex);
+int scoreCalculateFromMeat(struct BEEF beef);
+
+int meatLeftCount();

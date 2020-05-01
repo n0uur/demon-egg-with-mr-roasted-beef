@@ -67,6 +67,8 @@ void beefInit() {
 
     generateMeat();
 
+    gameScore = 0;
+
     //----------------------------
 
     mousePosition = GetMousePosition();
@@ -285,3 +287,22 @@ bool isMeatInGrill(struct BEEF beef) {
 bool isMeatInSauceBowl(struct BEEF beef) {
     return (pow((beef.position.x - 1083), 2) / pow(120, 2)) + (pow((beef.position.y - 684), 2) / pow(50, 2)) <= 1;
 }
+
+void eatThisMeat(int meatIndex) {
+    beefs[meatIndex].state = BEEF_STATE_ATE;
+    gameScore += scoreCalculateFromMeat(beefs[meatIndex]);
+
+    if(meatLeftCount() <= 0) { // regenerate meat when ran out of it
+        generateMeat();
+    }
+}
+
+int meatLeftCount() {
+    int count = 0;
+    for(int i = 0; i < MEAT_COUNT; i++) {
+        if(beefs[i].state != BEEF_STATE_ATE)
+            count++;
+    }
+    return count;
+}
+
