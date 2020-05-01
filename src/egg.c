@@ -96,7 +96,7 @@ void eggInit()
 
     for (int i = 0; i < 160; i++)
     {
-        gameLevels[i].position = (Vector2){1366 / 2, baseLevelY -(1 + i) * levelHeight};
+        gameLevels[i].position = (Vector2){GetRandomValue(400, 966), baseLevelY -(1 + i) * levelHeight};
         if(i % 10 == 0 && i != 0) {
             gameLevels[i].movementType = MOVE_STATIC;
         }
@@ -141,6 +141,7 @@ void eggMain()
         struct Level *currentEditingLevel = &gameLevels[i];
 
         if(currentEggLevel == i && i == 0) {
+            currentEditingLevel->position.x = 1366/2;
             continue;
         }
 
