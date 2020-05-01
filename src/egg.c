@@ -11,7 +11,7 @@ void eggInit()
     goalImg = LoadImage("resources/dozenegg/images/goal.png");
     eggInBasket = LoadImage("resources/dozenegg/images/egg_in_basket.png");
     auraImg = LoadImage("resources/dozenegg/images/aura.png");
-    exitButtonImg = LoadImage("resources/dozenegg/images/quit.png");
+    retryButtonImg = LoadImage("resources/dozenegg/images/Retrybutton.png");
 
     basketWidth = 100;
     basketHeight = 40;
@@ -19,7 +19,7 @@ void eggInit()
     // Image resize (if needed)
     ImageResize(&eggImg, 40, 48);
     ImageResize(&basketImg, basketWidth, basketHeight);
-    ImageResize(&exitButtonImg, 200, 200);
+    ImageResize(&retryButtonImg, 300, 200);
 
     // Image converted to texture
     eggTexture = LoadTextureFromImage(eggImg);
@@ -28,7 +28,7 @@ void eggInit()
     goalTexture = LoadTextureFromImage(goalImg);
     eggInBasketTexture = LoadTextureFromImage(eggInBasket);
     auraTexture = LoadTextureFromImage(auraImg);
-    exitButtonTexture = LoadTextureFromImage(exitButtonImg);
+    retryButtonTexture = LoadTextureFromImage(retryButtonImg);
 
     // Unloaded Image
     UnloadImage(eggImg);
@@ -37,7 +37,7 @@ void eggInit()
     UnloadImage(goalImg);
     UnloadImage(eggInBasket);
     UnloadImage(auraImg);
-    UnloadImage(exitButtonImg);
+    UnloadImage(retryButtonImg);
 
     //----------------------------
 
@@ -269,7 +269,7 @@ void eggMain()
         if(lifePoint > 0) { // still have life point ! now we still dont have life point system
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT;
         }
-        else { // no more point
+        else if (GetTime() - lastFail >= 1){ // no more point
             CURRENT_EGG_STATE = EGG_DIE;
         }
     }
@@ -319,6 +319,12 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_WAIT;
         }
     }
+    else if(CURRENT_EGG_STATE == EGG_DIE) {
+        updateGravity();
+        if (IsKeyPressed(KEY_R)) {
+            eggInit();
+        }
+    }
 
 #if DEBUG
 
@@ -338,7 +344,7 @@ void eggMain()
     //----------------------------
     //-- กล้อง
     //----------------------------
-    if(CURRENT_EGG_STATE != EGG_FAIL) // when fail camera will not follow egg
+    if(CURRENT_EGG_STATE != EGG_FAIL && CURRENT_EGG_STATE != EGG_DIE) // when fail camera will not follow egg
         UpdateCameraCustom(&camera, cameraTargetPositionY - levelHeight / 2, GetFrameTime(), 1366, 768);
 
     //----------------------------
@@ -398,6 +404,10 @@ void eggMain()
         DrawRectangleRounded((Rectangle){ 1116 - 195, 5, 185, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 });
         DrawText(FormatText("Score : %d", score), 1116 - 185, 20, 25, RAYWHITE);
 
+        if (CURRENT_EGG_STATE == EGG_DIE) {
+            DrawRectangleRounded((Rectangle){ 380, 200, 600, 400}, 0.3, 0, (Color) {33, 32, 31, 0.9 * 255 });
+            DrawText(FormatText("You Failed!\nYour score: %d\nPress <R> to RETRY", score), 430, 260, 50, RAYWHITE);
+        }
         //DrawTexture(exitButtonTexture, 1136, 608, WHITE);
 
         circlePosX = 270;

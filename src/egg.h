@@ -28,7 +28,7 @@ Image backgroundImg;
 Image goalImg;
 Image eggInBasket;
 Image auraImg;
-Image exitButtonImg;
+Image retryButtonImg;
 
 // -----------------------
 
@@ -38,7 +38,7 @@ Texture2D backgroundTexture;
 Texture2D goalTexture;
 Texture2D eggInBasketTexture;
 Texture2D auraTexture;
-Texture2D exitButtonTexture;
+Texture2D retryButtonTexture;
 
 // -----------------------
 
