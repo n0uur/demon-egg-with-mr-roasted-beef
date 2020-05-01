@@ -55,6 +55,7 @@ enum EGG_PLAY_STATE {
     EGG_FAIL,
     EGG_FAIL_TO_WAIT,
     EGG_FAIL_TO_WAIT_2,
+    EGG_DIE,
 };
 
 enum LEVEL_MOVEMENT_TYPE {
@@ -91,6 +92,7 @@ float lastFail;
 
 Sound eggJumpSound;
 Sound eggRespawnSound;
+Music eggGameMusic;
 
 // -----------------------
 
