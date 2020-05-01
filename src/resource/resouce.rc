@@ -1,0 +1,21 @@
+GLFW_ICON ICON "egg_128x128.ico"
+
+1 VERSIONINFO
+FILEVERSION     1,0,0,0
+PRODUCTVERSION  1,0,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "IT KMITL"
+      VALUE "FileDescription", "Demon egg with MR.Roasted Beef The Game"
+      VALUE "FileVersion", "1.0"
+      VALUE "InternalName", "demon_egg_game"
+      VALUE "LegalCopyright", "Demon Egg"
+      VALUE "OriginalFilename", "demonEgg.exe"
+      VALUE "ProductName", "Demon egg with MR.Roasted Beef Game"
+      VALUE "ProductVersion", "1.0"
+    END
+  END
+END

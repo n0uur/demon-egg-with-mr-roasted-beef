@@ -54,12 +54,12 @@ int rectanglePosY[MEAT_COUNT];
 int rectangleHeight[MEAT_COUNT];
 int rectangleWidth[MEAT_COUNT];
 
-int calcBeefArrayPosX[MEAT_COUNT] = {-430, -300, -400, -500, -400, -550,-500, -350, -250, -300};
-int calcBeefArrayPosY[MEAT_COUNT] = {240, 170, 150, 180, 320, 220, 310, 215, 250, 300};
-int calcRectanglePosX[MEAT_COUNT] = {18, 25, 15, 25, 25, 25, 25, 25, 25, 25};
-int calcRectanglePosY[MEAT_COUNT] = {0, 0, -4, 0, 0, 0, 0, 0, 0, 0};
-int calcRectangleHeight[MEAT_COUNT] = {-10, -5, -20, 0,-10, -10, -10,-10,-20,-20};
-int calcRectangleWidth[MEAT_COUNT] = {-23, -40, -23, -45,-35,-45,-46,-45,-40,-40};
+int calcBeefArrayPosX[MEAT_COUNT] = {-430, -300, -400, -500, -400, -550,-500, -350, -250, -300};// คำนวณตำแหน่ง x ของเนื้อ
+int calcBeefArrayPosY[MEAT_COUNT] = {240, 170, 150, 180, 320, 220, 310, 215, 250, 300};// คำนวณตำแหน่ง y ของเนื้อ
+int calcRectanglePosX[MEAT_COUNT] = {18, 25, 15, 25, 25, 25, 25, 25, 25, 25};// คำนวณตำแหน่ง x ของกรอบรอบเนื้อ
+int calcRectanglePosY[MEAT_COUNT] = {0, 0, -4, 0, 0, 0, 0, 0, 0, 0};// คำนวณตำแหน่ง y ของกรอบรอบเนื้อ
+int calcRectangleHeight[MEAT_COUNT] = {-10, -5, -20, 0,-10, -10, -10,-10,-20,-20};// คำนวณขนาดความสูง ของกรอบรอบเนื้อ
+int calcRectangleWidth[MEAT_COUNT] = {-23, -40, -23, -45,-35,-45,-46,-45,-40,-40};// คำนวณขนาดความกว้าง ของกรอบรอบเนื้อ
 
 //-------------------------
 Rectangle mouseBox = {SCREEN_WIDTH/2 - 20, SCREEN_HEIGHT/2 - 20, 40, 40};
@@ -67,4 +67,5 @@ Rectangle boxCollision = {0};
 Vector2 mPosition = { -100.0f, -100.0f };
 
 //-------------------------
+
 void beefAreaCheck();

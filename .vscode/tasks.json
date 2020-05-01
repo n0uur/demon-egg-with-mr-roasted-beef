@@ -7,21 +7,22 @@
 			"command": "C:/raylib/mingw/bin/gcc.exe",
 			"args": [
 				"-g",
-				"${fileDirname}\\main.c",
-				"${fileDirname}\\game.c",
-				"${fileDirname}\\egg.c",
-				"${fileDirname}\\beef.c",
-				"${fileDirname}\\raylib\\src\\text.c",
+				"${workspaceFolder}\\src\\main.c",
+				"${workspaceFolder}\\src\\game.c",
+				"${workspaceFolder}\\src\\egg.c",
+				"${workspaceFolder}\\src\\beef.c",
+				"${workspaceFolder}\\src\\external\\raylib\\src\\text.c",
 				"-o",
-				"${fileDirname}\\demonEgg.exe",
+				"${workspaceFolder}\\bin\\demonEgg.exe",
 				"-I",
-				"${fileDirname}\\raylib\\src",
+				"${workspaceFolder}\\src\\external\\raylib\\src",
 				"-lraylib",
 				"-lopengl32",
 				"-lgdi32",
 				"-lwinmm",
 				"-std=c99",
-				"-mwindows"
+				"-mwindows",
+				"${workspaceFolder}\\src\\resource\\resouce.res"
 			],
 			"options": {
 				"cwd": "C:/raylib/mingw/bin"

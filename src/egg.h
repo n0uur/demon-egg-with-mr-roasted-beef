@@ -4,6 +4,21 @@
 
 int eggPositionX;
 int eggPositionY;
+float eggRotation;
+float nextRotation;
+
+void updateRotation();
+
+int cameraTargetPositionY;
+
+int lifePoint;
+int score;
+
+// -----------------------
+
+float auraOpacity;
+float auraScale;
+Vector2 auraPosition;
 
 // -----------------------
 
@@ -13,6 +28,7 @@ Image backgroundImg;
 Image goalImg;
 Image eggInBasket;
 Image auraImg;
+Image exitButtonImg;
 
 // -----------------------
 
@@ -22,6 +38,7 @@ Texture2D backgroundTexture;
 Texture2D goalTexture;
 Texture2D eggInBasketTexture;
 Texture2D auraTexture;
+Texture2D exitButtonTexture;
 
 // -----------------------
 
@@ -34,8 +51,10 @@ enum EGG_PLAY_STATE {
     EGG_WAIT,
     EGG_JUMP,
     EGG_FALL,
-    EGG_NEXT_LEVEL_TRANSITION,
-    EGG_FAIL_TRANSITION
+    EGG_NEXT_LEVEL,
+    EGG_FAIL,
+    EGG_FAIL_TO_WAIT,
+    EGG_FAIL_TO_WAIT_2,
 };
 
 enum LEVEL_MOVEMENT_TYPE {
@@ -62,7 +81,16 @@ int baseLevelY;
 float gravity;
 float velocityY;
 
+void resetGravity();
+void updateGravity();
+
 float lastLanding;
+float lastFail;
+
+// -----------------------
+
+Sound eggJumpSound;
+Sound eggRespawnSound;
 
 // -----------------------
 
@@ -72,10 +100,16 @@ struct Level {
     int movementSpeed; /* pixel/seconds */
 };
 
-struct Level gameLevels[150];
+struct Level gameLevels[160];
 
 int currentEggLevel;
 int positionYToGo;
 
 int basketWidth;
 int basketHeight;
+
+int circlePosX;
+int circlePosY;
+
+Rectangle sourceRec;
+Rectangle destRec;

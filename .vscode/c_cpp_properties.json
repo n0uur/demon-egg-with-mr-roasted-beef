@@ -3,8 +3,8 @@
         {
             "name": "Win32",
             "includePath": [
-                "${workspaceFolder}/**",
-                "${workspaceFolder}/raylib/src/**"
+                "${workspaceFolder}/src/**",
+                "${workspaceFolder}/src/external/raylib/src/**"
             ],
             "defines": [
                 "_DEBUG",
