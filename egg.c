@@ -41,6 +41,11 @@ void eggInit()
 
     //----------------------------
 
+    eggJumpSound = LoadSound("resources/dozenegg/sounds/jump.ogg");
+    eggRespawnSound = LoadSound("resources/dozenegg/sounds/respawn.ogg");
+
+    //----------------------------
+
     CURRENT_EGG_STATE = EGG_WAIT;
 
     floorPositionY = 650;
@@ -164,11 +169,13 @@ void eggMain()
 
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
-            CURRENT_EGG_STATE = EGG_JUMP;
             velocityY = -1.5;
             positionYToGo = baseLevelY - jumpHeight - levelHeight;
             // TraceLog(LOG_INFO, "jumping Highest point is : %d", positionYToGo);
             nextRotation += 360;
+            PlaySound(eggJumpSound);
+
+            CURRENT_EGG_STATE = EGG_JUMP;
         }
 
     if (IsKeyPressed(KEY_BACKSPACE)) {
@@ -264,6 +271,8 @@ void eggMain()
             auraPosition.y = eggPositionY + 10;
             auraScale = 0;
             auraOpacity = 1;
+
+            PlaySound(eggRespawnSound);
 
             resetGravity();
             lifePoint --;

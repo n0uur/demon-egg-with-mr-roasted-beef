@@ -89,6 +89,11 @@ float lastFail;
 
 // -----------------------
 
+Sound eggJumpSound;
+Sound eggRespawnSound;
+
+// -----------------------
+
 struct Level {
     Vector2 position;
     enum LEVEL_MOVEMENT_TYPE movementType;
