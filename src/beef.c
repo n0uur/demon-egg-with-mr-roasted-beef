@@ -65,8 +65,10 @@ void beefMain() {
         ClearBackground(CHOCOLATE);
         DrawTexture(table, SCREEN_WIDTH/2 - table.width/2, SCREEN_HEIGHT/2 - table.height/2 + 80, WHITE);
         DrawTexture(pan, SCREEN_WIDTH/2 - pan.width/2 + 100, SCREEN_HEIGHT/2 - pan.height/2 - 30, WHITE);
+        DrawEllipseLines(SCREEN_WIDTH/2 + 100, SCREEN_HEIGHT/2 - 50, 320, 110, WHITE);
         DrawTexture(meatBowl, SCREEN_WIDTH/2 - meatBowl.width/2 - 400, SCREEN_HEIGHT/2 - meatBowl.height/2 + 240, WHITE);
         DrawTexture(sauceBowl, SCREEN_WIDTH/2 - sauceBowl.width/2 + 400, SCREEN_HEIGHT/2 - sauceBowl.height/2 + 280, WHITE);
+        DrawEllipseLines(SCREEN_WIDTH/2 + 400, SCREEN_HEIGHT/2 - -300, 120, 50, WHITE);
         DrawRectangleRec(mouseBox, GREEN);
         
         for(int i = 0; i < 10; i++){
