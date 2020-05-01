@@ -161,7 +161,7 @@ void eggMain()
 
     //----------------------------
     //-- ไข่
-    //----------------------------.
+    //----------------------------
     cameraTargetPositionY = eggPositionY;
 
     destRec = (Rectangle) { eggPositionX, eggPositionY, eggTexture.width, eggTexture.height };
