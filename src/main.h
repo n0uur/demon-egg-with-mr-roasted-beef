@@ -1,15 +1,14 @@
 #include "raylib.h"
 #include "raymath.h"
 
-#define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 }  //For bg
+#define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 } 
 
-#define MEAT_COUNT 10
 #define SCREEN_WIDTH 1366
 #define SCREEN_HEIGHT 768
 
 // -----------------------
 
-#define DEBUG 1
+#define GAME_DEBUG 1
 
 // -----------------------
 

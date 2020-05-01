@@ -198,7 +198,7 @@ void eggMain()
         CURRENT_GAME_STATE = GAME_SELECT;
         StopMusicStream(eggGameMusic);
     }
-#if DEBUG
+#if GAME_DEBUG
         if (IsKeyPressed(KEY_N))
         {
             baseLevelY -= levelHeight;
@@ -296,7 +296,7 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_FAIL_TO_WAIT_2;
         }
 
-#if DEBUG
+#if GAME_DEBUG
         if (IsKeyPressed(KEY_R)) // reset
         {
             lastLanding = GetTime();
@@ -327,7 +327,7 @@ void eggMain()
         }
     }
 
-#if DEBUG
+#if GAME_DEBUG
 
         if (IsKeyPressed(KEY_U)) {
             if (lifePoint != 12)
@@ -388,7 +388,7 @@ void eggMain()
                     continue;
                 DrawTexture(basketTexture, gameLevels[i].position.x - basketWidth / 2, gameLevels[i].position.y - basketHeight / 2 + 15, WHITE);
 
-#if DEBUG
+#if GAME_DEBUG
 
                     DrawText(FormatText("Level: %d Speed : %d", i + 1, gameLevels[i].movementSpeed), gameLevels[i].position.x - 100, gameLevels[i].position.y + 60, 20, BLACK);
                     DrawText(FormatText("X: %.2f Y : %.2f", gameLevels[i].position.x, gameLevels[i].position.y), gameLevels[i].position.x - 100, gameLevels[i].position.y + 85, 20, BLACK);
