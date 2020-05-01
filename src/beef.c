@@ -11,13 +11,19 @@ void beefInit() {
     rawMeatImg[1] = LoadImage("resources/roastedbeef/raw_meat/68_r.png");
     rawMeatImg[2] = LoadImage("resources/roastedbeef/raw_meat/74_r.png");
     rawMeatImg[3] = LoadImage("resources/roastedbeef/raw_meat/80_r.png");
+    rawMeatImg[4] = LoadImage("resources/roastedbeef/raw_meat/68_r.png");
+    rawMeatImg[5] = LoadImage("resources/roastedbeef/raw_meat/68_r.png");
+    rawMeatImg[6] = LoadImage("resources/roastedbeef/raw_meat/74_r.png");
+    rawMeatImg[7] = LoadImage("resources/roastedbeef/raw_meat/80_r.png");
+    rawMeatImg[8] = LoadImage("resources/roastedbeef/raw_meat/74_r.png");
+    rawMeatImg[9] = LoadImage("resources/roastedbeef/raw_meat/62_r.png");
 
     //Resize for new screen size
     ImageResize(&tableImg, 1366, 720);
     ImageResize(&panImg, 1000, 400);
     ImageResize(&meatBowlImg, 500, 300);
     ImageResize(&sauceBowlImg, 400, 200);
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 10; i++)
         ImageResize(&rawMeatImg[i], 140, 88);
 
     //Load to Vram
@@ -25,7 +31,7 @@ void beefInit() {
     pan = LoadTextureFromImage(panImg);
     meatBowl = LoadTextureFromImage(meatBowlImg);
     sauceBowl = LoadTextureFromImage(sauceBowlImg);
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 10; i++)
         rawMeat[i] = LoadTextureFromImage(rawMeatImg[i]);
     
     //Unload From RAM
@@ -33,11 +39,11 @@ void beefInit() {
     UnloadImage(panImg);
     UnloadImage(meatBowlImg);
     UnloadImage(sauceBowlImg);
-    for(int i = 0; i < 4; i++)
+    for(int i = 0; i < 10; i++)
         UnloadImage(rawMeatImg[i]);
 
     //Position of beef
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 10; i++){
         beefArray[i].posX = SCREEN_WIDTH/2 - rawMeatImg[i].width/2 + calcBeefArrayPosX[i];
         beefArray[i].posY = SCREEN_HEIGHT/2 - rawMeatImg[i].height/2 + calcBeefArrayPosY[i];
         beefArray[i].CURRENT_SIDE = FACE;
@@ -63,14 +69,11 @@ void beefMain() {
         DrawTexture(sauceBowl, SCREEN_WIDTH/2 - sauceBowl.width/2 + 400, SCREEN_HEIGHT/2 - sauceBowl.height/2 + 280, WHITE);
         DrawRectangleRec(mouseBox, GREEN);
         
-        // วาดเนื้อ และ กรอบรอบเนื้อ
-        for(int i = 0; i < 4; i++){
+        for(int i = 0; i < 10; i++){
             DrawTexture(rawMeat[i], beefArray[i].posX, beefArray[i].posY, WHITE);
             DrawRectangleLines(rectanglePosX[i], rectanglePosY[i], rectangleWidth[i], rectangleHeight[i], WHITE);
-
-            // เช็ค ว่าคลิ๊กชิ้นไหน รวมทั้ง ย้ายไปตำแหน่งไหน
             if (meatBox[i].collision&&meatBox[i].collisionArea == max&&IsMouseButtonDown(MOUSE_LEFT_BUTTON)){
-                DrawText(FormatText("Collision Area: %d [%d]", max, i), SCREEN_WIDTH/2 - 100, 40 + 10, 20, BLACK); // Debug ขนาดและชินที่ i
+                DrawText(FormatText("Collision Area: %d [%d]", max, i), SCREEN_WIDTH/2 - 100, 40 + 10, 20, BLACK);
                 beefArray[i].posX = mouseBox.x - (rectangleWidth[i] / 2);beefArray[i].posY = mouseBox.y - (rectangleHeight[i] / 2) + 30;
                 rectanglePosX[i] = beefArray[i].posX + calcRectanglePosX[i];
                 rectanglePosY[i] = beefArray[i].posY + calcRectanglePosY[i];
@@ -82,9 +85,8 @@ void beefMain() {
 }
 
 void beefAreaCheck(){
-    // เช็ค พื้นที่ว่าอันไหนเยอะเวลาคลิ๊กจะใช้อันที่ เม้าส์กินพื้นที่เยอะกว่า
     max = 0;
-    for(int i = 0; i < 4; i++){
+    for(int i = 0; i < 10; i++){
         meatBox[i].collision = CheckCollisionRecs(mouseBox, meatBox[i].box);
         meatBox[i].box = (Rectangle){rectanglePosX[i], rectanglePosY[i], rectangleWidth[i], rectangleHeight[i]};
         if (meatBox[i].collision) boxCollision = GetCollisionRec(mouseBox, meatBox[i].box);
