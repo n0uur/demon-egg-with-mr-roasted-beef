@@ -89,3 +89,4 @@ int draggingMeatIndex;
 // -----------------------
 
 bool isMeatInGrill(struct BEEF);
+bool isMeatInSauceBowl(struct BEEF beef);

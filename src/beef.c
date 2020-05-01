@@ -213,9 +213,10 @@ void beefMain() {
             DrawRectangleLines(beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88, (Color) {0, 255, 0, 255});
 
             DrawText(
-                TextFormat("TYPE : %s\n%s\nFRONT : %.2f\nBACK : %.2f\n%.2f %.2f %.2f %.2f",
+                TextFormat("TYPE : %s\nGRILL : %s\nSAUCE : %s\nFRONT : %.2f\nBACK : %.2f\n%.2f %.2f %.2f %.2f",
                     beefs[i].currentSide == FRONT ? "FRONT":"BACK",
                     isMeatInGrill(beefs[i]) ? "IN":"OUT",
+                    isMeatInSauceBowl(beefs[i]) ? "IN":"OUT",
                     beefs[i].frontGrilledTime,
                     beefs[i].backGrilledTime,
                     beefs[i].timeNeedToCooked,
@@ -223,9 +224,9 @@ void beefMain() {
                     beefs[i].timeNeedToOverCooked2,
                     beefs[i].timeNeedToUneatable
                 ),
-                beefs[i].position.x - 70,
-                beefs[i].position.y - 44,
-                12,
+                beefs[i].position.x - 60,
+                beefs[i].position.y - 42,
+                8,
                 GREEN
             );
 #endif
@@ -258,7 +259,7 @@ void generateMeat() {
     }
 }
 
-bool isMeatInGrill(struct BEEF checkBeef) {
+bool isMeatInGrill(struct BEEF beef) {
 
     // สูตร
     // p = (pow((x - h), 2) / pow(a, 2)) + (pow((y - k), 2) / pow(b, 2));
@@ -268,5 +269,9 @@ bool isMeatInGrill(struct BEEF checkBeef) {
     // if you hate math, you also hate programming too.
     //
 
-    return (pow((checkBeef.position.x - 783), 2) / pow(320, 2)) + (pow((checkBeef.position.y - 334), 2) / pow(110, 2)) <= 1;
+    return (pow((beef.position.x - 783), 2) / pow(320, 2)) + (pow((beef.position.y - 334), 2) / pow(110, 2)) <= 1;
+}
+
+bool isMeatInSauceBowl(struct BEEF beef) {
+    return (pow((beef.position.x - 1083), 2) / pow(120, 2)) + (pow((beef.position.y - 684), 2) / pow(50, 2)) <= 1;
 }
