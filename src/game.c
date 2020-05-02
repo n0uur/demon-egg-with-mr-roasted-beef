@@ -69,7 +69,7 @@ void gameMain() {
         }
     }
 
-    CloseWindow();
+    gameDeinit();
 
 }
 
@@ -134,7 +134,7 @@ void gameSelectMain() {
 
 }
 
-void gameFini() {
+void gameDeinit() {
 
     UnloadFont(fontRSU);
     UnloadFont(fontBM);
