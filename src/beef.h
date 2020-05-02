@@ -62,6 +62,8 @@ struct BEEF {
     double timeNeedToOverCooked;
     double timeNeedToOverCooked2;
     double timeNeedToUneatable;
+
+    Sound grillSound;
 };
 
 struct BEEF beefs[MEAT_COUNT];

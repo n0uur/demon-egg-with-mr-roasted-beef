@@ -65,7 +65,7 @@ void beefInit() {
 
     //----------------------------
 
-    grillSound = LoadSound("resources/roastedbeef/sounds/grill.ogg");
+    // grillSound = LoadSound("resources/roastedbeef/sounds/grill.ogg");
     gameOverSound = LoadSound("resources/roastedbeef/sounds/endgame.ogg");
     respawnSound = LoadSound("resources/roastedbeef/sounds/respawn.ogg");
     badScoreSound = LoadSound("resources/roastedbeef/sounds/score_bad.ogg");
@@ -174,7 +174,7 @@ void beefMain() {
             beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
             // -- เล่นเสียง
             if(isMeatInGrill(beefs[draggingMeatIndex])) {
-                PlaySound(grillSound);
+                PlaySound(beefs[draggingMeatIndex].grillSound);
             }
             // -- ใส่ถ้วยน้ำจิ้ม / กิน
             else if(isMeatInSauceBowl(beefs[draggingMeatIndex])) {
@@ -369,6 +369,8 @@ void generateMeat() {
         beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(3, 8);
         beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 8);
         beefs[i].timeNeedToUneatable = beefs[i].timeNeedToOverCooked2 + GetRandomValue(5, 10);
+
+        beefs[i].grillSound = LoadSound("resources/roastedbeef/sounds/grill.ogg");
     }
 }
 
@@ -404,6 +406,7 @@ void eatThisMeat(int meatIndex) {
     if(meatLeftCount() <= 0) { // regenerate meat when ran out of it
         generateMeat();
         gameTimeLeft += 40;
+        gameScore += 200;
         PlaySound(respawnSound);
     }
 }
