@@ -1,6 +1,16 @@
 #include "main.h"
 
 #define MEAT_COUNT 10
+
+// -----------------------
+
+enum GAME_BEEF_PLAY_STATE {
+    GAME_BEEF_PLAYING,
+    GAME_BEEF_GAMEOVER
+};
+
+enum GAME_BEEF_PLAY_STATE CURRENT_BEEF_GAME_STATE;
+
 // -----------------------
 
 void generateMeat();
@@ -99,5 +109,9 @@ bool isMeatInSauceBowl(struct BEEF beef);
 
 void eatThisMeat(int meatIndex);
 int scoreCalculateFromMeat(struct BEEF beef);
+int healthCalculateFromMeat(struct BEEF beef);
 
 int meatLeftCount();
+
+// -----------------------
+

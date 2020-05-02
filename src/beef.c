@@ -78,117 +78,140 @@ void beefInit() {
 
     isDragging = false;
     draggingMeatIndex = -1;
+
+    //----------------------------
+
+    CURRENT_BEEF_GAME_STATE = GAME_BEEF_PLAYING;
 }
 
 void beefMain() {
 
-#if GAME_DEBUG
-    if(IsKeyPressed(KEY_R)) {
-        generateMeat();
-    }
-#endif
+    if(CURRENT_BEEF_GAME_STATE == GAME_BEEF_PLAYING) {
 
-    //----------------------------
-    //-- เวลา
-    //----------------------------
-    gameTimeLeft -= GetFrameTime();
-
-    //----------------------------
-    //-- ความสุก
-    //----------------------------
-    for(int i = 0; i < MEAT_COUNT; i++) {
-        if(isDragging && draggingMeatIndex == i)
-            continue;
-
-        if(!isMeatInGrill(beefs[i]))
-            continue;
-
-        struct BEEF *editingBeef = &beefs[i];
-
-        if(editingBeef->currentSide == FRONT) {
-            editingBeef->frontGrilledTime += GetFrameTime() / 2.0;
-            editingBeef->backGrilledTime += GetFrameTime();
+    #if GAME_DEBUG
+        if(IsKeyPressed(KEY_R)) {
+            generateMeat();
         }
-        else {
-            editingBeef->frontGrilledTime += GetFrameTime();
-            editingBeef->backGrilledTime += GetFrameTime() / 2.0;
+    #endif
+
+        //----------------------------
+        //-- ตัวแปร / เวลา
+        //----------------------------
+        gameTimeLeft -= GetFrameTime();
+
+        if(gameHealth > 100)
+            gameHealth = 100;
+        else if(gameHealth <= 0) {
+            CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
         }
 
-        if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToUneatable) {
-            editingBeef->frontState = BEEF_SIDE_STATE_UNEATABLE;
-        }
-        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked2) {
-            editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED_2;
-        }
-        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked) {
-            editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED;
-        }
-        else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToCooked) {
-            editingBeef->frontState = BEEF_SIDE_STATE_COOKED;
+        if(gameTimeLeft <= 1) {
+            CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
         }
 
-        if(editingBeef->backGrilledTime >= editingBeef->timeNeedToUneatable) {
-            editingBeef->backState = BEEF_SIDE_STATE_UNEATABLE;
-        }
-        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked2) {
-            editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED_2;
-        }
-        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked) {
-            editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED;
-        }
-        else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToCooked) {
-            editingBeef->backState = BEEF_SIDE_STATE_COOKED;
-        }
-    }
-
-    //----------------------------
-    //-- ลากเนื้อ
-    //----------------------------
-
-    mousePosition = GetMousePosition();
-
-    if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-        // flip
-        beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
-        // dont forget to play sound and effect when put to tao fai
-        if(isMeatInGrill(beefs[draggingMeatIndex])) {
-
-        }
-        else if(isMeatInSauceBowl(beefs[draggingMeatIndex])) {
-            eatThisMeat(draggingMeatIndex);
-        }
-
-        isDragging = false;
-        draggingMeatIndex = -1;
-    }
-
-    if(isDragging && draggingMeatIndex != -1) {
-        beefs[draggingMeatIndex].position.x += mousePosition.x - lastMousePosition.x;
-        beefs[draggingMeatIndex].position.y += mousePosition.y - lastMousePosition.y;
-
-        if(beefs[draggingMeatIndex].position.x < 10)
-            beefs[draggingMeatIndex].position.x = 10;
-        else if(beefs[draggingMeatIndex].position.x > 1356)
-            beefs[draggingMeatIndex].position.x = 1356;
-
-        if(beefs[draggingMeatIndex].position.y < 10)
-            beefs[draggingMeatIndex].position.y = 10;
-        else if(beefs[draggingMeatIndex].position.y > 758)
-            beefs[draggingMeatIndex].position.y = 758;
-    }
-    else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+        //----------------------------
+        //-- ความสุก
+        //----------------------------
         for(int i = 0; i < MEAT_COUNT; i++) {
-            if(beefs[i].state == BEEF_STATE_ATE)
+            if(isDragging && draggingMeatIndex == i)
                 continue;
 
-            if(CheckCollisionPointRec(mousePosition, (Rectangle) { beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88 })) {
-                isDragging = true;
-                draggingMeatIndex = i;
+            if(!isMeatInGrill(beefs[i]))
+                continue;
+
+            struct BEEF *editingBeef = &beefs[i];
+
+            if(editingBeef->currentSide == FRONT) {
+                editingBeef->frontGrilledTime += GetFrameTime() / 2.0;
+                editingBeef->backGrilledTime += GetFrameTime();
+            }
+            else {
+                editingBeef->frontGrilledTime += GetFrameTime();
+                editingBeef->backGrilledTime += GetFrameTime() / 2.0;
+            }
+
+            if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToUneatable) {
+                editingBeef->frontState = BEEF_SIDE_STATE_UNEATABLE;
+            }
+            else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked2) {
+                editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED_2;
+            }
+            else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToOverCooked) {
+                editingBeef->frontState = BEEF_SIDE_STATE_OVER_COOKED;
+            }
+            else if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToCooked) {
+                editingBeef->frontState = BEEF_SIDE_STATE_COOKED;
+            }
+
+            if(editingBeef->backGrilledTime >= editingBeef->timeNeedToUneatable) {
+                editingBeef->backState = BEEF_SIDE_STATE_UNEATABLE;
+            }
+            else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked2) {
+                editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED_2;
+            }
+            else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToOverCooked) {
+                editingBeef->backState = BEEF_SIDE_STATE_OVER_COOKED;
+            }
+            else if(editingBeef->backGrilledTime >= editingBeef->timeNeedToCooked) {
+                editingBeef->backState = BEEF_SIDE_STATE_COOKED;
             }
         }
-    }
 
-    lastMousePosition = mousePosition;
+        //----------------------------
+        //-- ลากเนื้อ
+        //----------------------------
+
+        mousePosition = GetMousePosition();
+
+        if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
+            // flip
+            beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
+            // dont forget to play sound and effect when put to tao fai
+            if(isMeatInGrill(beefs[draggingMeatIndex])) {
+
+            }
+            else if(isMeatInSauceBowl(beefs[draggingMeatIndex])) {
+                eatThisMeat(draggingMeatIndex);
+            }
+
+            isDragging = false;
+            draggingMeatIndex = -1;
+        }
+
+        if(isDragging && draggingMeatIndex != -1) {
+            beefs[draggingMeatIndex].position.x += mousePosition.x - lastMousePosition.x;
+            beefs[draggingMeatIndex].position.y += mousePosition.y - lastMousePosition.y;
+
+            if(beefs[draggingMeatIndex].position.x < 10)
+                beefs[draggingMeatIndex].position.x = 10;
+            else if(beefs[draggingMeatIndex].position.x > 1356)
+                beefs[draggingMeatIndex].position.x = 1356;
+
+            if(beefs[draggingMeatIndex].position.y < 10)
+                beefs[draggingMeatIndex].position.y = 10;
+            else if(beefs[draggingMeatIndex].position.y > 758)
+                beefs[draggingMeatIndex].position.y = 758;
+        }
+        else if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            for(int i = 0; i < MEAT_COUNT; i++) {
+                if(beefs[i].state == BEEF_STATE_ATE)
+                    continue;
+
+                if(CheckCollisionPointRec(mousePosition, (Rectangle) { beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88 })) {
+                    isDragging = true;
+                    draggingMeatIndex = i;
+                }
+            }
+        }
+
+        lastMousePosition = mousePosition;
+    
+    }
+    else if(CURRENT_BEEF_GAME_STATE == GAME_BEEF_GAMEOVER) {
+        if(IsKeyPressed(KEY_R)) {
+            beefInit();
+        }
+    }
 
     //----------------------------
     // -- แสดงผล
@@ -274,13 +297,33 @@ void beefMain() {
         //----------------------------
         // -- แสดง UI
         //----------------------------
-        DrawRectangle(0, 0, 1366, 100, (Color) {0, 0, 0, 200});
-        DrawText(TextFormat("Time left : %d s.", (int)gameTimeLeft), 50, 38, 32, WHITE);
 
-        DrawRectangleLinesEx((Rectangle) {383, 20, 600, 60}, 4, YELLOW);
+        if(CURRENT_BEEF_GAME_STATE != GAME_BEEF_GAMEOVER) {
 
-        DrawText(TextFormat("Score : %d", gameScore), 1083, 38, 32, WHITE);
-        
+            DrawRectangle(0, 0, 1366, 100, (Color) {0, 0, 0, 200});
+            DrawText(TextFormat("Time left : %d s.", (int)gameTimeLeft), 50, 38, 32, WHITE);
+
+            DrawRectangle(383, 20, 600 * gameHealth / 100.0, 60, RED);
+            DrawRectangleLinesEx((Rectangle) {383, 20, 600, 60}, 4, YELLOW);
+
+#if GAME_DEBUG
+            DrawText(TextFormat("Health : %d", gameHealth), 583, 38, 32, WHITE);
+#endif
+
+            DrawText(TextFormat("Score : %d", gameScore), 1083, 38, 32, WHITE);
+        }
+
+        //----------------------------
+        // -- แสดง GAME OVER UI
+        //----------------------------
+        if(CURRENT_BEEF_GAME_STATE == GAME_BEEF_GAMEOVER) {
+            DrawRectangleRounded((Rectangle) {383, 184, 600, 220}, 0.2, 0, (Color) {0, 0, 0, 240});
+
+            DrawText("GAME OVER", 500, 220, 60, WHITE);
+            DrawText(TextFormat("Your score is : %d", gameScore), 520, 300, 32, WHITE);
+            DrawText(TextFormat("Press <R> to retry!", gameScore), 570, 342, 24, WHITE);
+        }
+
     EndDrawing();
 }
 
@@ -327,15 +370,90 @@ bool isMeatInSauceBowl(struct BEEF beef) {
 
 void eatThisMeat(int meatIndex) {
     beefs[meatIndex].state = BEEF_STATE_ATE;
-    gameScore += scoreCalculateFromMeat(beefs[meatIndex]);
+
+    int addedScore = scoreCalculateFromMeat(beefs[meatIndex]);
+    gameScore += addedScore;
+
+    gameHealth += healthCalculateFromMeat(beefs[meatIndex]);
 
     if(meatLeftCount() <= 0) { // regenerate meat when ran out of it
         generateMeat();
+        gameTimeLeft += 40;
     }
 }
 
 int scoreCalculateFromMeat(struct BEEF beef) {
-    return 5;
+    int score = 0;
+    if(beef.frontState == BEEF_SIDE_STATE_RAW) {
+        score -= 50;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_COOKED) {
+        score += 20;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED) {
+        score += 5;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED_2) {
+        score -= 25;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_UNEATABLE) {
+        score -= 45;
+    }
+
+    if(beef.backState == BEEF_SIDE_STATE_RAW) {
+        score -= 50;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_COOKED) {
+        score += 20;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED) {
+        score += 5;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED_2) {
+        score -= 25;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_UNEATABLE) {
+        score -= 45;
+    }
+
+    return score;
+}
+
+int healthCalculateFromMeat(struct BEEF beef) {
+    int health = 0;
+    if(beef.frontState == BEEF_SIDE_STATE_RAW) {
+        health -= 60;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_COOKED) {
+        health += 20;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED) {
+        health += 15;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED_2) {
+        health -= 40;
+    }
+    else if(beef.frontState == BEEF_SIDE_STATE_UNEATABLE) {
+        health -= 90;
+    }
+
+    if(beef.backState == BEEF_SIDE_STATE_RAW) {
+        health -= 100;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_COOKED) {
+        health += 80;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED) {
+        health += 15;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED_2) {
+        health -= 40;
+    }
+    else if(beef.backState == BEEF_SIDE_STATE_UNEATABLE) {
+        health -= 90;
+    }
+
+    return health;
 }
 
 int meatLeftCount() {
