@@ -3,9 +3,6 @@
 
 #define CHOCOLATE CLITERAL(Color) { 118, 57, 16, 255 } 
 
-#define SCREEN_WIDTH 1366
-#define SCREEN_HEIGHT 768
-
 // -----------------------
 
 #define GAME_DEBUG 1
