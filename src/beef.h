@@ -112,6 +112,7 @@ int draggingMeatIndex;
 int gameScore;
 int gameHealth;
 double gameTimeLeft;
+double healthTimer;
 
 // -----------------------
 

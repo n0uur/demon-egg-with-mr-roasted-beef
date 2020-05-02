@@ -81,6 +81,7 @@ void beefInit() {
     gameScore = 0;
     gameTimeLeft = 121;
     gameHealth = 100;
+    healthTimer = 0;
 
     //----------------------------
 
@@ -127,12 +128,12 @@ void beefMain() {
             struct BEEF *editingBeef = &beefs[i];
 
             if(editingBeef->currentSide == FRONT) {
-                editingBeef->frontGrilledTime += GetFrameTime() / 2.0;
+                editingBeef->frontGrilledTime += GetFrameTime() / 3.0;
                 editingBeef->backGrilledTime += GetFrameTime();
             }
             else {
                 editingBeef->frontGrilledTime += GetFrameTime();
-                editingBeef->backGrilledTime += GetFrameTime() / 2.0;
+                editingBeef->backGrilledTime += GetFrameTime() / 3.0;
             }
 
             if(editingBeef->frontGrilledTime >= editingBeef->timeNeedToUneatable) {
@@ -223,6 +224,11 @@ void beefMain() {
         else if(gameHealth <= 0 || gameTimeLeft <= 1) {
             CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
             PlaySound(gameOverSound);
+        }
+
+        if(GetTime() - healthTimer > 2) {
+            gameHealth -= 2;
+            healthTimer = GetTime();
         }
     }
     //----------------------------
@@ -366,9 +372,9 @@ void generateMeat() {
         beefs[i].backGrilledTime = 0;
 
         beefs[i].timeNeedToCooked = GetRandomValue(5, 15);
-        beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(3, 8);
-        beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 8);
-        beefs[i].timeNeedToUneatable = beefs[i].timeNeedToOverCooked2 + GetRandomValue(5, 10);
+        beefs[i].timeNeedToOverCooked = beefs[i].timeNeedToCooked + GetRandomValue(2, 4);
+        beefs[i].timeNeedToOverCooked2 = beefs[i].timeNeedToOverCooked + GetRandomValue(2, 4);
+        beefs[i].timeNeedToUneatable = beefs[i].timeNeedToOverCooked2 + GetRandomValue(2, 4);
 
         beefs[i].grillSound = LoadSound("resources/roastedbeef/sounds/grill.ogg");
     }
@@ -454,10 +460,10 @@ int healthCalculateFromMeat(struct BEEF beef) {
         health -= 60;
     }
     else if(beef.frontState == BEEF_SIDE_STATE_COOKED) {
-        health += 20;
+        health += 10;
     }
     else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED) {
-        health += 15;
+        health += 5;
     }
     else if(beef.frontState == BEEF_SIDE_STATE_OVER_COOKED_2) {
         health -= 40;
@@ -467,13 +473,13 @@ int healthCalculateFromMeat(struct BEEF beef) {
     }
 
     if(beef.backState == BEEF_SIDE_STATE_RAW) {
-        health -= 100;
+        health -= 60;
     }
     else if(beef.backState == BEEF_SIDE_STATE_COOKED) {
-        health += 80;
+        health += 10;
     }
     else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED) {
-        health += 15;
+        health += 5;
     }
     else if(beef.backState == BEEF_SIDE_STATE_OVER_COOKED_2) {
         health -= 40;
