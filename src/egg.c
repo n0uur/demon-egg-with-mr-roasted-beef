@@ -45,6 +45,8 @@ void eggInit()
     eggRespawnSound = LoadSound("resources/dozenegg/sounds/respawn.ogg");
     eggGameMusic = LoadMusicStream("resources/dozenegg/sounds/Cipher2.ogg");
 
+    thunderSound = LoadSound("resources/dozenegg/sounds/thunder.ogg");
+
     //----------------------------
 
     CURRENT_EGG_STATE = EGG_WAIT;
@@ -71,6 +73,8 @@ void eggInit()
     lifePoint = 12;
 
     score = 0;
+
+    lied = false;
 
     //----------------------------
 
@@ -182,6 +186,24 @@ void eggMain()
     // -- ไข่อยู่ในตระกร้า
     if (CURRENT_EGG_STATE == EGG_WAIT)
     {
+        // -- end game ?
+        if(currentEggLevel == 146) {
+
+            PlaySound(thunderSound);
+
+            for(int i = 0; i < 146; i++) {
+                baseLevelY += levelHeight;
+                eggPositionY = baseLevelY;
+                currentEggLevel--;
+                lastLanding = GetTime();
+            }
+
+            eggPositionX = 1366/2;
+            lied = true;
+            StopMusicStream(eggGameMusic);
+
+        }
+
         eggPositionY = baseLevelY;
 
         auraScale = LERP(auraScale, 2, 0.1);
@@ -377,11 +399,16 @@ void eggMain()
 
         ClearBackground(RAYWHITE);
 
-        DrawTexture(backgroundTexture, 0, 0, WHITE);
+        DrawRectangle(0, 0, 1366, 768, BLACK);
+        
+        DrawTexture(backgroundTexture, 0, 0, lied ? (Color) {255, 255, 255, 120} : WHITE);
 
         BeginMode2D(camera);
 
             DrawText("USE <BACKSPACE> TO GIVEUP!", 450, -400, 20, WHITE);
+
+            if(lied)
+                DrawText("HAHAHAHAHAHAHAHAHAHAHAHAHA", 450, 400, 100, WHITE);
 
             DrawText("YOU COME SO FAR!", 700, -2500, 20, WHITE);
 

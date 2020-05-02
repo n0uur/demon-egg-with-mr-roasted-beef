@@ -92,6 +92,7 @@ float lastFail;
 
 Sound eggJumpSound;
 Sound eggRespawnSound;
+Sound thunderSound;
 Music eggGameMusic;
 
 // -----------------------
@@ -115,3 +116,7 @@ int circlePosY;
 
 Rectangle sourceRec;
 Rectangle destRec;
+
+// -----------------------
+
+bool lied;
