@@ -93,7 +93,8 @@ void eggInit()
     camera.zoom = 1.0f;
 
     //----------------------------
-
+    //-- Map generate
+    //----------------------------
     for (int i = 0; i < 160; i++)
     {
         gameLevels[i].position = (Vector2){GetRandomValue(400, 966), baseLevelY -(1 + i) * levelHeight};
@@ -128,10 +129,21 @@ void eggInit()
 
 void eggMain()
 {
+    //----------------------------
+    //-- เพลงพิ้นหลัง
+    //----------------------------
     UpdateMusicStream(eggGameMusic);
+
+    //----------------------------
+    //-- ออกจากเกม
+    //----------------------------
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        CURRENT_GAME_STATE = GAME_SELECT;
+        StopMusicStream(eggGameMusic);
+    }
     
     //----------------------------
-    //-- ด่าน
+    //-- อัพเดทด่าน
     //----------------------------
     for(int i = currentEggLevel - 5; i < currentEggLevel + 10; i++) {
 
@@ -161,12 +173,13 @@ void eggMain()
     }
 
     //----------------------------
-    //-- ไข่
+    //-- อัพเดทไข่
     //----------------------------
     cameraTargetPositionY = eggPositionY;
 
     destRec = (Rectangle) { eggPositionX, eggPositionY, eggTexture.width, eggTexture.height };
 
+    // -- ไข่อยู่ในตระกร้า
     if (CURRENT_EGG_STATE == EGG_WAIT)
     {
         eggPositionY = baseLevelY;
@@ -183,7 +196,7 @@ void eggMain()
             else
                 eggPositionX = LERP(eggPositionX, gameLevels[currentEggLevel - 1].position.x, 0.6);
         }
-
+        // -- กระโดด
         if (IsKeyPressed(KEY_SPACE) || IsKeyPressed(KEY_UP))
         {
             velocityY = -1.5;
@@ -195,10 +208,6 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_JUMP;
         }
 
-    if (IsKeyPressed(KEY_BACKSPACE)) {
-        CURRENT_GAME_STATE = GAME_SELECT;
-        StopMusicStream(eggGameMusic);
-    }
 #if GAME_DEBUG
         if (IsKeyPressed(KEY_N))
         {
@@ -222,6 +231,7 @@ void eggMain()
         }
 #endif
     }
+    // -- ไข่กระโดด - กำลังลอยขึ้น
     else if (CURRENT_EGG_STATE == EGG_JUMP)
     {
         updateRotation();
@@ -239,6 +249,7 @@ void eggMain()
             resetGravity();
         }
     }
+    // -- ไข่กระโดด - กำลังตก
     else if (CURRENT_EGG_STATE == EGG_FALL)
     {
         updateRotation();
@@ -258,6 +269,7 @@ void eggMain()
             }
         }
     }
+    // -- ไข่ตกมาตรงตะกร้า
     else if (CURRENT_EGG_STATE == EGG_NEXT_LEVEL)
     {
         updateRotation();
@@ -268,6 +280,7 @@ void eggMain()
         CURRENT_EGG_STATE = EGG_WAIT;
         score += (currentEggLevel <= 10 ? 10 : ((currentEggLevel/10)+1)*10); 
     }
+    // -- ไข่ตกไม่ตรงตะกร้า
     else if (CURRENT_EGG_STATE == EGG_FAIL)
     {
         updateGravity();
@@ -279,6 +292,7 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_DIE;
         }
     }
+    // -- ไข่หล่นไปแล้ววววว เตรียมเกิดใหม่
     else if (CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT) {
 
         cameraTargetPositionY = baseLevelY - 60;
@@ -310,6 +324,7 @@ void eggMain()
         }
 #endif
     }
+    // -- ไข่หล่นไปแล้ววววว เตรียมเกิดใหม่
     else if(CURRENT_EGG_STATE == EGG_FAIL_TO_WAIT_2) {
         updateGravity();
         eggPositionX = gameLevels[currentEggLevel - 1].position.x;
@@ -325,6 +340,7 @@ void eggMain()
             CURRENT_EGG_STATE = EGG_WAIT;
         }
     }
+    // -- ชีวิตหมด / ตาย
     else if(CURRENT_EGG_STATE == EGG_DIE) {
         updateGravity();
         if (IsKeyPressed(KEY_R)) {
@@ -420,7 +436,7 @@ void eggMain()
         circlePosY = 5;
 
         //----------------------------
-        // -- Life Point
+        // -- Life Point UI
         //----------------------------
         DrawRectangleRounded((Rectangle){ 255, 5, 155, 55}, 0.3, 0, (Color) {33, 32, 31, 0.6 * 255 }); // แผงไข่
 
