@@ -68,6 +68,8 @@ void beefInit() {
     generateMeat();
 
     gameScore = 0;
+    gameTimeLeft = 121;
+    gameHealth = 100;
 
     //----------------------------
 
@@ -85,6 +87,11 @@ void beefMain() {
         generateMeat();
     }
 #endif
+
+    //----------------------------
+    //-- เวลา
+    //----------------------------
+    gameTimeLeft -= GetFrameTime();
 
     //----------------------------
     //-- ความสุก
@@ -183,10 +190,17 @@ void beefMain() {
 
     lastMousePosition = mousePosition;
 
+    //----------------------------
+    // -- แสดงผล
+    //----------------------------
+
     BeginDrawing();
 
         ClearBackground(CHOCOLATE);
 
+        //----------------------------
+        // -- แสดงฉาก
+        //----------------------------
         DrawTexture(tableTexture, 0, 80, WHITE);
         DrawTexture(panTexture, 1366/2 - panTexture.width / 2 + 100, 768/2 - panTexture.height/2 - 30, WHITE);
         
@@ -198,6 +212,9 @@ void beefMain() {
         DrawEllipseLines(1366 / 2 + 400, 768 / 2 - -300, 120, 50, RED); // น้ำจิ้ม
 #endif
 
+        //----------------------------
+        // -- แสดงเนื้อ
+        //----------------------------
         for(int i = 0; i < MEAT_COUNT; i++) {
 
             if(beefs[i].state == BEEF_STATE_ATE)
@@ -228,8 +245,9 @@ void beefMain() {
                     textureToDraw = overCooked2MeatTexture[beefs[i].type];
                 }
             }
+
             DrawTextureRec(textureToDraw, (Rectangle) {0, 0, rawMeatTexture[beefs[i].type].width * (beefs[i].currentSide == FRONT ? 1:-1), rawMeatTexture[beefs[i].type].height}, (Vector2) {beefs[i].position.x - 70, beefs[i].position.y - 44}, overlayColor);
-            // DrawTexture(rawMeatTexture[beefs[i].type], beefs[i].position.x - 70, beefs[i].position.y - 44, WHITE);
+            
 #if GAME_DEBUG
             DrawRectangleLines(beefs[i].position.x - 70, beefs[i].position.y - 44, 140, 88, (Color) {0, 255, 0, 255});
 
@@ -252,6 +270,16 @@ void beefMain() {
             );
 #endif
         }
+
+        //----------------------------
+        // -- แสดง UI
+        //----------------------------
+        DrawRectangle(0, 0, 1366, 100, (Color) {0, 0, 0, 200});
+        DrawText(TextFormat("Time left : %d s.", (int)gameTimeLeft), 50, 38, 32, WHITE);
+
+        DrawRectangleLinesEx((Rectangle) {383, 20, 600, 60}, 4, YELLOW);
+
+        DrawText(TextFormat("Score : %d", gameScore), 1083, 38, 32, WHITE);
         
     EndDrawing();
 }
@@ -307,7 +335,7 @@ void eatThisMeat(int meatIndex) {
 }
 
 int scoreCalculateFromMeat(struct BEEF beef) {
-    return 0;
+    return 5;
 }
 
 int meatLeftCount() {
