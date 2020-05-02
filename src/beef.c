@@ -65,6 +65,17 @@ void beefInit() {
 
     //----------------------------
 
+    grillSound = LoadSound("resources/roastedbeef/sounds/grill.ogg");
+    gameOverSound = LoadSound("resources/roastedbeef/sounds/endgame.ogg");
+    respawnSound = LoadSound("resources/roastedbeef/sounds/respawn.ogg");
+    badScoreSound = LoadSound("resources/roastedbeef/sounds/score_bad.ogg");
+    goodScoreSound = LoadSound("resources/roastedbeef/sounds/score_good.ogg");
+    gameStartSound = LoadSound("resources/roastedbeef/sounds/start.ogg");
+
+    PlaySound(gameStartSound);
+
+    //----------------------------
+
     generateMeat();
 
     gameScore = 0;
@@ -86,6 +97,16 @@ void beefInit() {
 
 void beefMain() {
 
+    //----------------------------
+    //-- กลับหน้าหลัก
+    //----------------------------
+    if (IsKeyPressed(KEY_BACKSPACE)) {
+        CURRENT_GAME_STATE = GAME_SELECT;
+    }
+
+    //----------------------------
+    //-- กำลังเล่น
+    //----------------------------
     if(CURRENT_BEEF_GAME_STATE == GAME_BEEF_PLAYING) {
 
     #if GAME_DEBUG
@@ -93,22 +114,6 @@ void beefMain() {
             generateMeat();
         }
     #endif
-
-        //----------------------------
-        //-- ตัวแปร / เวลา
-        //----------------------------
-        gameTimeLeft -= GetFrameTime();
-
-        if(gameHealth > 100)
-            gameHealth = 100;
-        else if(gameHealth <= 0) {
-            CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
-        }
-
-        if(gameTimeLeft <= 1) {
-            CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
-        }
-
         //----------------------------
         //-- ความสุก
         //----------------------------
@@ -164,12 +169,14 @@ void beefMain() {
         mousePosition = GetMousePosition();
 
         if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON)) {
-            // flip
-            beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
-            // dont forget to play sound and effect when put to tao fai
-            if(isMeatInGrill(beefs[draggingMeatIndex])) {
 
+            // -- กลับด้าน
+            beefs[draggingMeatIndex].currentSide = beefs[draggingMeatIndex].currentSide == FRONT ? BACK:FRONT;
+            // -- เล่นเสียง
+            if(isMeatInGrill(beefs[draggingMeatIndex])) {
+                PlaySound(grillSound);
             }
+            // -- ใส่ถ้วยน้ำจิ้ม / กิน
             else if(isMeatInSauceBowl(beefs[draggingMeatIndex])) {
                 eatThisMeat(draggingMeatIndex);
             }
@@ -205,8 +212,22 @@ void beefMain() {
         }
 
         lastMousePosition = mousePosition;
-    
+
+        //----------------------------
+        //-- ตัวแปร / เวลา
+        //----------------------------
+        gameTimeLeft -= GetFrameTime();
+
+        if(gameHealth > 100)
+            gameHealth = 100;
+        else if(gameHealth <= 0 || gameTimeLeft <= 1) {
+            CURRENT_BEEF_GAME_STATE = GAME_BEEF_GAMEOVER;
+            PlaySound(gameOverSound);
+        }
     }
+    //----------------------------
+    //-- เกมจบ / แพ้
+    //----------------------------
     else if(CURRENT_BEEF_GAME_STATE == GAME_BEEF_GAMEOVER) {
         if(IsKeyPressed(KEY_R)) {
             beefInit();
@@ -372,6 +393,10 @@ void eatThisMeat(int meatIndex) {
     beefs[meatIndex].state = BEEF_STATE_ATE;
 
     int addedScore = scoreCalculateFromMeat(beefs[meatIndex]);
+    if(addedScore >= 0)
+        PlaySound(goodScoreSound);
+    else
+        PlaySound(badScoreSound);
     gameScore += addedScore;
 
     gameHealth += healthCalculateFromMeat(beefs[meatIndex]);
@@ -379,6 +404,7 @@ void eatThisMeat(int meatIndex) {
     if(meatLeftCount() <= 0) { // regenerate meat when ran out of it
         generateMeat();
         gameTimeLeft += 40;
+        PlaySound(respawnSound);
     }
 }
 
@@ -464,4 +490,3 @@ int meatLeftCount() {
     }
     return count;
 }
-

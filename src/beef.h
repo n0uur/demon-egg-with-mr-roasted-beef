@@ -90,6 +90,15 @@ Texture2D overCooked2MeatTexture[4];
 
 // -----------------------
 
+Sound grillSound;
+Sound gameOverSound;
+Sound respawnSound;
+Sound badScoreSound;
+Sound goodScoreSound;
+Sound gameStartSound;
+
+// -----------------------
+
 Vector2 mousePosition;
 Vector2 lastMousePosition;
 
