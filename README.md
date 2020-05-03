@@ -50,6 +50,11 @@
 
 <hr>
 
+### ดาวน์โหลดเกม
+ - [ดาวน์โหลดเกมเวอร์ชั่นล่าสุด](https://n0uur.github.io/demon-egg-with-mr-roasted-beef/release/latest.zip)
+
+<hr>
+
 ### คำอธิบายไฟล์ และรหัสต้นฉบับ
  - [ไฟล์ในรหัสต้นฉบับ](https://n0uur.github.io/demon-egg-with-mr-roasted-beef/#directory)
  - [คำอธิบายรหัสต้นฉบับ](https://n0uur.github.io/demon-egg-with-mr-roasted-beef/#docs)
