@@ -50,6 +50,12 @@
 
 <hr>
 
+### คำอธิบายไฟล์ และรหัสต้นฉบับ
+ - [ไฟล์ในรหัสต้นฉบับ](https://n0uur.github.io/demon-egg-with-mr-roasted-beef/#directory)
+ - [คำอธิบายรหัสต้นฉบับ](https://n0uur.github.io/demon-egg-with-mr-roasted-beef/#docs)
+
+<hr>
+
 ### อ้างอิง
  - [Raylib](https://www.raylib.com/)
 
