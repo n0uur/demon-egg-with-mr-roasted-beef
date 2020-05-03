@@ -48,6 +48,7 @@ body {
   width: 100vw;
   position: relative;
   overflow: hidden;
+  margin: 0;
 }
 
 .nolimit-block {
@@ -55,6 +56,7 @@ body {
   position: relative;
   background-size: cover;
   overflow-x: hidden;
+  margin: 0;
 }
 
 .long-block {
@@ -64,6 +66,7 @@ body {
   position: relative;
   background-size: cover;
   overflow-x: hidden;
+  margin: 0;
 }
 
 .top-bottom {
@@ -86,6 +89,10 @@ body {
 
 .bg-gray-to-black {
   background-image: linear-gradient(rgb(14, 14, 14), black);
+}
+
+.bg-black-to-code-gray {
+  background-image: linear-gradient(black, rgb(37, 37, 38));
 }
 
 .bg-code {
