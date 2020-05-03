@@ -37,15 +37,38 @@
           <a class="nav-link" href="#about">เกี่ยวกับ</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="#howtoplay">วิธีการเล่น</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#video">วิดิโอนำเสนอ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#poster">โปสเตอร์</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="#directory">ไฟล์ในรหัสต้นฉบับ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#docs">Documents</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#advisor">อาจารย์ที่ปรึกษา</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#developers">ผู้พัฒนา</a>
         </li>
       </ul>
     </div>
   </nav>
 
   <div class="block top" id="home">
-    <div class="animated infinite slow pulse logo-img">
+    <div class="animated infinite slow pulse logo-img text-center">
       <img src="./static/logo.png" class="logo-img animated fadeIn delay-1s" draggable="false">
+      <div class="logo-img text-white text-center d-md-none animated fadeIn delay-1s" style="z-index: 3; height: 40px; bottom: 30vh; top: auto; width: 100vw;">
+        <h5>เพื่อการแสดงผลเว็บไซต์ที่ดีที่สุด</h5>
+        <h6>กรุณาเข้าด้วยคอมพิวเตอร์หรือแท็บเล็ต</h6>
+        <p class="text-warning">* ข้อมูลบางส่วนอาจไม่แสดงผล *</p>
+      </div>
     </div>
     <img src="./static/egg_beef.png" class="egg-beef-img" draggable="false">
     <img src="./static/beef.png" class="beef-img" draggable="false">
@@ -67,17 +90,15 @@
           <p>
             ไข่ตัวร้ายกับนายเนื้อย่าง เป็นผลงานของนักศึกษาจากคณะเทคโนโลยีสารสนเทศ
             สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง
-            ซึ่งเป็นโครงงานในวิชา Computer Programming รหัสวิชา 06016315 ซึ่งทางผู้จัดทำได้จัดทำเกม
-            "ไข่ตัวร้ายกับนายเนื้อย่าง" ขึ้นมา
+            ซึ่งเป็นโครงงานในวิชา Computer Programming รหัสวิชา 06016315
           </p>
           <p>
             เกม "ไข่ตัวร้ายกับนายเนื้อย่าง" เป็นเกมที่สร้างขึ้นมาเลียนแบบเกม Beff Grill (<span class="jp-font">焼き肉亭</span>) และเกม The Amazing Dare-Dozen
-            ขึ้นมา
             โดยทั้งสองเกมต้นฉบับสร้างขึ้นมาด้วย Flash และต้องเล่นผ่านเว็บไซต์ผ่านโปรแกรม Flash Player
             ซึ่งกำลังจะหมดการสนับสนุนในบราวเซอร์ใหม่ ๆ ในเร็ววันนี้
             ทางผู้จัดทำจึงตัดสินใจทำเกมเลียนแบบขึ้นมาโดยเขียนด้วยภาษา C ที่สามารถเล่นได้บนระบบปฏิบัติการ Windows
             ได้อยู่ตลอด และยังสามารถแปลง Source code ของเรา
-            ไปบนแพลตฟอร์มอื่นได้ด้วยเช่น Mac OS และ Android เนื่องจากทางผู้จัดทำได้พัฒนาเกมโดยใช้ช Libary <a
+            ไปบนแพลตฟอร์มอื่นได้ด้วยเช่น Mac OS และ Android เนื่องจากทางผู้จัดทำได้พัฒนาเกมโดยใช้ Libary <a
               href="https://www.raylib.com/" target="_BLANK" class="text-warning">"Raylib"</a>
           </p>
           <div class="border-top mb-3 w-50"></div>
@@ -93,11 +114,76 @@
       </div>
     </div>
   </div>
-  <div class="block bg-gray-to-black block-code bg-code" id="directory">
+  <div class="block bg-gray-to-black text-white" id="howtoplay">
+    <div class="container h-100">
+      <div class="row h-100">
+        <div class="col-md-12 p-3 my-auto">
+          <h3>วิธีการเล่น</h3>
+          <p class="d-none d-md-block">
+            ภายในเกม "ไข่ตัวร้ายกับนายเนื้อย่าง" จะมีเกมย่อย 2 เกมได้แก่ "ไข่ตัวร้าย" และ "นายเนื้อย่าง" โดยสามารถเลือกที่จะเล่นได้ทันทีที่เปิดเกม
+          </p>
+          <p>
+            <span class="text-warning">ไข่ตัวร้าย</span> ผู้เล่นจะได้บังคับไข่ฟองหนึ่งที่ต้องกระโดดไปตามตะกร้าที่อยู่สูงขึ้นไปเรื่อยๆ ด้วยเหตุผลบางอย่าง ผู้เล่นจะต้องขึ้นไปให้ถึง
+            ชั้นที่ 145 โดยจะมีชีวิตทั้งหมด 12 ชีวิต โดยเมื่อผู้เล่นกระโดดพลาดตกจากตะกร้าจะถูกหัก 1 ชีวิต<span class="d-none d-md-inline-block">และเมื่อชีวิตหมดจะถือว่าเกมจบและสรุปคะแนนที่ได้รับ และระหว่างทางจะมีข้อความ
+            ภายในเกมให้อ่านเพื่อทราบรายละเอียดบางอย่างเกี่ยวกับเกมนี้? เนื้อเรื่องอย่างนั้นเหรอ?</span>
+          </p>
+          <p>
+            <span class="text-danger">นายเนื้อย่าง</span> เมื่อเริ่มเกมผู้เล่นจะมีเวลา 120 วินาทีและแต้มชีวิต 100% ในการเล่น ผู้เล่นจะต้องนำเนื้อภายในจานไปย่าง
+            และเมื่อเนื้อสุกจะต้องนำเนื้อใส่ถ้วยน้ำจิ้มเพื่อรับประทาน โดยในแต่ละวินาที เวลาจะนับถอยลังลง และในทุกๆ 2 วินาที
+            แต้มเลือดของผู้เล่นจะลดลง 2 หน่วย และเมื่อเวลา หรือแต้มเลือดหมดจะถือว่าเกมจบทันทีแล้วสรุปคะแนนที่ได้รับ โดยผู้เล่นจะได้รับแต้มเลือดเพิ่มเมื่อทานเนื้อที่ย่างอย่างพอดี
+            แต่จะถูกหักแต้มหากเนื้อไม่สามารถทานได้ เช่น ดิบ หรือไหม้เกินไป<span class="d-none d-md-inline-block">และเมื่อเนื้อภายในจานหมดเกมจะนำเนื้อมาเสิร์ฟเพิ่มให้, เพิ่มเวลาในการเล่น 40 วินาที และ
+            เพิ่มคะแนนโบนัส 200 คะแนนในทุก ๆ ครั้งที่นำเนื้อมาเสิร์ฟใหม่! <span class="font-italic text-muted">"อยากรู้จังว่ากินเท่าไหร่จึงจะอิ่ม"</span></span>
+          </p>
+          <div class="row">
+            <div class="col-6 d-none d-md-inline-block">
+              <img src="./static/game_beef.png" class="img-fluid rounded profile-img">
+            </div>
+            <div class="col-6 d-none d-md-inline-block">
+              <img src="./static/game_egg.png" class="img-fluid rounded profile-img">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="block bg-black-to-gray" id="video">
+    <div class="container h-100 text-white">
+      <div class="row h-100">
+        <div class="col-md-12 my-auto p-3 p-md-4 rounded">
+          <h3><i class="fab fa-youtube"></i> วิดิโอนำเสนอ</h3>
+          <div class="text-center">
+            <iframe class="video-frame" src="https://www.youtube.com/embed/9xwazD5SyVg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="block bg-gray-to-black" id="poster">
+    <div class="container h-100 text-white">
+      <div class="row h-100">
+        <div class="col-md-6 my-auto p-3 p-md-4 bg-dark-tran rounded">
+          <h3>โปสเตอร์</h3>
+          <p>
+            โปสเตอร์เกม "ไข่ตัวร้ายกับนายเนื้อย่าง" ทำด้วยโปรแกรม Adobe illustrator ขนาด A1 (150 DPI)
+          </p>
+          <a href="./poster/poster_full.jpg" target="_BLANK">
+            <button class="btn btn-success"><i class="fas fa-download"></i> รูปขนาดเต็ม</button>
+          </a>
+          <a href="./poster/poster.ai" class="d-none d-md-inline-block"  target="_BLANK">
+            <button class="btn btn-dark"><i class="fas fa-download"></i> ไฟล์โปรเจค illustrator</button>
+          </a>
+        </div>
+        <div class="col-md-6 my-auto text-center">
+          <img src="./poster/poster_web.jpg" style="max-height: 60vh;" class="img-fluid rounded animated swing infinite slower">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="block bg-gray-to-black bg-code block-code bg-code" id="directory">
     <div class="container h-100 text-white">
       <div class="row h-100">
         <div class="col-md-4 d-none d-md-block my-auto"></div>
-        <div class="col-md-8 my-auto p-4 bg-dark-tran rounded">
+        <div class="col-md-8 my-auto p-2 p-sm-2 p-md-4 bg-dark-tran rounded">
           <h3>ไฟล์ในรหัสต้นฉบับ</h3>
           <p>
             โดยผู้จัดทำเปิดโค้ดต้นฉบับ (Source Code) เป็นสารธารณะ และอนุญาตให้สามารถนำไปพัฒนาต่อได้โดย แต่ต้องไม่นำไปใช้งานเชิงพาณิชย์
@@ -130,6 +216,435 @@
               <li><i class="far fa-file"></i> main.c <span class="text-success d-none d-md-inline-block">/* โค้ดต้นฉบับของตัวโปรแกรมหลัก */</span></li>
               <li><i class="far fa-file"></i> main.h <span class="text-success d-none d-md-inline-block">/* โค้ดต้นฉบับ header ของตัวโปรแกรมหลัก */</span></li>
             </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nolimit-block bg-gray-to-black" id="docs">
+    <div class="container-fluid long-container h-100 text-white">
+      <div class="row h-100">
+        <div class="col-md-12 my-auto p-3 p-sm-2 p-md-4">
+          <h3>คำอธิบายรหัสต้นฉบับเบื้องต้น</h3>
+          <p>
+            คำอธิบายเบื้อต้นสำหรับรหัสต้นฉบับเกม ไข่ตัวร้ายกับนายเนื้อย่าง
+          </p>
+          <div class="border-top mt-3 mb-3 w-50"></div>
+            > src
+            <ul>
+              <li class="text-muted"><i class="far fa-folder"></i> external</li>
+              <li class="text-muted"><i class="far fa-folder"></i> resource</li>
+              <li class="text-default">
+                <i class="far fa-file"></i> beef.c
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> beefInit</span>();
+                    <span class="text-success">// ฟังก์ชั่นเริ่มต้นของเกมนายเนื้อย่าง โดยจะทำการโหลดภาพและเสียงต่างๆและทำการตั้งค่าเริ่มต้นให้กับตัวแปรต่างๆ</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> beefMain</span>();
+                    <span class="text-success">// ฟังก์ชั่นหลักของเกมนายเนื้อย่าง โดยจะมีการแสดง UI ต่างๆให้เห็นในเกม
+                      และการเช็คสถานะต่างๆของสภาพแวดล้มในเกม</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> generateMeat</span>();
+                    <span class="text-success">// ฟังก์ชั่นเพื่อสุ่มค่าต่างๆของเนื้อเช่น รูปแบบเนื้อ และตั้งค่าเริ่มต้นของเนื้อแต่ละชิ้น</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">bool</span><span class="text-warning"> isMeatInGrill</span>(struct BEEF beef);
+                    <span class="text-success">// ฟังก์ชั่นเพื่อตรวจสอบว่าตำแหน่งของเนื้ออยู่ในเตาย่างหรือไม่ จาก struct เนื้อที่รับเข้ามา</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">bool</span><span class="text-warning"> isMeatInSauceBowl</span>(struct BEEF beef);
+                    <span class="text-success">// ฟังก์ชั่นเพื่อตรวจสอบว่าตำแหน่งของเนื้ออยู่ในถ้วยน้ำจิ้มหรือไม่ จาก struct เนื้อที่รับเข้ามา</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> eatThisMeat</span>(int meatIndex);
+                    <span class="text-success">// ฟังก์ชั่นที่เรียกใช้เมื่อเนื้อถูกกินแล้ว โดยจะมีการเรียกใช้ฟังก์ชั่นคำนวณต่างๆเพื่อนำไปแสดงผลต่อไป
+                      และเล่นเสียงต่าง ๆ โดยรับข้อมูล Index ของเนื้อที่อยู่ใน Array beefs</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">int</span><span class="text-warning"> scoreCalculateFromMeat</span>(struct BEEF beef);
+                    <span class="text-success">// ฟังก์ชั่นคำนวณคะแนนที่จะได้จากการกินเนื้อ จาก struct เนื้อที่รับเข้ามา</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">int</span><span class="text-warning"> healthCalculateFromMeat</span>(struct BEEF beef);
+                    <span class="text-success">// ฟังก์ชั่นคำนวณแต้มเลือดที่จะได้จากการกินเนื้อ จาก struct เนื้อที่รับเข้ามา</span>
+                  </li>
+                </ul>
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">int</span><span class="text-warning"> meatLeftCount</span>;
+                    <span class="text-success">// ฟังก์ชั่นคำนวณจำนวนเนื้อทั้งหมดที่ยังไม่ถูกกิน</span>
+                  </li>
+                </ul>
+              </li>
+              <li class="text-info">
+                <i class="far fa-file"></i> beef.h
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> CURRENT_BEEF_GAME_STATE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะปัจจุบันของเกมย่างเนื้อ เช่นกำลังเล่น หรือเกมจบแล้ว</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> BEEF_SIDE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะด้านของเนื้อที่กำลังย่าง</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> BEEF_STATE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะของเนื้อว่าถูกกินไปหรือยัง</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> BEEF_SIDE_STATE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะของเนื้อแต่ละด้านว่ามีความสุกอยู่ในระดับไหน</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> BEEF_TYPE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บรูปแบบของเนื้อ ซึ่งมีอยู่ทั้งหมด 4 แบบ</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">struct</span><span class="text-default"> BEEF</span>;
+                    <span class="text-success">// struct ใช้สำหรับเก็บข้อมูลของเนื้อแต่ละชิ้นซื้อใน struct นี้จะประกอบด้วยข้อมูลต่าง ๆ ที่ต้องใช้ในเนื้อแต่ละชิ้น
+                      เช่นตำแหน่งของเนื้อ ความสุกของแต่ละด้าน ด้านที่กำลังพลิก เวลาที่ใช้เพื่อที่จะสุก เสียงของเนื้อบนเตาย่าง เป็นต้น
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">struct</span><span class="text-default"> BEEF</span> beefs[MEAT_COUNT];
+                    <span class="text-success">// ตัวแปรประเภท struct BEEF สำหรับเก็บข้อมูลเนื้อแต่ละชิ้นเป็น Array ขนาดตามที่กำหนดใน MEAT_COUNT
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">bool</span> isDragging;
+                    <span class="text-success">// ตัวแปร boolean ใช้สำหรับตรวจสอบว่าเมาส์กำลังลากเนื้อชิ้นไหนอยู่หรือไม่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> draggingMeatIndex;
+                    <span class="text-success">// ตัวแปร int ใช้สำหรับเก็บ Index ของเนื้อชิ้นที่กำลังลาก
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li class="text-muted"><i class="far fa-file"></i> compile.cmd</li>
+              <li class="text-default">
+                <i class="far fa-file"></i> egg.c
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> eggInit</span>();
+                    <span class="text-success">// เป็นฟังก์ชั่นเริ่มต้นเกมไข่ตัวร้าย โดยจะทำการโหลดภาพโหลดเสียงของเกมและตั้งค่าเริ่มต้นของตัวแปรที่จะใช้ในฟังก็ชั่นต่อไป</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> eggMain</span>();
+                    <span class="text-success">// เป็นฟังก็ชั่นหลักของเกมไข่ตัวร้าย โดยจะมีการแสดง UI ต่างๆให้เห็นในเกม
+                      และการตรวจสอบสถานะต่าง ๆ ของสภาพแวดล้อมในเกม เช่น ไข่, ตะกร้า เป็นต้นเพื่อให้เกมแสดงผลอย่างถูกต้อง</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> UpdateCameraCustom</span>();
+                    <span class="text-success">// ฟังก์ชั่นเพื่อการอัพเดตมุมกล้องอย่างเหมาะสม และลื่นไหล</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> resetGravity</span>();
+                    <span class="text-success">// เป็นฟังก์ชั่นที่ทำการรีเซ็ตความเร็วของไข่เป็นศูนย์</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> updateGravity</span>();
+                    <span class="text-success">// เป็นฟังก์ชั่นที่ทำให้ไข่หล่นไปตามแรงโน้มถ่วงด้วยความเร็วที่เหมาะสม</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">void</span><span class="text-warning"> updateRotation</span>();
+                    <span class="text-success">// เป็นฟังก์ชั่นที่ใช้ทำให้เวลาไข่กระโดดแล้วไข่จะหมุน</span>
+                  </li>
+                </ul>
+              </li>
+              <li class="text-info">
+                <i class="far fa-file"></i> egg.h
+                <ul>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> eggPositionX;
+                    <span class="text-success">// ตัวแปรประเภท int ใช้สำหรับเก็บตำแหน่งแกน X ของไข่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> eggPositionY;
+                    <span class="text-success">// ตัวแปรประเภท int ใช้สำหรับเก็บตำแหน่งแกน Y ของไข่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">float</span> eggRotation;
+                    <span class="text-success">// ตัวแปรประเภท float ใช้สำหรับองศาของไข่ที่กำลังหมุน
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">float</span> nextRotation;
+                    <span class="text-success">// ตัวแปรประเภท float ใช้สำหรับองศาเป้าหมายของที่ไข่ที่ต้องหมุนไป
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> cameraTargetPositionY;
+                    <span class="text-success">// ตัวแปรเก็บเป้าหมายที่กล้องจะต้องตามบนแกน Y
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> lifePoint;
+                    <span class="text-success">// ตัวแปรเก็บจำนวนชีวิตของไข่ที่ยังเหลืออยู่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> score;
+                    <span class="text-success">// ตัวแปรเก็บจำนวนคะแนนของผู้เล่น
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">float</span> auraOpacity;
+                    <span class="text-success">// ตัวแปรสำหรับแสดงผลเอฟเฟคตอนไข่เกิดใหม่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">float</span> auraScale;
+                    <span class="text-success">// ตัวแปรสำหรับแสดงผลเอฟเฟคตอนไข่เกิดใหม่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">Vector2</span> auraPosition;
+                    <span class="text-success">// ตัวแปรสำหรับแสดงผลเอฟเฟคตอนไข่เกิดใหม่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> GAME_PLAY_STATE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะเกมว่ากำลังเล่น หรือจบแล้ว</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> EGG_PLAY_STATE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บสถานะของไข่ขณะเล่นว่าไข่อยู่ในสถานะใด เช่น กำลังกระโดด กำลังหล่น เป็นต้น</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">enum</span><span class="text-default"> LEVEL_MOVEMENT_TYPE</span>;
+                    <span class="text-success">// ตัวแปรประเภท enum เก็บรูปแบบของด่านแต่ละชั้นว่ามีรูปแบบการเคลื่อนที่แบบใด</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">Camera2D</span><span class="text-white"> camera</span>;
+                    <span class="text-success">// ตัวแปรเก็บข้อมูลของกล้อง 2 มิติที่ใช้ในเกม</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> floorPositionY;
+                    <span class="text-success">// ตัวแปรเก็บพิกัดแกน Y ของพื้น (จุดเริ่มต้นเกม)
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> levelHeight;
+                    <span class="text-success">// ตัวแปรเก็บความสูงของด่านแต่ละชั้น
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> jumpHeight;
+                    <span class="text-success">// ตัวแปรเก็บความสูงของไข่ที่สามารถกระโดดได้
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> baseLevelY;
+                    <span class="text-success">// ตัวแปรเก็บความสูงของไข่ปัจจุบันที่กำลังอยู่
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">flaot</span> gravity;
+                    <span class="text-success">// ตัวแปรเก็บค่าแรงโน้มถ่วงของเกม
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">flaot</span> velocityY;
+                    <span class="text-success">// ตัวแปรเก็บค่าความเร็วของไข่ในขณะปัจจุบัน
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">flaot</span> lastLanding;
+                    <span class="text-success">// ตัวแปรเก็บเวลาของไข่ที่ตกลงตะกร้าครั้งล่าสุด
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">flaot</span> lastFail;
+                    <span class="text-success">// ตัวแปรเก็บเวลาของไข่ที่ตกไม่ลงตะกร้าครั้งล่าสุด
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">struct</span><span class="text-default"> Level</span>;
+                    <span class="text-success">// struct เก็บข้อมูลของด่านในแต่ละชั้น เช่นตำแหน่งพิกัด รูปแบบการเคลื่อนที่ ความเร็ว เป็นต้น</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">struct</span><span class="text-default"> Level</span> gameLevels[160];
+                    <span class="text-success">// struct เก็บข้อมูลของด่านในแต่ละชั้นใน Array</span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> currentEggLevel;
+                    <span class="text-success">// ตัวแปรเก็บชั้นที่อยู่ในปัจจุบัน
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> positionYToGo;
+                    <span class="text-success">// ตัวแปรใช้สำหรับตอนคำนวนพิกัดของไข่ตอนกระโดด
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> basketWidth;
+                    <span class="text-success">// ตัวแปรเก็บความกว้างของตะกร้า หน่วยเป็น Pixel
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> basketHeight;
+                    <span class="text-success">// ตัวแปรเก็บความสูงของตะกร้า หน่วยเป็น Pixel
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> circlePosX;
+                    <span class="text-success">// ตัวแปรใช้คำนวนตำแหน่งที่แสดง UI
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">int</span> circlePosY;
+                    <span class="text-success">// ตัวแปรใช้คำนวนตำแหน่งที่แสดง UI
+                    </span>
+                  </li>
+                  <li class="text-white">
+                    <span class="text-primary">bool</span> lied;
+                    <span class="text-success">// ตัวแปรแห่งการโกหก!?
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li class="text-default"><i class="far fa-file"></i> game.c</li>
+              <li class="text-default"><i class="far fa-file"></i> main.c</li>
+              <li class="text-info"><i class="far fa-file"></i> main.h</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nolimit-block bg-black-to-gray" id="advisor">
+    <div class="container-fluid h-100 text-white">
+      <div class="row h-100">
+        <div class="col-md-12 my-auto p-2 p-sm-2 p-md-4 rounded">
+          <h3 class="mb-5 text-center">อาจารย์ที่ปรึกษา</h3>
+          <div class="row d-flex flex-row justify-content-center">
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <img class="card-img-top profile-img" src="./static/advisor/Kitsuchart-300x300.jpg">
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center">รศ.ดร. กิติ์สุชาต พสุภา</h4>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">อาจารย์ที่ปรึกษา</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <img class="card-img-top profile-img" src="./static/advisor/Panwit-300x300.jpg">
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center">รศ.ดร. ปานวิทย์ ธุวะนุติ</h4>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">อาจารย์ที่ปรึกษา</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="nolimit-block bg-gray-to-black" id="developers">
+    <div class="container-fluid h-100 text-white">
+      <div class="row h-100">
+        <div class="col-md-12 my-auto p-2 p-sm-2 p-md-4 rounded">
+          <h3 class="mb-5 text-center">ผู้พัฒนา</h3>
+          <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <a href="https://github.com/n0uur" target="_BLANK">
+                  <img class="card-img-top profile-img" src="./static/members/no.png">
+                </a>
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center"><a href="https://github.com/n0uur" target="_BLANK" class="text-white">n0uur</a></h4>
+                  <p class="card-text text-white text-center">
+                    นาย กฤตณัฏฐ์ ศิริพรนพคุณ<br>
+                    รหัสนักศึกษา 62070002
+                  </p>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">ผู้ให้กำเนิดโลกและจักรวาล</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <a href="https://github.com/hikariz01" target="_BLANK">
+                  <img class="card-img-top profile-img" src="./static/members/pure.png">
+                </a>
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center"><a href="https://github.com/hikariz01" target="_BLANK" class="text-white">hikariz01</a></h4>
+                  <p class="card-text text-white text-center">
+                    นาย กิตติภัค พนารินทร์<br>
+                    รหัสนักศึกษา 62070016
+                  </p>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">ผู้ให้กำเนิดไข่ตัวร้าย</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <a href="https://github.com/boatlittlebear" target="_BLANK">
+                  <img class="card-img-top profile-img" src="./static/members/boat.png">
+                </a>
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center"><a href="https://github.com/boatlittlebear" target="_BLANK" class="text-white">boatlittlebear</a></h4>
+                  <p class="card-text text-white text-center">
+                    นาย จักรกฤษณ์ สายแฉ่ง<br>
+                    รหัสนักศึกษา 62070026
+                  </p>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">ผู้ให้กำเนิดนายเนื้อย่าง</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 col-md-6 col-lg-3 mt-3">
+              <div class="card">
+                <a href="https://github.com/boatlittlebear" target="_BLANK">
+                  <img class="card-img-top profile-img" src="./static/members/wut.png">
+                </a>
+                <div class="card-body bg-dark">
+                  <h4 class="card-title text-center"><a href="https://github.com/FuMiRiO" target="_BLANK" class="text-white">FuMiRiO</a></h4>
+                  <p class="card-text text-white text-center">
+                    นาย ธัชวุฒิ วิจิตรบรรจง<br>
+                    รหัสนักศึกษา 62070091
+                  </p>
+                  <p class="card-text text-white text-center text-warning">
+                    ตำแหน่ง<br>
+                    <span class="text-white">ผู้ให้กำเนิดนายเนื้อย่าง</span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
