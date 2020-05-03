@@ -46,7 +46,7 @@
 <hr>
 
 ### วิดิโอนำเสนอ
-> ระหว่างจัดทำ
+[วิดิโอนำเสนอ (Youtube)](https://www.youtube.com/watch?v=dbuFqpnngro)
 
 <hr>
 
